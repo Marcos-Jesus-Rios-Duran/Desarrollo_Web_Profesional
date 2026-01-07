@@ -1,0 +1,44 @@
+Explicación del Código HTML, CSS y JavaScript
+1. Estructura HTML
+El documento utiliza etiquetas semánticas de HTML5 para organizar el contenido de forma lógica:
+
+<header>: Contiene el título principal de la página.
+
+<nav>: Define el menú de navegación con una lista de enlaces.
+
+<main>: Envuelve el contenido principal del sitio.
+
+<section> (Contenido): Un bloque para texto general.
+
+<section> (Formulario): Contiene el formulario de registro y los controles de interacción.
+
+<form>: Incluye campos para correo electrónico (type="email") y contraseña (type="password"). El uso de estos tipos ayuda a que el navegador valide automáticamente el formato del correo.
+
+<footer>: El pie de página.
+
+2. Lógica de JavaScript (La Interactividad)
+El script se encarga de manejar dos funciones principales: la validación de los datos y el control visual del formulario.
+
+A. Validación del Formulario
+Cuando el usuario hace clic en el botón "Enviar":
+
+event.preventDefault(): Evita que la página se recargue automáticamente (comportamiento por defecto de los formularios).
+
+Captura de datos: Se obtienen los valores escritos en los inputs de email y contraseña.
+
+Condicionales (if):
+
+Verifica que los campos no estén vacíos.
+
+Verifica que el email contenga un símbolo @.
+
+Si algo falla, muestra una alerta (alert).
+
+B. Alternar Visibilidad (Toggle)
+El botón con el ID toggleBtn tiene un "escuchador de eventos" (addEventListener) que:
+
+Revisa el estado actual de la propiedad CSS display del formulario.
+
+Si está oculto (none): Lo cambia a block para mostrarlo.
+
+Si está visible (block): Lo cambia a none para ocultarlo.
