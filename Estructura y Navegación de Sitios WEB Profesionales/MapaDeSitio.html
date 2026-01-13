@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mapa del Sitio Web - Completo</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #ffffff;
+            min-height: 100vh;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .container {
+            width: 100%;
+            display: inline-block;
+            background: white;
+            padding: 30px;
+        }
+
+        h1 {
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 32px;
+        }
+
+        .subtitle {
+            color: #666;
+            margin-bottom: 50px;
+            font-size: 16px;
+        }
+
+        /* --- ESTILOS DEL ÁRBOL --- */
+        
+        .tree {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            margin-top: 20px;
+            margin-bottom: 60px;
+            width: 100%;
+            overflow-x: auto;
+            padding-bottom: 20px;
+        }
+
+        .tree ul {
+            position: relative;
+            padding-top: 20px; 
+            transition: all 0.5s;
+            display: flex;
+            justify-content: center;
+        }
+        
+        /* El UL raíz (primer nivel) no tiene padding superior */
+        .tree > ul {
+            padding-top: 0;
+        }
+
+        .tree li {
+            text-align: center;
+            list-style-type: none;
+            position: relative;
+            padding: 20px 10px 0 10px;
+            transition: all 0.5s;
+            display: table-cell;
+            vertical-align: top;
+        }
+
+        /* --- LÍNEAS CONECTORAS GENERALES (Nivel 1 a 2) --- */
+
+        /* Línea vertical arriba del Li */
+        .tree li::before, .tree li::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 50%;
+            border-top: 2px solid #667eea;
+            width: 50%;
+            height: 20px;
+        }
+
+        .tree li::after {
+            right: auto;
+            left: 50%;
+            border-left: 2px solid #667eea;
+        }
+
+        /* Quitar líneas del nodo raíz y nodos únicos */
+        .tree li:only-child::after, .tree li:only-child::before {
+            display: none;
+        }
+        .tree li:only-child { 
+            padding-top: 0;
+        }
+        .tree li:first-child::before, .tree li:last-child::after {
+            border: 0 none;
+        }
+        .tree li:last-child::before {
+            border-right: 2px solid #667eea;
+            border-radius: 0 5px 0 0;
+        }
+        .tree li:first-child::after {
+            border-radius: 5px 0 0 0;
+        }
+
+        /* Línea vertical hacia abajo desde el padre */
+        .tree ul ul::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            border-left: 2px solid #667eea;
+            width: 0;
+            height: 20px;
+        }
+
+        /* --- CORRECCIÓN NIVEL 3 (LISTA VERTICAL CON CONEXIONES) --- */
+        
+        /* Contenedor del Nivel 3 */
+        .tree ul ul ul {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            padding-top: 20px;
+            padding-left: 40px;
+            position: relative;
+        }
+
+        /* Línea vertical a la izquierda que conecta todos los items del Nivel 3 */
+        .tree ul ul ul::before {
+            content: '';
+            position: absolute;
+            top: -20px;
+            left: 0;
+            border-left: 2px solid #667eea;
+            width: 0;
+            height: calc(100% + 20px);
+            z-index: 0;
+        }
+        
+        /* Línea horizontal que conecta el nivel 2 con la línea vertical del nivel 3 */
+        .tree ul ul ul::after {
+            content: '';
+            position: absolute;
+            top: -20px;
+            left: 0;
+            width: 40px;
+            height: 0;
+            border-top: 2px solid #667eea;
+            z-index: 0;
+        }
+
+        .tree ul ul ul li {
+            display: block;
+            width: 100%;
+            padding: 10px 0;
+            margin: 0;
+            position: relative;
+        }
+
+        /* LÍNEA HORIZONTAL desde la línea vertical hacia cada elemento */
+        .tree ul ul ul li::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: -40px;
+            width: 40px;
+            height: 0;
+            border-top: 2px solid #667eea;
+            transform: translateY(-50%);
+            z-index: 0;
+        }
+
+        /* LÍNEA ESPECIAL para el PRIMER elemento - sube y conecta con el padre */
+        .tree ul ul ul li:first-child::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: -40px;
+            width: 40px;
+            height: calc(50% + 20px);
+            border-left: 2px solid #667eea;
+            border-bottom: 2px solid #667eea;
+            border-top: none;
+            border-radius: 0 0 0 5px;
+            transform: translateY(-100%);
+            z-index: 0;
+        }
+
+        /* Ocultamos la línea "after" del nivel 3 */
+        .tree ul ul ul li::after {
+            display: none; 
+        }
+
+        /* --- ESTILOS DE LOS BOTONES (CAJAS) --- */
+        .tree li a {
+            border: 2px solid #667eea;
+            padding: 10px 16px;
+            text-decoration: none;
+            color: #fff;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-size: 14px;
+            display: inline-block;
+            border-radius: 6px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+            position: relative;
+            z-index: 10;
+        }
+
+        .tree li a:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        /* Colores específicos */
+        .tree li a.root {
+            background: linear-gradient(135deg, #ff7eb3 0%, #ff758c 100%);
+            border-color: #ff758c;
+            font-size: 18px;
+            padding: 15px 30px;
+            font-weight: bold;
+            min-width: 200px;
+        }
+
+        .tree li a.sub {
+            background: linear-gradient(135deg, #e0c3fc 0%, #8ec5fc 100%);
+            border-color: #8ec5fc;
+            color: #444;
+            font-size: 13px;
+            font-weight: 600;
+            min-width: 140px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .tree ul ul ul {
+                padding-left: 25px;
+            }
+            
+            .tree ul ul ul li::before {
+                left: -25px;
+                width: 25px;
+            }
+            
+            .tree ul ul ul li:first-child::before {
+                left: -25px;
+                width: 25px;
+            }
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>🌐 Mapa del Sitio Web</h1>
+        <p class="subtitle">Estructura jerárquica visual completa</p>
+
+        <!-- ÁRBOL PRINCIPAL -->
+        <div class="tree">
+            <ul>
+                <li>
+                    <a href="#" class="root">INICIO</a>
+                    
+                    <ul>
+                        <li>
+                            <a href="#">NOSOTROS</a>
+                            <ul>
+                                <li><a href="#" class="sub">Quiénes Somos</a></li>
+                                <li><a href="#" class="sub">Misión</a></li>
+                                <li><a href="#" class="sub">Visión</a></li>
+                                <li><a href="#" class="sub">Equipo</a></li>
+                            </ul>
+                        </li>
+
+                        <li>
+                            <a href="#">SERVICIOS</a>
+                            <ul>
+                                <li><a href="#" class="sub">Desarrollo Web</a></li>
+                                <li><a href="#" class="sub">Apps Móviles</a></li>
+                                <li><a href="#" class="sub">Consultoría</a></li>
+                            </ul>
+                        </li>
+
+                        <li>
+                            <a href="#">PORTAFOLIO</a>
+                            <ul>
+                                <li><a href="#" class="sub">Proyectos Web</a></li>
+                                <li><a href="#" class="sub">Apps</a></li>
+                                <li><a href="#" class="sub">Casos Éxito</a></li>
+                            </ul>
+                        </li>
+
+                        <li>
+                            <a href="#">BLOG</a>
+                            <ul>
+                                <li><a href="#" class="sub">Noticias</a></li>
+                                <li><a href="#" class="sub">Tutoriales</a></li>
+                            </ul>
+                        </li>
+
+                         <li>
+                            <a href="#">CONTACTO</a>
+                            <ul>
+                                <li><a href="#" class="sub">Formulario</a></li>
+                                <li><a href="#" class="sub">Ubicación</a></li>
+                                <li><a href="#" class="sub">Soporte</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
+        <!-- ÁRBOL ÁREA DE USUARIO -->
+        <div class="tree">
+            <ul>
+                <li>
+                    <a href="#" class="root">ÁREA DE USUARIO</a>
+                    <ul>
+                        <li>
+                            <a href="#">ACCESO</a>
+                            <ul>
+                                <li><a href="#" class="sub">Login</a></li>
+                                <li><a href="#" class="sub">Registro</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="#">DASHBOARD</a>
+                            <ul>
+                                <li><a href="#" class="sub">Perfil</a></li>
+                                <li><a href="#" class="sub">Proyectos</a></li>
+                                <li><a href="#" class="sub">Pagos</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="#">UTILIDADES</a>
+                            <ul>
+                                <li><a href="#" class="sub">Búsqueda</a></li>
+                                <li><a href="#" class="sub">Error 404</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
+    </div>
+
+</body>
+</html>
