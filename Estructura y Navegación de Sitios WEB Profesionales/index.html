@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inicio - DevAgency</title>
+
+    
+<style>
+    /* === BASE === */
+    body { margin: 0; font-family: 'Segoe UI', system-ui, sans-serif; background-color: #f8fafc; color: #334155; }
+    
+    /* === LAYOUT DEL DASHBOARD === */
+    #dashboard-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 40px 20px;
+        min-height: 80vh;
+    }
+
+    /* === HERO SECTION (Bienvenida) === */
+    .dashboard-header {
+        margin-bottom: 40px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .welcome-text h1 { color: #0f172a; font-size: 2rem; margin: 0 0 5px 0; }
+    .welcome-text p { color: #64748b; margin: 0; }
+    .date-badge { background: #e0f2fe; color: #0ea5e9; padding: 8px 16px; border-radius: 20px; font-weight: 600; font-size: 0.9rem; }
+
+    /* === GRID DE TARJETAS (STATS) === */
+    .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        gap: 25px;
+        margin-bottom: 40px;
+    }
+
+    .stat-card {
+        background: white;
+        padding: 25px;
+        border-radius: 16px;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+        border: 1px solid #e2e8f0;
+        transition: transform 0.2s;
+        display: flex;
+        align-items: center;
+        gap: 20px;
+    }
+    .stat-card:hover { transform: translateY(-3px); box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); }
+    
+    .stat-icon {
+        width: 50px; height: 50px;
+        border-radius: 12px;
+        display: flex; align-items: center; justify-content: center;
+        font-size: 24px;
+    }
+    /* Colores para iconos */
+    .bg-blue { background: #e0f2fe; color: #0ea5e9; }
+    .bg-green { background: #dcfce7; color: #22c55e; }
+    .bg-purple { background: #f3e8ff; color: #a855f7; }
+
+    .stat-info h3 { margin: 0; font-size: 28px; color: #0f172a; }
+    .stat-info p { margin: 0; color: #64748b; font-size: 14px; }
+
+    /* === SECCIÓN PRINCIPAL (2 Columnas) === */
+    .main-grid {
+        display: grid;
+        grid-template-columns: 2fr 1fr; /* Izquierda ancha, Derecha angosta */
+        gap: 25px;
+    }
+
+    /* Estilos comunes de paneles */
+    .panel {
+        background: white;
+        border-radius: 16px;
+        border: 1px solid #e2e8f0;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+        overflow: hidden;
+    }
+    .panel-header {
+        padding: 20px 25px;
+        border-bottom: 1px solid #f1f5f9;
+        display: flex; justify-content: space-between; align-items: center;
+    }
+    .panel-header h2 { margin: 0; font-size: 1.1rem; color: #0f172a; }
+
+    /* Lista de Proyectos */
+    .project-item {
+        padding: 20px 25px;
+        border-bottom: 1px solid #f1f5f9;
+        display: flex; align-items: center; justify-content: space-between;
+    }
+    .project-item:last-child { border-bottom: none; }
+    
+    .project-info h4 { margin: 0 0 5px 0; color: #334155; }
+    .project-info span { font-size: 13px; color: #94a3b8; }
+
+    /* Barra de Progreso */
+    .progress-wrapper { width: 120px; text-align: right; }
+    .progress-bar-bg { width: 100%; height: 8px; background: #f1f5f9; border-radius: 4px; margin-top: 5px; overflow: hidden; }
+    .progress-fill { height: 100%; background: #0ea5e9; border-radius: 4px; }
+    .progress-text { font-size: 12px; font-weight: 700; color: #0f4c81; }
+
+    /* Lista de Actividad Reciente */
+    .activity-list { padding: 0; margin: 0; list-style: none; }
+    .activity-item {
+        padding: 15px 25px;
+        border-bottom: 1px solid #f8fafc;
+        display: flex; gap: 15px;
+        font-size: 14px;
+    }
+    .dot { width: 10px; height: 10px; background: #cbd5e1; border-radius: 50%; margin-top: 6px; flex-shrink: 0; }
+    .dot.active { background: #0ea5e9; box-shadow: 0 0 0 3px #e0f2fe; }
+
+    /* Responsivo para móviles */
+    @media (max-width: 768px) {
+        .dashboard-header { flex-direction: column; align-items: flex-start; gap: 10px; }
+        .main-grid { grid-template-columns: 1fr; }
+    }
+</style>
+</head>
+<body>
+
+    <div id="navbar-container"></div>
+
+
+<main id="dashboard-container">
+    
+    <header class="dashboard-header">
+        <div class="welcome-text">
+            <h1>Hola, Marcos 👋</h1>
+            <p>Aquí tienes el resumen de tus servicios activos.</p>
+        </div>
+        <div class="date-badge">📅 Enero 2026</div>
+    </header>
+
+    <section class="stats-grid">
+        <div class="stat-card">
+            <div class="stat-icon bg-blue">🚀</div>
+            <div class="stat-info">
+                <h3>3</h3>
+                <p>Proyectos Activos</p>
+            </div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon bg-green">💳</div>
+            <div class="stat-info">
+                <h3>$0.00</h3>
+                <p>Pagos Pendientes</p>
+            </div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon bg-purple">📨</div>
+            <div class="stat-info">
+                <h3>2</h3>
+                <p>Mensajes Nuevos</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="main-grid">
+        
+        <div class="panel">
+            <div class="panel-header">
+                <h2>📊 Estado de Proyectos</h2>
+                <button style="border:none; background:none; color:#0ea5e9; font-weight:600; cursor:pointer;">Ver Todos</button>
+            </div>
+            
+            <div class="project-item">
+                <div class="project-info">
+                    <h4>E-commerce "Zapatería León"</h4>
+                    <span>Fase: Desarrollo Frontend</span>
+                </div>
+                <div class="progress-wrapper">
+                    <span class="progress-text">75%</span>
+                    <div class="progress-bar-bg">
+                        <div class="progress-fill" style="width: 75%;"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="project-item">
+                <div class="project-info">
+                    <h4>App Móvil "Delivery Express"</h4>
+                    <span>Fase: Diseño UX/UI</span>
+                </div>
+                <div class="progress-wrapper">
+                    <span class="progress-text">30%</span>
+                    <div class="progress-bar-bg">
+                        <div class="progress-fill" style="width: 30%; background-color: #a855f7;"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="project-item">
+                <div class="project-info">
+                    <h4>Landing Page Corporativa</h4>
+                    <span>Fase: Revisión Final</span>
+                </div>
+                <div class="progress-wrapper">
+                    <span class="progress-text">95%</span>
+                    <div class="progress-bar-bg">
+                        <div class="progress-fill" style="width: 95%; background-color: #22c55e;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="panel">
+            <div class="panel-header">
+                <h2>🔔 Actividad Reciente</h2>
+            </div>
+            <ul class="activity-list">
+                <li class="activity-item">
+                    <div class="dot active"></div>
+                    <div>
+                        <strong style="display:block; color:#334155;">Nuevo prototipo subido</strong>
+                        <span style="color:#94a3b8; font-size:12px;">Hace 2 horas</span>
+                    </div>
+                </li>
+                <li class="activity-item">
+                    <div class="dot"></div>
+                    <div>
+                        <strong style="display:block; color:#334155;">Factura #0045 Pagada</strong>
+                        <span style="color:#94a3b8; font-size:12px;">Ayer</span>
+                    </div>
+                </li>
+                <li class="activity-item">
+                    <div class="dot"></div>
+                    <div>
+                        <strong style="display:block; color:#334155;">Reunión programada</strong>
+                        <span style="color:#94a3b8; font-size:12px;">12 Ene, 2026</span>
+                    </div>
+                </li>
+            </ul>
+            <div style="padding: 20px; text-align: center;">
+                 <button style="width:100%; padding:10px; background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; color:#64748b; cursor:pointer;">Ver historial completo</button>
+            </div>
+        </div>
+
+    </section>
+
+</main>
+
+
+    <div id="footer-container"></div>
+
+
+    <script src="./src/common/scripts/ui-loader.js"></script>
+
+</body>
+</html>

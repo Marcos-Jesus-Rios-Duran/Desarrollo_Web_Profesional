@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nuestros Servicios - DevAgency</title>
+    
+    <style>
+        /* === BREADCRUMBS ESTILO MINIMALISTA === */
+.breadcrumb-nav {
+    display: flex;
+    justify-content: center; /* Centrado igual que el título */
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px; /* Espacio antes del título H1 */
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.breadcrumb-nav a {
+    text-decoration: none;
+    color: #94a3b8; /* Gris suave */
+    transition: color 0.2s ease;
+}
+
+.breadcrumb-nav a:hover {
+    color: #0ea5e9; /* Azul de tu marca al pasar el mouse */
+}
+
+.breadcrumb-separator {
+    color: #cbd5e1; /* Gris muy clarito */
+    font-size: 0.8rem;
+}
+
+.breadcrumb-current {
+    color: #0ea5e9; /* Azul marca para indicar "Aquí estás" */
+    background-color: #e0f2fe; /* Fondo azulito muy suave */
+    padding: 4px 12px;
+    border-radius: 20px; /* Forma de pastilla moderna */
+}
+        /* === ESTILOS BASE (Iguales al Dashboard para consistencia) === */
+        body { margin: 0; font-family: 'Segoe UI', system-ui, sans-serif; background-color: #f8fafc; color: #334155; }
+        
+        /* === HERO SECTION === */
+        .services-hero {
+            text-align: center;
+            padding: 80px 20px 60px;
+            background: linear-gradient(180deg, #ffffff 0%, #f1f5f9 100%);
+            border-bottom: 1px solid #e2e8f0;
+        }
+        .services-hero h1 {
+            color: #0f172a; font-size: 3rem; margin-bottom: 15px; letter-spacing: -1px;
+        }
+        .services-hero p {
+            color: #64748b; font-size: 1.2rem; max-width: 600px; margin: 0 auto; line-height: 1.6;
+        }
+
+        /* === CONTENEDOR PRINCIPAL === */
+        .services-container {
+            max-width: 1200px; margin: 0 auto; padding: 60px 20px;
+        }
+
+        /* === GRID DE TARJETAS === */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Responsivo automático */
+            gap: 30px;
+        }
+
+        /* === TARJETA DE SERVICIO === */
+        .service-card {
+            background: white;
+            border-radius: 20px;
+            padding: 40px 30px;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+        
+        /* Efecto Hover: Sube y brilla */
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            border-color: #bae6fd;
+        }
+
+        /* Iconos con fondo de color */
+        .icon-box {
+            width: 70px; height: 70px;
+            border-radius: 16px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 32px;
+            margin-bottom: 25px;
+        }
+        .icon-web { background: #e0f2fe; color: #0284c7; }
+        .icon-app { background: #f0fdf4; color: #16a34a; }
+        .icon-consult { background: #f3e8ff; color: #9333ea; }
+
+        .service-card h2 { font-size: 1.5rem; color: #0f172a; margin: 0 0 15px 0; }
+        .service-card p { color: #64748b; line-height: 1.6; margin: 0 0 25px 0; flex-grow: 1; }
+
+        /* Lista de características (Bullets) */
+        .feature-list { list-style: none; padding: 0; margin: 0 0 30px 0; width: 100%; }
+        .feature-list li {
+            padding: 8px 0;
+            border-bottom: 1px dashed #e2e8f0;
+            color: #475569;
+            font-size: 0.95rem;
+            display: flex; align-items: center; gap: 10px;
+        }
+        .feature-list li:last-child { border-bottom: none; }
+        .check-icon { color: #0ea5e9; font-weight: bold; }
+
+        /* Botón de acción dentro de la tarjeta */
+        .btn-service {
+            width: 100%;
+            padding: 12px;
+            border-radius: 10px;
+            border: 1px solid #e2e8f0;
+            background: transparent;
+            color: #0f172a;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+            text-align: center;
+            text-decoration: none;
+        }
+        .btn-service:hover {
+            background: #0f172a;
+            color: white;
+            border-color: #0f172a;
+        }
+
+        /* === SECCIÓN CTA (Llamada a la acción) === */
+        .cta-section {
+            margin-top: 80px;
+            background: linear-gradient(135deg, #0f4c81 0%, #0ea5e9 100%);
+            border-radius: 24px;
+            padding: 60px;
+            text-align: center;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+        .cta-section h2 { font-size: 2.2rem; margin-bottom: 15px; }
+        .cta-section p { font-size: 1.1rem; opacity: 0.9; margin-bottom: 30px; }
+        .btn-cta-white {
+            background: white; color: #0f4c81; padding: 15px 35px;
+            border-radius: 50px; font-weight: bold; text-decoration: none;
+            display: inline-block; transition: transform 0.2s;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+        .btn-cta-white:hover { transform: scale(1.05); }
+
+    </style>
+</head>
+<body data-page-name="Servicios"> <div id="navbar-container"></div>
+
+    <main>
+        <section class="services-hero">
+    
+    <nav class="breadcrumb-nav">
+        <a href="/index.html">Inicio</a> 
+        
+        <span class="breadcrumb-separator">/</span>
+        
+        <span class="breadcrumb-current">Servicios</span>
+    </nav>
+
+    <h1>Impulsamos tu Transformación Digital</h1>
+    <p>Desde aplicaciones móviles intuitivas hasta sistemas web robustos. Creamos la tecnología que tu negocio necesita para escalar.</p>
+</section>
+
+        <div class="services-container">
+            <div class="services-grid">
+                
+                <article class="service-card">
+                    <div class="icon-box icon-web">💻</div>
+                    <h2>Desarrollo Web</h2>
+                    <p>Sitios corporativos y aplicaciones web progresivas (PWA) diseñadas para convertir visitantes en clientes.</p>
+                    <ul class="feature-list">
+                        <li><span class="check-icon">✓</span> Diseño Responsive (Móvil/PC)</li>
+                        <li><span class="check-icon">✓</span> SEO Optimizado</li>
+                        <li><span class="check-icon">✓</span> Paneles Administrativos</li>
+                    </ul>
+                    <a href="/src/pages/desarrollo-web.html" class="btn-service">Ver Planes Web</a>
+                </article>
+
+                <article class="service-card">
+                    <div class="icon-box icon-app">📱</div>
+                    <h2>Apps Móviles</h2>
+                    <p>Llevamos tu idea a la palma de la mano de tus usuarios. Desarrollo nativo y multiplataforma.</p>
+                    <ul class="feature-list">
+                        <li><span class="check-icon">✓</span> iOS y Android (Flutter/React)</li>
+                        <li><span class="check-icon">✓</span> Notificaciones Push</li>
+                        <li><span class="check-icon">✓</span> Publicación en Tiendas</li>
+                    </ul>
+                    <a href="/src/pages/apps-moviles.html" class="btn-service">Cotizar App</a>
+                </article>
+
+                <article class="service-card">
+                    <div class="icon-box icon-consult">🚀</div>
+                    <h2>Consultoría TI</h2>
+                    <p>¿No sabes por dónde empezar? Te asesoramos para elegir la mejor arquitectura y tecnología.</p>
+                    <ul class="feature-list">
+                        <li><span class="check-icon">✓</span> Auditoría de Código</li>
+                        <li><span class="check-icon">✓</span> Arquitectura Cloud</li>
+                        <li><span class="check-icon">✓</span> Transformación Digital</li>
+                    </ul>
+                    <a href="/src/pages/consultoria.html" class="btn-service">Agendar Asesoría</a>
+                </article>
+
+            </div>
+
+            <div class="cta-section">
+                <h2>¿Tienes un proyecto en mente?</h2>
+                <p>No dejes pasar más tiempo. Convierte esa idea en realidad hoy mismo.</p>
+                <a href="/src/pages/contacto.html" class="btn-cta-white">Hablar con un Experto</a>
+            </div>
+        </div>
+    </main>
+
+    <div id="footer-container"></div>
+
+    <script src="../common/scripts/ui-loader.js"></script>
+
+</body>
+</html>

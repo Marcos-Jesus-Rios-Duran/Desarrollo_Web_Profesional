@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apps Móviles - DevAgency</title>
+    <style>
+        body { margin: 0; font-family: 'Segoe UI', system-ui, sans-serif; background-color: #ffffff; color: #334155; }
+        
+        .breadcrumb-section { background-color: #f8fafc; padding: 20px 0; border-bottom: 1px solid #e2e8f0; }
+        .breadcrumb-nav { max-width: 1200px; margin: 0 auto; padding: 0 20px; display: flex; align-items: center; gap: 10px; font-size: 0.9rem; }
+        .breadcrumb-nav a { text-decoration: none; color: #64748b; }
+        .breadcrumb-nav a:hover { color: #0ea5e9; }
+        .breadcrumb-separator { color: #cbd5e1; }
+        .breadcrumb-current { color: #0ea5e9; background: #e0f2fe; padding: 4px 12px; border-radius: 20px; font-weight: 600; font-size: 0.85rem; }
+
+        .detail-hero { max-width: 1200px; margin: 0 auto; padding: 60px 20px; display: grid; grid-template-columns: 1fr 1fr; gap: 50px; align-items: center; }
+        .detail-text h1 { font-size: 3rem; color: #0f172a; margin-bottom: 20px; line-height: 1.1; }
+        .detail-text p { font-size: 1.1rem; color: #64748b; line-height: 1.7; margin-bottom: 30px; }
+        /* Visual Box Diferente (Verde menta para Apps) */
+        .visual-box { background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%); border-radius: 24px; height: 350px; display: flex; align-items: center; justify-content: center; font-size: 80px; }
+
+        .tech-section { background: #0f172a; padding: 60px 20px; text-align: center; color: white; }
+        .tech-grid { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; margin-top: 30px; }
+        .tech-item { background: rgba(255,255,255,0.1); padding: 10px 25px; border-radius: 50px; font-weight: 600; border: 1px solid rgba(255,255,255,0.2); }
+
+        .btn-primary { background: #0ea5e9; color: white; padding: 15px 35px; border: none; border-radius: 50px; font-weight: bold; cursor: pointer; text-decoration: none; display: inline-block; transition: transform 0.2s; }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 10px 20px -5px rgba(14, 165, 233, 0.4); }
+    </style>
+</head>
+<body>
+
+    <div id="navbar-container"></div>
+
+    <div class="breadcrumb-section">
+        <nav class="breadcrumb-nav">
+            <a href="/index.html">Inicio</a>
+            <span class="breadcrumb-separator">/</span>
+            <a href="/src/pages/servicios.html">Servicios</a>
+            <span class="breadcrumb-separator">/</span>
+            <span class="breadcrumb-current">Apps Móviles</span>
+        </nav>
+    </div>
+
+    <main>
+        <section class="detail-hero">
+            <div class="detail-text">
+                <h1>Tu Negocio en el Bolsillo</h1>
+                <p>Desarrollamos aplicaciones nativas y multiplataforma con experiencia de usuario fluida. Llega a tus clientes a través de App Store y Google Play.</p>
+                <ul style="list-style: none; padding: 0; margin-bottom: 30px; color: #475569; line-height: 2;">
+                    <li>✅ Desarrollo Multiplataforma (Un solo código)</li>
+                    <li>✅ Notificaciones Push</li>
+                    <li>✅ Publicación y Mantenimiento</li>
+                </ul>
+                <a href="/src/pages/contacto.html" class="btn-primary">Cotizar App Móvil</a>
+            </div>
+            <div class="visual-box">📱</div>
+        </section>
+
+        <section class="tech-section">
+            <h2>Nuestro Stack Móvil</h2>
+            <div class="tech-grid">
+                <div class="tech-item">Flutter / Dart</div>
+                <div class="tech-item">React Native</div>
+                <div class="tech-item">Firebase</div>
+                <div class="tech-item">Kotlin (Android)</div>
+                <div class="tech-item">Swift (iOS)</div>
+            </div>
+        </section>
+    </main>
+
+    <div id="footer-container"></div>
+    <script src="../common/scripts/ui-loader.js"></script>
+</body>
+</html>

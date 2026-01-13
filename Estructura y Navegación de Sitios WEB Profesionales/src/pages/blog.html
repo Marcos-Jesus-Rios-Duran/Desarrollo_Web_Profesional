@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog - DevAgency</title>
+    
+    <style>
+        /* === ESTILOS BASE === */
+        body { margin: 0; font-family: 'Segoe UI', system-ui, sans-serif; background-color: #f8fafc; color: #334155; }
+        
+        /* === BREADCRUMBS CENTRADO === */
+        .breadcrumb-nav {
+            display: flex; justify-content: center; align-items: center; gap: 10px;
+            margin-bottom: 20px; font-size: 0.9rem; font-weight: 500;
+        }
+        .breadcrumb-nav a { text-decoration: none; color: #94a3b8; transition: color 0.2s; }
+        .breadcrumb-nav a:hover { color: #0ea5e9; }
+        .breadcrumb-separator { color: #cbd5e1; font-size: 0.8rem; }
+        .breadcrumb-current { color: #0ea5e9; background-color: #e0f2fe; padding: 4px 12px; border-radius: 20px; }
+
+        /* === HERO SECTION === */
+        .blog-hero {
+            text-align: center; padding: 80px 20px 40px;
+            background: white; border-bottom: 1px solid #e2e8f0;
+        }
+        .blog-hero h1 { color: #0f172a; font-size: 3rem; margin-bottom: 15px; letter-spacing: -1px; }
+        .blog-hero p { color: #64748b; font-size: 1.2rem; max-width: 700px; margin: 0 auto; line-height: 1.6; }
+
+        /* === CATEGORÍAS (Filtros) === */
+        .categories-bar { display: flex; justify-content: center; gap: 15px; margin-top: 40px; flex-wrap: wrap; }
+        .cat-link {
+            text-decoration: none; color: #64748b; font-weight: 600; padding: 8px 20px; border-radius: 50px;
+            border: 1px solid transparent; transition: all 0.2s; font-size: 0.95rem;
+        }
+        .cat-link:hover, .cat-link.active { background: #e0f2fe; color: #0ea5e9; border-color: #bae6fd; }
+
+        /* === CONTENEDOR PRINCIPAL === */
+        .blog-container { max-width: 1200px; margin: 60px auto; padding: 0 20px; }
+
+        /* === ARTÍCULO DESTACADO (Featured) === */
+        .featured-post {
+            display: grid; grid-template-columns: 1.2fr 1fr; gap: 40px; background: white;
+            border-radius: 24px; overflow: hidden; border: 1px solid #e2e8f0; margin-bottom: 60px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05); align-items: center;
+        }
+        .featured-image {
+            width: 100%; height: 100%; min-height: 400px; object-fit: cover;
+        }
+        .featured-content { padding: 40px; }
+        .featured-tag { background: #0ea5e9; color: white; padding: 6px 12px; border-radius: 6px; font-size: 0.8rem; font-weight: 700; text-transform: uppercase; display: inline-block; margin-bottom: 20px; }
+        .featured-content h2 { font-size: 2.2rem; margin: 0 0 20px 0; color: #0f172a; line-height: 1.2; }
+        .featured-content p { color: #64748b; font-size: 1.1rem; line-height: 1.7; margin-bottom: 30px; }
+
+        /* === GRID DE ARTÍCULOS === */
+        .posts-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px;
+        }
+
+        /* === TARJETA DE ARTÍCULO === */
+        .post-card {
+            background: white; border-radius: 20px; overflow: hidden; border: 1px solid #e2e8f0;
+            transition: transform 0.3s ease; display: flex; flex-direction: column;
+        }
+        .post-card:hover { transform: translateY(-8px); box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.05); }
+        
+        .post-img { width: 100%; height: 200px; object-fit: cover; background: #e2e8f0; }
+        .post-body { padding: 25px; flex-grow: 1; display: flex; flex-direction: column; }
+        
+        .post-meta { font-size: 0.85rem; color: #94a3b8; margin-bottom: 12px; display: flex; align-items: center; gap: 10px; }
+        .dot-sep { width: 4px; height: 4px; background: #cbd5e1; border-radius: 50%; }
+        
+        .post-title { font-size: 1.3rem; margin: 0 0 12px 0; color: #0f172a; font-weight: 700; line-height: 1.4; }
+        .post-excerpt { font-size: 0.95rem; color: #64748b; line-height: 1.6; margin-bottom: 20px; flex-grow: 1; }
+        
+        .read-more {
+            text-decoration: none; color: #0ea5e9; font-weight: 700; font-size: 0.9rem;
+            display: flex; align-items: center; gap: 5px;
+        }
+        .read-more:hover { text-decoration: underline; }
+
+        /* === NEWSLETTER === */
+        .newsletter-box {
+            background: #0f172a; border-radius: 24px; padding: 60px 40px; text-align: center;
+            color: white; margin-top: 80px; position: relative; overflow: hidden;
+        }
+        .newsletter-box h2 { font-size: 2rem; margin-bottom: 15px; }
+        .newsletter-box p { color: #cbd5e1; margin-bottom: 30px; max-width: 500px; margin-left: auto; margin-right: auto; }
+        
+        .input-group {
+            display: flex; max-width: 500px; margin: 0 auto; gap: 10px;
+        }
+        .email-input {
+            flex: 1; padding: 15px 20px; border-radius: 50px; border: none; outline: none; font-size: 1rem;
+        }
+        .sub-btn {
+            background: #0ea5e9; color: white; border: none; padding: 15px 30px;
+            border-radius: 50px; font-weight: bold; cursor: pointer; transition: background 0.2s;
+        }
+        .sub-btn:hover { background: #0284c7; }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .featured-post { grid-template-columns: 1fr; }
+            .featured-image { min-height: 250px; }
+            .input-group { flex-direction: column; }
+            .sub-btn { width: 100%; }
+        }
+    </style>
+</head>
+<body data-page-name="Blog">
+
+    <div id="navbar-container"></div>
+
+    <main>
+        <section class="blog-hero">
+            <nav class="breadcrumb-nav">
+                <a href="/index.html">Inicio</a>
+                <span class="breadcrumb-separator">/</span>
+                <span class="breadcrumb-current">Blog</span>
+            </nav>
+            <h1>Noticias y Tecnología</h1>
+            <p>Descubre las últimas tendencias en desarrollo de software, tutoriales prácticos y consejos para escalar tu negocio digital.</p>
+            
+            <div class="categories-bar">
+                <a href="#" class="cat-link active">Todo</a>
+                <a href="#" class="cat-link">Tutoriales</a>
+                <a href="#" class="cat-link">Tendencias Tech</a>
+                <a href="#" class="cat-link">Noticias DevAgency</a>
+            </div>
+        </section>
+
+        <div class="blog-container">
+            
+            <article class="featured-post">
+                <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80" alt="Código" class="featured-image">
+                <div class="featured-content">
+                    <span class="featured-tag">Tutorial</span>
+                    <h2>Cómo elegir la arquitectura perfecta para tu próxima App</h2>
+                    <p>Monolito vs Microservicios. Analizamos las ventajas y desventajas de cada enfoque para que tomes la mejor decisión técnica sin gastar de más.</p>
+                    <a href="#" class="read-more" style="font-size: 1.1rem;">Leer artículo completo →</a>
+                </div>
+            </article>
+
+            <div class="posts-grid">
+
+                <article class="post-card">
+                    <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="React" class="post-img">
+                    <div class="post-body">
+                        <div class="post-meta">
+                            <span style="color: #0ea5e9; font-weight: 600;">Desarrollo Web</span>
+                            <div class="dot-sep"></div>
+                            <span>5 min lectura</span>
+                        </div>
+                        <h3 class="post-title">¿Por qué usar React en 2026?</h3>
+                        <p class="post-excerpt">React sigue siendo el rey del frontend. Te explicamos las nuevas features que lo hacen indispensable este año.</p>
+                        <a href="#" class="read-more">Leer más</a>
+                    </div>
+                </article>
+
+                <article class="post-card">
+                    <img src="https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Ciberseguridad" class="post-img">
+                    <div class="post-body">
+                        <div class="post-meta">
+                            <span style="color: #a855f7; font-weight: 600;">Seguridad</span>
+                            <div class="dot-sep"></div>
+                            <span>8 min lectura</span>
+                        </div>
+                        <h3 class="post-title">Protege tu E-commerce de ataques</h3>
+                        <p class="post-excerpt">Guía básica de ciberseguridad para tiendas online. Lo que debes saber sobre certificados SSL y pasarelas de pago.</p>
+                        <a href="#" class="read-more">Leer más</a>
+                    </div>
+                </article>
+
+                <article class="post-card">
+                    <img src="https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Móvil" class="post-img">
+                    <div class="post-body">
+                        <div class="post-meta">
+                            <span style="color: #22c55e; font-weight: 600;">Móvil</span>
+                            <div class="dot-sep"></div>
+                            <span>6 min lectura</span>
+                        </div>
+                        <h3 class="post-title">Flutter vs React Native</h3>
+                        <p class="post-excerpt">La batalla definitiva del desarrollo híbrido. Comparativa de rendimiento y facilidad de uso para tu startup.</p>
+                        <a href="#" class="read-more">Leer más</a>
+                    </div>
+                </article>
+
+            </div>
+
+            <section class="newsletter-box">
+                <h2>Suscríbete a nuestro Newsletter</h2>
+                <p>Recibe los mejores consejos de tecnología directamente en tu correo. Sin spam, solo contenido de valor.</p>
+                <div class="input-group">
+                    <input type="email" placeholder="Tu correo electrónico" class="email-input">
+                    <button class="sub-btn">Suscribirme</button>
+                </div>
+            </section>
+
+        </div>
+    </main>
+
+    <div id="footer-container"></div>
+    <script src="../common/scripts/ui-loader.js"></script>
+
+</body>
+</html> 

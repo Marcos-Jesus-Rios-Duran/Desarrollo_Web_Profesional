@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nosotros - DevAgency</title>
+    
+    <style>
+        /* === ESTILOS BASE === */
+        body { margin: 0; font-family: 'Segoe UI', system-ui, sans-serif; background-color: #ffffff; color: #334155; }
+        
+        /* === BREADCRUMBS (Estilo Hero Centrado - Igual que Servicios) === */
+        .breadcrumb-nav {
+            display: flex; justify-content: center; align-items: center; gap: 10px;
+            margin-bottom: 20px; font-size: 0.9rem; font-weight: 500;
+        }
+        .breadcrumb-nav a { text-decoration: none; color: #94a3b8; transition: color 0.2s; }
+        .breadcrumb-nav a:hover { color: #0ea5e9; }
+        .breadcrumb-separator { color: #cbd5e1; font-size: 0.8rem; }
+        .breadcrumb-current { color: #0ea5e9; background-color: #e0f2fe; padding: 4px 12px; border-radius: 20px; }
+
+        /* === HERO SECTION === */
+        .about-hero {
+            text-align: center; padding: 80px 20px 60px;
+            background: linear-gradient(180deg, #f8fafc 0%, #ffffff 100%);
+        }
+        .about-hero h1 { color: #0f172a; font-size: 3rem; margin-bottom: 15px; letter-spacing: -1px; }
+        .about-hero p { color: #64748b; font-size: 1.2rem; max-width: 700px; margin: 0 auto; line-height: 1.6; }
+
+        /* === HISTORIA & MISIÓN (Grid 2 columnas) === */
+        .story-section { max-width: 1100px; margin: 0 auto; padding: 60px 20px; display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
+        .story-content h2 { font-size: 2rem; color: #0f172a; margin-bottom: 20px; }
+        .story-content p { line-height: 1.8; color: #475569; margin-bottom: 20px; }
+        
+        /* Caja decorativa para "foto" de la oficina */
+        .story-image {
+            height: 400px; background: #e2e8f0; border-radius: 24px;
+            background-image: url('https://images.unsplash.com/photo-1522071820081-009f0129c71c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'); /* Foto real de ejemplo */
+            background-size: cover; background-position: center;
+            box-shadow: 20px 20px 0px #e0f2fe; /* Efecto de sombra sólida azul */
+        }
+
+        /* === VALORES (Tarjetas) === */
+        .values-section { background-color: #0f172a; padding: 80px 20px; text-align: center; color: white; }
+        .values-grid { max-width: 1100px; margin: 40px auto 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; }
+        .value-card { background: rgba(255,255,255,0.05); padding: 30px; border-radius: 16px; border: 1px solid rgba(255,255,255,0.1); transition: transform 0.3s; }
+        .value-card:hover { transform: translateY(-5px); background: rgba(255,255,255,0.1); }
+        .value-icon { font-size: 40px; margin-bottom: 15px; display: block; }
+        .value-card h3 { margin: 0 0 10px 0; color: #38bdf8; }
+        .value-card p { font-size: 0.95rem; color: #cbd5e1; line-height: 1.6; }
+
+        /* === EQUIPO === */
+        .team-section { max-width: 1100px; margin: 80px auto; padding: 0 20px; text-align: center; }
+        .team-section h2 { font-size: 2.5rem; color: #0f172a; margin-bottom: 50px; }
+        .team-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 40px; }
+        
+        .member-card { text-align: center; }
+        .member-photo {
+            width: 150px; height: 150px; background: #cbd5e1; border-radius: 50%; margin: 0 auto 20px;
+            object-fit: cover; border: 4px solid white; box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        .member-card h4 { margin: 0; font-size: 1.2rem; color: #0f172a; }
+        .member-card span { color: #0ea5e9; font-weight: 600; font-size: 0.9rem; display: block; margin-top: 5px; }
+
+    </style>
+</head>
+<body data-page-name="Nosotros">
+
+    <div id="navbar-container"></div>
+
+    <main>
+        <section class="about-hero">
+            <nav class="breadcrumb-nav">
+                <a href="/index.html">Inicio</a>
+                <span class="breadcrumb-separator">/</span>
+                <span class="breadcrumb-current">Nosotros</span>
+            </nav>
+            
+            <h1>Más que código, creamos soluciones</h1>
+            <p>Somos un equipo apasionado por la tecnología y la innovación. Ayudamos a empresas a navegar el mundo digital con estrategia y diseño de alto nivel.</p>
+        </section>
+
+        <section class="story-section">
+            <div class="story-image"></div> <div class="story-content">
+                <h2>Nuestra Historia</h2>
+                <p>DevAgency nació en 2024 con una misión simple: eliminar la brecha técnica entre las grandes ideas y su ejecución. Lo que empezó como dos amigos programando en una habitación, hoy es una agencia que transforma negocios.</p>
+                <p>Creemos en el software bien hecho, en el diseño que funciona y en las relaciones a largo plazo con nuestros clientes.</p>
+                
+                <div style="margin-top: 30px; display: flex; gap: 40px;">
+                    <div>
+                        <strong style="font-size: 2rem; color: #0ea5e9;">+50</strong>
+                        <div style="font-size: 0.9rem; color: #64748b;">Proyectos</div>
+                    </div>
+                    <div>
+                        <strong style="font-size: 2rem; color: #0ea5e9;">100%</strong>
+                        <div style="font-size: 0.9rem; color: #64748b;">Clientes Felices</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="values-section">
+            <h2>Nuestros Pilares</h2>
+            <div class="values-grid">
+                <div class="value-card">
+                    <span class="value-icon">💡</span>
+                    <h3>Innovación</h3>
+                    <p>No usamos tecnología vieja. Siempre estamos a la vanguardia con lo último del mercado.</p>
+                </div>
+                <div class="value-card">
+                    <span class="value-icon">🤝</span>
+                    <h3>Transparencia</h3>
+                    <p>Sin letras chiquitas. Te mantenemos informado en cada etapa del desarrollo.</p>
+                </div>
+                <div class="value-card">
+                    <span class="value-icon">⚡</span>
+                    <h3>Velocidad</h3>
+                    <p>Sabemos que el tiempo es dinero. Entregamos calidad en tiempos récord.</p>
+                </div>
+            </div>
+        </section>
+
+<section class="team-section">
+            <h2>Conoce al Equipo</h2>
+            <div class="team-grid">
+                <div class="member-card">
+                    <img src="https://placehold.co/150x150/0ea5e9/white?text=MR" alt="Foto" class="member-photo">
+                    <h4>Marcos Ríos</h4>
+                    <span>CEO & Lead Developer</span>
+                </div>
+                <div class="member-card">
+                    <img src="https://placehold.co/150x150/0f4c81/white?text=Zy" alt="Foto" class="member-photo">
+                    <h4>Zyan</h4>
+                    <span>Diseñadora UX/UI</span>
+                </div>
+                <div class="member-card">
+                    <img src="https://placehold.co/150x150/a855f7/white?text=Am" alt="Foto" class="member-photo">
+                    <h4>Amaury</h4>
+                    <span>Backend Specialist</span>
+                </div>
+                <div class="member-card">
+                    <img src="https://placehold.co/150x150/22c55e/white?text=Ur" alt="Foto" class="member-photo">
+                    <h4>Uriel</h4>
+                    <span>Marketing Digital</span>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <div id="footer-container"></div>
+    
+    <script src="../common/scripts/ui-loader.js"></script>
+
+</body>
+</html>

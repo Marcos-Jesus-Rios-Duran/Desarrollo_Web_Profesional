@@ -1,68 +1,69 @@
-# Estructura de Navegación (Breadcrumbs)
+# Mapa de Rutas de Navegación (Breadcrumbs)
 
-Este documento define la jerarquía de navegación ("migas de pan") basada en el mapa de sitio del proyecto. El objetivo es permitir al usuario identificar su ubicación actual y retroceder niveles fácilmente.
+Este documento detalla todas las rutas de navegación ("carreteras") disponibles en el sitio web. Cada línea representa el camino secuencial que el usuario debe recorrer para llegar a una sección específica desde la página de inicio.
 
-## 1. Definición de Rutas
+## 1. Área Pública (Sitio Web Principal)
 
-A continuación se detallan los recorridos de navegación para tres escenarios clave de la arquitectura: Servicios, Portafolio y Área de Usuario.
+Estas rutas parten desde el **INICIO** y se bifurcan hacia las secciones informativas y de contacto.
 
-### Escenario A: Navegación de Servicios (Público)
-*Contexto: El usuario explora los servicios específicos ofrecidos.*
+### 📍 Ruta: Nosotros
+El camino para conocer la identidad de la organización.
+* `Inicio` > `Nosotros` > **Quiénes Somos**
+* `Inicio` > `Nosotros` > **Misión**
+* `Inicio` > `Nosotros` > **Visión**
+* `Inicio` > `Nosotros` > **Equipo**
 
-> **Ruta Visual:** `Inicio` / `Servicios` / **Apps Móviles**
+### 📍 Ruta: Servicios
+El camino hacia la oferta comercial y técnica.
+* `Inicio` > `Servicios` > **Desarrollo Web**
+* `Inicio` > `Servicios` > **Apps Móviles**
+* `Inicio` > `Servicios` > **Consultoría**
 
-* **Nivel 0:** [Inicio] (Link al Home)
-* **Nivel 1:** [Servicios] (Link a la lista de servicios)
-* **Nivel 2:** **Apps Móviles** (Texto estático - Página Actual)
+### 📍 Ruta: Portafolio
+El camino para visualizar trabajos previos y resultados.
+* `Inicio` > `Portafolio` > **Proyectos Web**
+* `Inicio` > `Portafolio` > **Apps**
+* `Inicio` > `Portafolio` > **Casos de Éxito**
 
-### Escenario B: Navegación de Portafolio (Público)
-*Contexto: El usuario revisa la evidencia de trabajos anteriores.*
+### 📍 Ruta: Blog
+El camino hacia el contenido dinámico y educativo.
+* `Inicio` > `Blog` > **Noticias**
+* `Inicio` > `Blog` > **Tutoriales**
 
-> **Ruta Visual:** `Inicio` / `Portafolio` / **Casos de Éxito**
-
-* **Nivel 0:** [Inicio] (Link al Home)
-* **Nivel 1:** [Portafolio] (Link al índice del portafolio)
-* **Nivel 2:** **Casos de Éxito** (Texto estático - Página Actual)
-
-### Escenario C: Dashboard de Usuario (Privado)
-*Contexto: El usuario autenticado gestiona sus pagos dentro del sistema.*
-
-> **Ruta Visual:** `Inicio` / `Área de Usuario` / `Dashboard` / **Pagos**
-
-* **Nivel 0:** [Inicio] (Link a Landing Page)
-* **Nivel 1:** [Área de Usuario] (Link al Hub de acceso)
-* **Nivel 2:** [Dashboard] (Link al Resumen Principal)
-* **Nivel 3:** **Pagos** (Texto estático - Página Actual)
+### 📍 Ruta: Contacto
+El camino para establecer comunicación o ubicar la empresa.
+* `Inicio` > `Contacto` > **Formulario**
+* `Inicio` > `Contacto` > **Ubicación**
+* `Inicio` > `Contacto` > **Soporte**
 
 ---
 
-## 2. Reglas de Diseño e Implementación
+## 2. Área Privada (Plataforma de Usuario)
 
-Para asegurar una buena Experiencia de Usuario (UX), los breadcrumbs deben cumplir con las siguientes directrices:
+Estas rutas son más profundas y requieren autenticación o interacción con el sistema. Se asume que "Área de Usuario" es el nodo principal tras el login o registro.
 
-1.  **Estado Activo:** El último elemento de la lista (la página actual) debe estar visualmente destacado (negrita o color diferente) y **no debe tener enlace**.
-2.  **Separadores:** Se utilizará el carácter `/` o el símbolo `>` (chevron-right) para separar los niveles.
-3.  **Jerarquía:** Siempre deben colocarse en la parte superior del contenedor principal, debajo del menú de navegación (Header).
+### 🔐 Ruta: Acceso
+Puntos de entrada al sistema.
+* `Inicio` > `Área de Usuario` > `Acceso` > **Login**
+* `Inicio` > `Área de Usuario` > `Acceso` > **Registro**
 
-### Ejemplo de Estructura de Datos (JSON)
+### 📊 Ruta: Dashboard (Panel de Control)
+Área de gestión personal del usuario.
+* `Inicio` > `Área de Usuario` > `Dashboard` > **Perfil**
+* `Inicio` > `Área de Usuario` > `Dashboard` > **Proyectos**
+* `Inicio` > `Área de Usuario` > `Dashboard` > **Pagos**
 
-Para la implementación dinámica en el frontend:
+### 🛠️ Ruta: Utilidades
+Herramientas del sistema y manejo de estados.
+* `Inicio` > `Área de Usuario` > `Utilidades` > **Búsqueda**
+* `Inicio` > `Área de Usuario` > `Utilidades` > **Error 404**
 
-```json
-[
-  {
-    "label": "Inicio",
-    "url": "/",
-    "active": false
-  },
-  {
-    "label": "Servicios",
-    "url": "/servicios",
-    "active": false
-  },
-  {
-    "label": "Apps Móviles",
-    "url": null,
-    "active": true
-  }
-]
+---
+
+## 3. Leyenda de Representación
+
+Para interpretar las rutas anteriores en la interfaz de usuario (UI):
+
+* **Inicio / Nodo Padre / ... :** Son enlaces activos (cliqueables) que permiten regresar al nivel anterior ("Retornos").
+* **Destino Final (Negrita):** Representa la página actual donde se encuentra el usuario. No es un enlace ("Fin del camino").
+* **Separador (`>`):** Indicador visual de jerarquía y dirección de la navegación.

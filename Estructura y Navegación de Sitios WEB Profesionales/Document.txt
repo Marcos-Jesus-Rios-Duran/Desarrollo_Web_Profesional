@@ -1,0 +1,44 @@
+src/
+│
+├── common/                  # (Shared) Cosas reutilizables en TODA la app
+│   ├── components/
+│   │   ├── layout/
+│   │   │   ├── Navbar.html       <-- MENÚ PERSISTENTE
+│   │   │   ├── Footer.html
+│   │   │   └── Breadcrumbs.html  <-- COMPONENTE DE MIGAS
+│   │   └── ui/
+│   │       ├── Button.html
+│   │       └── Card.html
+│   └── pages/
+│       └── NotFoundPage.html     <-- 404 (Vista genérica)
+│
+├── features/                # Módulos principales
+│   │
+│   ├── auth/                # Feature: Autenticación (Login/Registro)
+│   │   ├── components/      # Componentes exclusivos de Auth
+│   │   │   └── LoginForm.html
+│   │   ├── pages/           # Vistas completas (Screens)
+│   │   │   ├── LoginPage.html
+│   │   │   └── RegisterPage.html
+│   │   └── services/        # Lógica de conexión (AuthService)
+│   │
+│   ├── portfolio/           # Feature: Portafolio
+│   │   ├── components/
+│   │   │   └── ProjectCard.html
+│   │   ├── pages/
+│   │   │   ├── PortfolioList.html
+│   │   │   └── ProjectDetail.html
+│   │   └── models/
+│   │
+│   ├── user_dashboard/      # Feature: Área de Usuario
+│   │   ├── pages/
+│   │   │   ├── DashboardHome.html
+│   │   │   └── Payments.html
+│   │   └── ...
+│   │
+│   └── public/              # Feature: Páginas estáticas (Nosotros, Home)
+│       └── pages/
+│           ├── HomePage.html
+│           └── AboutUs.html
+│
+└── assets/                  # Imágenes, estilos globales, fuentes
