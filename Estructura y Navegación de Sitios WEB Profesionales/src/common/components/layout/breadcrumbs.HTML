@@ -1,0 +1,83 @@
+<style>
+    .breadcrumb-section { 
+        background-color: #ffffff; /* Fondo blanco para destacar sobre el gris de la web */
+        padding: 15px 0; 
+        border-bottom: 1px solid #e2e8f0; 
+        width: 100%;
+        font-family: 'Segoe UI', system-ui, sans-serif;
+        user-select: none;
+        box-shadow: 0 1px 2px rgba(0,0,0,0.02); /* Sombra muy sutil */
+    }
+
+    .breadcrumb-nav { 
+        width: 100%;          
+        padding: 0 30px;      /* Alineado perfectamente con el Navbar */
+        box-sizing: border-box; 
+        display: flex; 
+        align-items: center; 
+        gap: 8px; 
+        font-size: 0.9rem; 
+    }
+
+    /* Enlace Base (Gris) */
+    .breadcrumb-nav a { 
+        text-decoration: none; 
+        color: #64748b; 
+        font-weight: 500;
+        transition: all 0.2s ease;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+    }
+
+    /* Hover en enlaces */
+    .breadcrumb-nav a:hover { 
+        color: #0ea5e9; 
+        background-color: #f1f5f9;
+        padding: 4px 8px;
+        border-radius: 6px;
+        margin: -4px -8px; /* Compensar el padding para no mover nada */
+    }
+
+    /* Separador (La flechita ›) */
+    .breadcrumb-separator { 
+        color: #cbd5e1; 
+        font-size: 1.2rem;
+        line-height: 1;
+        margin-top: -2px; /* Pequeño ajuste visual */
+    }
+
+    /* La Píldora Activa (El final) */
+    .breadcrumb-current { 
+        color: #0284c7;           /* Texto azul oscuro */
+        background: #e0f2fe;      /* Fondo azul muy suave */
+        padding: 4px 12px; 
+        border-radius: 20px; 
+        font-weight: 600; 
+        font-size: 0.85rem;
+        letter-spacing: 0.3px;
+        border: 1px solid #bae6fd; /* Borde sutil */
+        display: inline-block;
+    }
+
+    /* Estilo para el icono de Home */
+    .home-icon svg {
+        width: 16px;
+        height: 16px;
+        fill: currentColor;
+        margin-bottom: 1px;
+    }
+</style>
+
+<div class="breadcrumb-section">
+    <nav class="breadcrumb-nav">
+        <a href="/index.html" class="home-icon" aria-label="Ir al Inicio">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+            Inicio
+        </a>
+        
+        <span class="breadcrumb-separator">›</span>
+        
+        <span id="breadcrumb-text" class="breadcrumb-current">Cargando...</span>
+    </nav>
+</div>

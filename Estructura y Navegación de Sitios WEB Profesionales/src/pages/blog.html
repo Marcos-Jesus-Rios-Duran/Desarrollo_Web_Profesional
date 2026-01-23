@@ -9,22 +9,14 @@
         /* === ESTILOS BASE === */
         body { margin: 0; font-family: 'Segoe UI', system-ui, sans-serif; background-color: #f8fafc; color: #334155; }
         
-        /* === BREADCRUMBS CENTRADO === */
-        .breadcrumb-nav {
-            display: flex; justify-content: center; align-items: center; gap: 10px;
-            margin-bottom: 20px; font-size: 0.9rem; font-weight: 500;
-        }
-        .breadcrumb-nav a { text-decoration: none; color: #94a3b8; transition: color 0.2s; }
-        .breadcrumb-nav a:hover { color: #0ea5e9; }
-        .breadcrumb-separator { color: #cbd5e1; font-size: 0.8rem; }
-        .breadcrumb-current { color: #0ea5e9; background-color: #e0f2fe; padding: 4px 12px; border-radius: 20px; }
+        /* NOTA: Se eliminaron los estilos manuales de Breadcrumbs para usar el componente global */
 
         /* === HERO SECTION === */
         .blog-hero {
-            text-align: center; padding: 80px 20px 40px;
+            text-align: center; padding: 60px 20px 40px; /* Ajusté un poco el padding superior */
             background: white; border-bottom: 1px solid #e2e8f0;
         }
-        .blog-hero h1 { color: #0f172a; font-size: 3rem; margin-bottom: 15px; letter-spacing: -1px; }
+        .blog-hero h1 { color: #0f172a; font-size: 3rem; margin-bottom: 15px; letter-spacing: -1px; margin-top: 0; }
         .blog-hero p { color: #64748b; font-size: 1.2rem; max-width: 700px; margin: 0 auto; line-height: 1.6; }
 
         /* === CATEGORÍAS (Filtros) === */
@@ -108,17 +100,14 @@
         }
     </style>
 </head>
-<body data-page-name="Blog">
+<body>
 
     <div id="navbar-container"></div>
 
+    <div id="breadcrumb-container" data-page="Blog"></div>
+
     <main>
         <section class="blog-hero">
-            <nav class="breadcrumb-nav">
-                <a href="/index.html">Inicio</a>
-                <span class="breadcrumb-separator">/</span>
-                <span class="breadcrumb-current">Blog</span>
-            </nav>
             <h1>Noticias y Tecnología</h1>
             <p>Descubre las últimas tendencias en desarrollo de software, tutoriales prácticos y consejos para escalar tu negocio digital.</p>
             
@@ -204,4 +193,4 @@
     <script src="../common/scripts/ui-loader.js"></script>
 
 </body>
-</html> 
+</html>

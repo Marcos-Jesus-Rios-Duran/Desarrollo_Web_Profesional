@@ -13,24 +13,7 @@
         
         html { scroll-behavior: smooth; }
 
-        .breadcrumb-section { background-color: #cef3ff; padding: 10px 0; border-bottom: 1px solid #e2e8f0; }
-
-        .breadcrumb-nav { max-width: 1200px; margin: 0 auto; padding: 0 20px; display: flex; align-items: center; gap: 10px; font-size: 0.9rem; }
-        
-        .breadcrumb-nav a { text-decoration: none; color: #64748b; font-weight: 500; transition: color 0.2s; }
-        .breadcrumb-nav a:hover { color: #0ea5e9; } /* Azul */
-        
-        .breadcrumb-separator { color: #cbd5e1; font-weight: bold; }
-        
-        .breadcrumb-current { 
-            color: #0ea5e9; 
-            background: #e0f2fe; 
-            padding: 4px 12px; 
-            border-radius: 50px; 
-            font-weight: 700; 
-            font-size: 0.8rem;
-            letter-spacing: 0.5px;
-        }
+        /* NOTA: Se eliminaron los estilos de Breadcrumbs para usar el componente global */
 
         /* === MAIN BLANCO (Para contenido legible) === */
         main { background-color: #ffffff; }
@@ -156,15 +139,11 @@
 
     <div id="navbar-container" style="margin: 0; padding: 0;"></div>
 
-    <div class="breadcrumb-section">
-        <nav class="breadcrumb-nav">
-            <a href="/index.html">Inicio</a>
-            <span class="breadcrumb-separator">/</span>
-            <a href="/src/pages/servicios.html">Servicios</a>
-            <span class="breadcrumb-separator">/</span>
-            <span class="breadcrumb-current">Consultoría TI</span>
-        </nav>
-    </div>
+    <div id="breadcrumb-container" 
+     data-parent="Servicios" 
+     data-parent-link="/src/pages/servicios.html"
+     data-page="Consultoría TI">
+</div>
 
     <main>
         <section class="detail-hero">

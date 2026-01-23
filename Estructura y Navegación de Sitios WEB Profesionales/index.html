@@ -3,164 +3,167 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DevAgency - Inicio (Sesión Activa)</title>
+    <title>DevAgency - Inicio (Hub)</title>
     <style>
-        /* === ESTILOS GENERALES (Misma base oscura) === */
+        /* === ESTILOS GENERALES === */
         * { box-sizing: border-box; }
-        body { margin: 0; padding: 0; font-family: 'Segoe UI', system-ui, sans-serif; background-color: #0f172a; color: #334155; }
-        html { scroll-behavior: smooth; }
+        body { margin: 0; padding: 0; font-family: 'Segoe UI', system-ui, sans-serif; background-color: #f8fafc; color: #334155; }
+        
+        #navbar-container, #footer-container { display: block; width: 100%; margin: 0; padding: 0; }
 
-        /* === NAVBAR LOGUEADO (Simulado sin JS externo para esta demo) === */
-        .logged-navbar {
-            background-color: #ffffff; padding: 15px 20px; border-bottom: 1px solid #e2e8f0;
-            display: flex; justify-content: space-between; align-items: center;
-            position: sticky; top: 0; z-index: 100;
+        /* === HERO SECTION (Hub Central) === */
+        .hub-hero {
+            background: #ffffff;
+            padding: 60px 20px 80px;
+            border-bottom: 1px solid #e2e8f0;
+            text-align: center;
         }
         
-        .nav-logo { font-size: 1.5rem; font-weight: 900; color: #0f172a; text-decoration: none; letter-spacing: -1px; }
-        .nav-logo span { color: #0ea5e9; }
+        .user-welcome { margin-bottom: 30px; }
+        .user-welcome h1 { font-size: 2.5rem; color: #0f172a; margin: 0 0 10px; }
+        .user-welcome p { color: #64748b; font-size: 1.1rem; }
 
-        .nav-links { display: flex; gap: 25px; align-items: center; }
-        .nav-links a { text-decoration: none; color: #64748b; font-weight: 500; font-size: 0.95rem; transition: color 0.2s; }
-        .nav-links a:hover { color: #0ea5e9; }
-
-        /* PERFIL DE USUARIO (La parte nueva) */
-        .user-menu { display: flex; align-items: center; gap: 15px; border-left: 1px solid #e2e8f0; padding-left: 20px; margin-left: 10px; }
-        
-        .notif-btn { position: relative; cursor: pointer; color: #64748b; font-size: 1.2rem; }
-        .notif-badge { position: absolute; top: -2px; right: -2px; width: 8px; height: 8px; background: #ef4444; border-radius: 50%; border: 1px solid white; }
-        
-        .user-profile { display: flex; align-items: center; gap: 10px; cursor: pointer; }
-        .user-avatar { width: 35px; height: 35px; background: #e0f2fe; color: #0ea5e9; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.9rem; }
-        .user-name { font-size: 0.9rem; font-weight: 600; color: #0f172a; }
-        .user-role { font-size: 0.75rem; color: #94a3b8; display: block; }
-
-        /* === HERO SECTION (Adaptado) === */
-        .home-hero {
+        /* Tarjeta de Estado Principal (Resumen) */
+        .status-card-main {
             background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
-            color: white; padding: 80px 20px 100px; text-align: center; position: relative; overflow: hidden;
-        }
-        .home-hero::before {
-            content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
-            background: radial-gradient(circle, rgba(14, 165, 233, 0.1) 0%, transparent 70%); pointer-events: none;
+            color: white;
+            max-width: 800px;
+            margin: 0 auto;
+            border-radius: 20px;
+            padding: 30px;
+            text-align: left;
+            box-shadow: 0 20px 40px -10px rgba(15, 23, 42, 0.3);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
         }
 
-        .hero-content { position: relative; z-index: 2; max-width: 900px; margin: 0 auto; }
-        
-        /* Badge de bienvenida */
-        .welcome-badge {
-            background: rgba(34, 197, 94, 0.15); color: #4ade80; border: 1px solid rgba(34, 197, 94, 0.3);
-            padding: 6px 16px; border-radius: 50px; font-size: 0.9rem; font-weight: 600; 
-            display: inline-flex; align-items: center; gap: 8px; margin-bottom: 20px;
+        .status-content h2 { margin: 0 0 5px; font-size: 1.3rem; }
+        .status-content p { margin: 0; color: #94a3b8; font-size: 0.95rem; }
+        .status-badge { 
+            background: rgba(34, 197, 94, 0.2); color: #4ade80; 
+            padding: 4px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: bold;
+            display: inline-block; margin-top: 10px;
         }
-        .online-dot { width: 8px; height: 8px; background: #4ade80; border-radius: 50%; box-shadow: 0 0 10px #4ade80; }
 
-        .home-hero h1 {
-            font-size: 3.5rem; margin: 0 0 20px; line-height: 1.1; font-weight: 800;
-            background: -webkit-linear-gradient(left, #ffffff, #94a3b8); -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        .btn-action-main {
+            background: #0ea5e9; color: white; padding: 12px 25px; 
+            border-radius: 50px; text-decoration: none; font-weight: bold;
+            transition: background 0.2s; white-space: nowrap;
         }
-        .home-hero p { font-size: 1.25rem; color: #cbd5e1; margin-bottom: 40px; line-height: 1.6; }
+        .btn-action-main:hover { background: #0284c7; }
 
-        .hero-buttons { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; }
-        
-        .btn-cta { padding: 15px 35px; border-radius: 50px; font-weight: bold; text-decoration: none; transition: transform 0.2s; }
-        /* Botón de Panel (Diferente color para resaltar) */
-        .btn-panel { background: #0ea5e9; color: white; box-shadow: 0 10px 25px -5px rgba(14, 165, 233, 0.5); display: flex; align-items: center; gap: 10px; }
-        .btn-secondary { background: rgba(255,255,255,0.1); color: white; border: 1px solid rgba(255,255,255,0.2); }
-        
-        .btn-cta:hover { transform: translateY(-3px); }
-        .btn-panel:hover { background: #0284c7; }
-        .btn-secondary:hover { background: rgba(255,255,255,0.2); }
-
-        /* Contenido Principal Blanco */
-        main { background: white; }
-
-        /* Quick Actions (Accesos Rápidos Logueado) */
-        .quick-actions {
-            max-width: 1000px; margin: -50px auto 60px; padding: 0 20px; position: relative; z-index: 5;
+        /* === ACCESOS DIRECTOS (Grid) === */
+        .shortcuts-section {
+            max-width: 1000px; margin: -40px auto 60px; padding: 0 20px;
         }
-        .actions-grid {
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px;
+        .shortcuts-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px;
         }
-        .action-card {
+
+        .shortcut-card {
             background: white; padding: 25px; border-radius: 16px; border: 1px solid #e2e8f0;
-            text-align: center; box-shadow: 0 10px 30px -5px rgba(0,0,0,0.1); transition: transform 0.2s;
-            text-decoration: none; color: #334155;
+            text-align: center; text-decoration: none; color: #334155;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); transition: transform 0.2s;
         }
-        .action-card:hover { transform: translateY(-5px); border-color: #0ea5e9; }
-        .action-icon { font-size: 2rem; margin-bottom: 10px; display: block; }
-        .action-title { font-weight: 700; font-size: 1.1rem; color: #0f172a; display: block; }
-        .action-desc { font-size: 0.85rem; color: #64748b; margin-top: 5px; display: block; }
+        .shortcut-card:hover { transform: translateY(-5px); border-color: #0ea5e9; }
+        
+        .shortcut-icon { 
+            width: 50px; height: 50px; background: #f1f5f9; border-radius: 12px; 
+            display: flex; align-items: center; justify-content: center; 
+            font-size: 1.5rem; margin: 0 auto 15px; color: #64748b;
+        }
+        .shortcut-card:hover .shortcut-icon { background: #e0f2fe; color: #0ea5e9; }
+
+        .shortcut-title { font-weight: 700; display: block; margin-bottom: 5px; }
+        .shortcut-desc { font-size: 0.85rem; color: #94a3b8; }
+
+        /* === SECCIÓN "EXPLORA" (Servicios) === */
+        .explore-section {
+            padding: 40px 20px 80px; text-align: center;
+        }
+        .explore-section h2 { color: #0f172a; font-size: 1.8rem; margin-bottom: 30px; }
+        
+        .services-mini-grid {
+            display: flex; justify-content: center; gap: 20px; flex-wrap: wrap;
+        }
+        .service-mini {
+            background: white; padding: 15px 25px; border-radius: 50px; border: 1px solid #e2e8f0;
+            text-decoration: none; color: #64748b; font-weight: 600; font-size: 0.9rem;
+            transition: all 0.2s; display: flex; align-items: center; gap: 8px;
+        }
+        .service-mini:hover { border-color: #0ea5e9; color: #0ea5e9; background: #f0f9ff; }
 
         @media (max-width: 768px) {
-            .nav-links { display: none; } /* Ocultar menú móvil para demo */
-            .home-hero h1 { font-size: 2.5rem; }
-            .user-menu { margin-left: auto; }
+            .status-card-main { text-align: center; justify-content: center; }
         }
     </style>
 </head>
 <body>
 
- <div id="navbar-container"></div>
-
+    <div id="navbar-container"></div>
+   <div id="breadcrumb-container">
+</div>
     <main>
-        <section class="home-hero">
-            <div class="hero-content">
-                <div class="welcome-badge">
-                    <div class="online-dot"></div> Sesión Activa
+        <section class="hub-hero">
+            <div class="user-welcome">
+                <h1>Hola, Marcos 👋</h1>
+                <p>Aquí tienes un resumen de tu actividad reciente en DevAgency.</p>
+            </div>
+
+            <div class="status-card-main">
+                <div class="status-content">
+                    <h2>Proyecto: App E-Commerce</h2>
+                    <p>Fase actual: Integración de Pagos</p>
+                    <span class="status-badge">🟢 En Desarrollo (75%)</span>
                 </div>
-                
-                <h1>Hola Marcos, bienvenido de nuevo</h1>
-                <p>Tu proyecto "App E-Commerce" tiene novedades recientes. Revisa tu panel para más detalles.</p>
-                
-                <div class="hero-buttons">
-                    <a href="/src/pages/panel-cliente.html" class="btn-cta btn-panel">
-                        Ir a mi Panel 🚀
-                    </a>
-                    <a href="/src/pages/historial.html" class="btn-cta btn-secondary">Ver Historial</a>
-                </div>
+                <a href="/src/pages/panel-cliente.html" class="btn-action-main">Ver Detalles del Proyecto →</a>
             </div>
         </section>
 
-        <section class="quick-actions">
-            <div class="actions-grid">
-                <a href="/src/pages/panel-cliente.html" class="action-card">
-                    <span class="action-icon">📊</span>
-                    <span class="action-title">Mi Dashboard</span>
-                    <span class="action-desc">Ver estado general</span>
+        <section class="shortcuts-section">
+            <div class="shortcuts-grid">
+                <a href="/src/pages/contacto.html" class="shortcut-card">
+                    <div class="shortcut-icon">🎫</div>
+                    <span class="shortcut-title">Soporte Técnico</span>
+                    <span class="shortcut-desc">Reportar un problema</span>
                 </a>
-                <a href="/src/pages/contacto.html" class="action-card">
-                    <span class="action-icon">🎫</span>
-                    <span class="action-title">Crear Ticket</span>
-                    <span class="action-desc">Soporte técnico</span>
+
+                <a href="/src/pages/historial.html" class="shortcut-card">
+                    <div class="shortcut-icon">📂</div>
+                    <span class="shortcut-title">Archivos</span>
+                    <span class="shortcut-desc">Descargar entregables</span>
                 </a>
-                <a href="/src/pages/historial.html" class="action-card">
-                    <span class="action-icon">📂</span>
-                    <span class="action-title">Archivos</span>
-                    <span class="action-desc">Descargar entregables</span>
+
+                <a href="#" class="shortcut-card">
+                    <div class="shortcut-icon">💳</div>
+                    <span class="shortcut-title">Facturación</span>
+                    <span class="shortcut-desc">Ver facturas pendientes</span>
                 </a>
-                <a href="#" class="action-card">
-                    <span class="action-icon">💳</span>
-                    <span class="action-title">Pagos</span>
-                    <span class="action-desc">Ver facturas</span>
+
+                <a href="/src/pages/agendar.html" class="shortcut-card">
+                    <div class="shortcut-icon">📅</div>
+                    <span class="shortcut-title">Agendar Reunión</span>
+                    <span class="shortcut-desc">Con tu Project Manager</span>
                 </a>
             </div>
         </section>
 
-        <section style="padding: 60px 20px; text-align: center;">
-            <h2 style="color: #0f172a; margin-bottom: 20px;">¿Necesitas algo más?</h2>
-            <p style="color: #64748b; max-width: 600px; margin: 0 auto 40px;">Explora nuestros nuevos servicios disponibles para escalar tu negocio.</p>
-            
-            <div style="display: flex; justify-content: center; gap: 15px; flex-wrap: wrap;">
-                <a href="/src/pages/desarrollo-web.html" style="color: #0ea5e9; font-weight: bold; text-decoration: none;">Desarrollo Web ➝</a>
-                <a href="/src/pages/apps-moviles.html" style="color: #0ea5e9; font-weight: bold; text-decoration: none;">Apps Móviles ➝</a>
-                <a href="/src/pages/consultoria.html" style="color: #0ea5e9; font-weight: bold; text-decoration: none;">Consultoría ➝</a>
+        <section class="explore-section">
+            <h2>¿Necesitas ampliar tu ecosistema digital?</h2>
+            <div class="services-mini-grid">
+                <a href="/src/pages/desarrollo-web.html" class="service-mini">💻 Sitios Web</a>
+                <a href="/src/pages/apps-moviles.html" class="service-mini">📱 Apps Móviles</a>
+                <a href="/src/pages/consultoria.html" class="service-mini">🚀 Consultoría TI</a>
+                <a href="/src/pages/blog.html" class="service-mini">📰 Blog & Noticias</a>
             </div>
         </section>
-
     </main>
 
     <div id="footer-container"></div>
     <script src="src/common/scripts/ui-loader.js"></script>
+
 </body>
 </html>

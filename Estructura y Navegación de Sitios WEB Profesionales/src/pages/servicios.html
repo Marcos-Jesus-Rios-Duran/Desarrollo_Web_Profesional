@@ -6,40 +6,10 @@
     <title>Nuestros Servicios - DevAgency</title>
     
     <style>
-        /* === BREADCRUMBS ESTILO MINIMALISTA === */
-.breadcrumb-nav {
-    display: flex;
-    justify-content: center; /* Centrado igual que el título */
-    align-items: center;
-    gap: 10px;
-    margin-bottom: 20px; /* Espacio antes del título H1 */
-    font-size: 0.9rem;
-    font-weight: 500;
-}
-
-.breadcrumb-nav a {
-    text-decoration: none;
-    color: #94a3b8; /* Gris suave */
-    transition: color 0.2s ease;
-}
-
-.breadcrumb-nav a:hover {
-    color: #0ea5e9; /* Azul de tu marca al pasar el mouse */
-}
-
-.breadcrumb-separator {
-    color: #cbd5e1; /* Gris muy clarito */
-    font-size: 0.8rem;
-}
-
-.breadcrumb-current {
-    color: #0ea5e9; /* Azul marca para indicar "Aquí estás" */
-    background-color: #e0f2fe; /* Fondo azulito muy suave */
-    padding: 4px 12px;
-    border-radius: 20px; /* Forma de pastilla moderna */
-}
-        /* === ESTILOS BASE (Iguales al Dashboard para consistencia) === */
+        /* === ESTILOS BASE === */
         body { margin: 0; font-family: 'Segoe UI', system-ui, sans-serif; background-color: #f8fafc; color: #334155; }
+        
+        /* NOTA: Se eliminaron los estilos manuales de Breadcrumbs para usar el componente global */
         
         /* === HERO SECTION === */
         .services-hero {
@@ -49,7 +19,7 @@
             border-bottom: 1px solid #e2e8f0;
         }
         .services-hero h1 {
-            color: #0f172a; font-size: 3rem; margin-bottom: 15px; letter-spacing: -1px;
+            color: #0f172a; font-size: 3rem; margin-bottom: 15px; letter-spacing: -1px; margin-top: 0;
         }
         .services-hero p {
             color: #64748b; font-size: 1.2rem; max-width: 600px; margin: 0 auto; line-height: 1.6;
@@ -63,7 +33,7 @@
         /* === GRID DE TARJETAS === */
         .services-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Responsivo automático */
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 30px;
         }
 
@@ -159,22 +129,17 @@
 
     </style>
 </head>
-<body data-page-name="Servicios"> <div id="navbar-container"></div>
+<body>
+
+    <div id="navbar-container"></div>
+
+    <div id="breadcrumb-container" data-page="Servicios"></div>
 
     <main>
         <section class="services-hero">
-    
-    <nav class="breadcrumb-nav">
-        <a href="/index.html">Inicio</a> 
-        
-        <span class="breadcrumb-separator">/</span>
-        
-        <span class="breadcrumb-current">Servicios</span>
-    </nav>
-
-    <h1>Impulsamos tu Transformación Digital</h1>
-    <p>Desde aplicaciones móviles intuitivas hasta sistemas web robustos. Creamos la tecnología que tu negocio necesita para escalar.</p>
-</section>
+            <h1>Impulsamos tu Transformación Digital</h1>
+            <p>Desde aplicaciones móviles intuitivas hasta sistemas web robustos. Creamos la tecnología que tu negocio necesita para escalar.</p>
+        </section>
 
         <div class="services-container">
             <div class="services-grid">

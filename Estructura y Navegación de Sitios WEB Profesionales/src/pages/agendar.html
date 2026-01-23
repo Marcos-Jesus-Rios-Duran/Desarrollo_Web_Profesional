@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agendar Reunión - DevAgency</title>
+    <style>
+        /* === ESTILOS GENERALES === */
+        * { box-sizing: border-box; }
+        body { margin: 0; padding: 0; font-family: 'Segoe UI', system-ui, sans-serif; background-color: #f8fafc; color: #334155; }
+        
+        #navbar-container, #footer-container { display: block; width: 100%; margin: 0; padding: 0; }
+
+        /* === LAYOUT PRINCIPAL === */
+        main { background-color: #ffffff; min-height: 85vh; padding-bottom: 60px; }
+
+        .booking-container {
+            max-width: 1000px; margin: 40px auto; padding: 0 20px;
+            display: grid; grid-template-columns: 1fr 2fr; gap: 0;
+            background: white; border-radius: 20px; overflow: hidden;
+            box-shadow: 0 20px 40px -10px rgba(0,0,0,0.1); border: 1px solid #e2e8f0;
+        }
+
+        /* === COLUMNA IZQUIERDA === */
+        .booking-sidebar {
+            background: #f8fafc; padding: 40px; border-right: 1px solid #e2e8f0;
+        }
+        
+        .pm-profile { display: flex; align-items: center; gap: 15px; margin-bottom: 30px; }
+        .pm-avatar {
+            width: 60px; height: 60px; border-radius: 50%; object-fit: cover;
+            border: 3px solid white; box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .pm-info h3 { margin: 0; font-size: 1.1rem; color: #0f172a; }
+        .pm-info span { font-size: 0.85rem; color: #64748b; }
+
+        .meeting-details h2 { font-size: 1.5rem; margin: 0 0 20px 0; color: #0f172a; }
+        .detail-row { display: flex; align-items: center; gap: 10px; margin-bottom: 15px; color: #475569; font-size: 0.95rem; }
+        .detail-icon { color: #94a3b8; font-size: 1.2rem; width: 24px; text-align: center; }
+
+        .meeting-types { margin-top: 30px; }
+        .type-label { display: block; font-size: 0.8rem; font-weight: 700; color: #94a3b8; margin-bottom: 10px; text-transform: uppercase; }
+        
+        .duration-option {
+            display: block; width: 100%; text-align: left;
+            background: white; border: 1px solid #e2e8f0; padding: 12px 15px;
+            border-radius: 8px; margin-bottom: 10px; cursor: pointer;
+            transition: all 0.2s; font-weight: 600; color: #334155;
+        }
+        .duration-option:hover { border-color: #0ea5e9; color: #0ea5e9; }
+        .duration-option.active { background: #0ea5e9; color: white; border-color: #0ea5e9; }
+
+        /* === COLUMNA DERECHA === */
+        .booking-main { padding: 40px; }
+        .booking-main h3 { margin-top: 0; color: #0f172a; margin-bottom: 25px; }
+
+        /* Calendario Visual */
+        .calendar-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; font-weight: 700; }
+        .month-nav { cursor: pointer; color: #64748b; font-size: 1.2rem; user-select: none; }
+        .month-nav:hover { color: #0f172a; }
+
+        /* Grid del Calendario (Estilos base necesarios para el JS) */
+        .calendar-grid {
+            display: grid; grid-template-columns: repeat(7, 1fr); gap: 5px; text-align: center; margin-bottom: 30px;
+        }
+        /* Estilos inyectados dinámicamente, se definen aquí para que el JS los use */
+        .day-name { font-size: 0.8rem; color: #94a3b8; font-weight: 600; padding-bottom: 10px; }
+        .calendar-day {
+            padding: 10px; border-radius: 50%; cursor: pointer; font-size: 0.9rem; transition: all 0.2s;
+        }
+        .calendar-day:hover:not(.empty):not(.disabled) { background: #e0f2fe; color: #0ea5e9; }
+        .calendar-day.selected { background: #0ea5e9; color: white; font-weight: bold; }
+        .calendar-day.disabled { color: #e2e8f0; cursor: not-allowed; }
+        .calendar-day.empty { cursor: default; }
+
+        /* Selector de Horas */
+        .time-slots {
+            display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 20px;
+            border-top: 1px solid #e2e8f0; padding-top: 20px;
+        }
+        .time-btn {
+            background: white; border: 1px solid #e2e8f0; padding: 10px; border-radius: 8px;
+            cursor: pointer; color: #0ea5e9; font-weight: 600; text-align: center; transition: all 0.2s;
+        }
+        .time-btn:hover { border-color: #0ea5e9; background: #f0f9ff; }
+        
+        .confirm-btn {
+            width: 100%; background: #0f172a; color: white; padding: 15px; border: none;
+            border-radius: 8px; font-weight: bold; margin-top: 30px; cursor: pointer;
+            font-size: 1rem; transition: background 0.2s;
+        }
+        .confirm-btn:hover { background: #1e293b; }
+
+        @media (max-width: 800px) {
+            .booking-container { grid-template-columns: 1fr; border-radius: 0; border: none; box-shadow: none; margin: 0; }
+            .booking-sidebar { border-right: none; border-bottom: 1px solid #e2e8f0; }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="navbar-container"></div>
+
+    <div id="breadcrumb-container" 
+         data-page="Agendar Reunión">
+    </div>
+
+    <main>
+        <div class="booking-container">
+            
+            <div class="booking-sidebar">
+                <div class="pm-profile">
+                    <img src="https://placehold.co/100x100/0ea5e9/white?text=MJ" alt="Marcos" class="pm-avatar">
+                    <div class="pm-info">
+                        <h3>Marcos J.</h3>
+                        <span>Project Manager</span>
+                    </div>
+                </div>
+
+                <div class="meeting-details">
+                    <h2>Sesión de Seguimiento</h2>
+                    <div class="detail-row">
+                        <span class="detail-icon">⏱️</span>
+                        <span>30 min</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-icon">📹</span>
+                        <span>Google Meet</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-icon">🌍</span>
+                        <span>Hora Ciudad de México</span>
+                    </div>
+                    <p style="font-size: 0.9rem; color: #64748b; margin-top: 20px; line-height: 1.5;">
+                        Revisaremos el avance del sprint actual, bloqueos técnicos y planificaremos la siguiente entrega.
+                    </p>
+                </div>
+
+                <div class="meeting-types">
+                    <span class="type-label">Selecciona duración:</span>
+                    <button class="duration-option">⚡ 15 min (Check rápido)</button>
+                    <button class="duration-option active">📅 30 min (Seguimiento)</button>
+                    <button class="duration-option">🚀 1 hora (Planificación)</button>
+                </div>
+            </div>
+
+            <div class="booking-main">
+                <h3>Selecciona una fecha y hora</h3>
+
+                <div class="calendar-header">
+                    <span class="month-nav" id="prevMonth">‹</span>
+                    <span id="currentMonthDisplay">Cargando...</span>
+                    <span class="month-nav" id="nextMonth">›</span>
+                </div>
+
+                <div class="calendar-grid" id="calendarGrid"></div>
+
+                <div style="font-size: 0.9rem; font-weight: 600; margin-bottom: 10px;">
+                    Horarios para el: <span style="color: #0ea5e9;" id="selectedDateText">Selecciona un día</span>
+                </div>
+
+                <div class="time-slots">
+                    <div class="time-btn">09:00 AM</div>
+                    <div class="time-btn">10:00 AM</div>
+                    <div class="time-btn">11:30 AM</div>
+                    <div class="time-btn">03:00 PM</div>
+                    <div class="time-btn">04:30 PM</div>
+                </div>
+
+                <button class="confirm-btn">Confirmar Reunión</button>
+            </div>
+
+        </div>
+    </main>
+
+    <div id="footer-container"></div>
+    
+    <script src="../common/scripts/ui-loader.js"></script>
+    <script src="../common/scripts/calendar-loader.js"></script> 
+
+</body>
+</html>

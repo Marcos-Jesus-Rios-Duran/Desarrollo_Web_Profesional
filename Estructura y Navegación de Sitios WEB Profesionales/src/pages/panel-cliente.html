@@ -11,15 +11,7 @@
         
         #navbar-container, #footer-container { display: block; width: 100%; margin: 0; padding: 0; }
 
-        /* === BREADCRUMBS === */
-        .breadcrumb-section { 
-            background-color: #f8fafc; padding: 12px 0; border-bottom: 1px solid #e2e8f0; margin-top: 0; 
-        }
-        .breadcrumb-nav { max-width: 1200px; margin: 0 auto; padding: 0 20px; display: flex; align-items: center; gap: 10px; font-size: 0.85rem; }
-        .breadcrumb-nav a { text-decoration: none; color: #64748b; transition: color 0.2s; }
-        .breadcrumb-nav a:hover { color: #0ea5e9; }
-        .breadcrumb-separator { color: #cbd5e1; }
-        .breadcrumb-current { color: #0ea5e9; background: #e0f2fe; padding: 2px 10px; border-radius: 20px; font-weight: 600; }
+        /* NOTA: Se eliminaron los estilos de Breadcrumbs para usar el componente global */
 
         /* === MAIN === */
         main { background-color: #ffffff; min-height: 85vh; padding-bottom: 60px; }
@@ -111,13 +103,7 @@
 
     <div id="navbar-container"></div>
 
-    <div class="breadcrumb-section">
-        <nav class="breadcrumb-nav">
-            <a href="/index.html">Inicio</a>
-            <span class="breadcrumb-separator">/</span>
-            <span class="breadcrumb-current">Panel de Cliente</span>
-        </nav>
-    </div>
+    <div id="breadcrumb-container" data-page="Panel de Cliente"></div>
 
     <main>
         <div class="dashboard-container">
@@ -158,37 +144,105 @@
 
             <div class="main-grid">
                 
-                <div class="project-card">
-                    <div class="project-header">
-                        <h2>Proyecto: App E-Commerce v1.0</h2>
-                        <span class="status-badge">En Desarrollo</span>
-                    </div>
-                    
-                    <p style="color: #64748b; font-size: 0.95rem; margin-bottom: 20px;">
-                        Estamos trabajando en la integración de la pasarela de pagos y el módulo de notificaciones push.
-                    </p>
+<div class="projects-column" style="display: flex; flex-direction: column; gap: 25px;">
 
-                    <div class="progress-container">
-                        <div class="progress-labels">
-                            <span>Progreso General</span>
-                            <span>75%</span>
-                        </div>
-                        <div class="progress-bar-bg">
-                            <div class="progress-bar-fill"></div>
-                        </div>
-                    </div>
+    <div class="project-card">
+        <div class="project-header">
+            <h2>📱 App E-Commerce v1.0</h2>
+            <span class="status-badge" style="background: #dcfce7; color: #166534;">En Desarrollo</span>
+        </div>
+        
+        <p style="color: #64748b; font-size: 0.95rem; margin-bottom: 20px;">
+            Integración de pasarela de pagos (Stripe) y configuración de notificaciones push para ofertas.
+        </p>
 
-                    <div class="project-details">
-                        <div class="detail-item">
-                            <strong>Fecha de Entrega Estimada:</strong>
-                            <span>28 de Febrero, 2026</span>
-                        </div>
-                        <div class="detail-item">
-                            <strong>Líder de Proyecto:</strong>
-                            <span>Carlos D. (DevAgency)</span>
-                        </div>
-                    </div>
-                </div>
+        <div class="progress-container">
+            <div class="progress-labels">
+                <span>Progreso General</span>
+                <span>75%</span>
+            </div>
+            <div class="progress-bar-bg">
+                <div class="progress-bar-fill" style="width: 75%;"></div>
+            </div>
+        </div>
+
+        <div class="project-details">
+            <div class="detail-item">
+                <strong>Entrega Estimada:</strong>
+                <span>28 Feb, 2026</span>
+            </div>
+            <div class="detail-item">
+                <strong>Líder:</strong>
+                <span>Carlos D.</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="project-card">
+        <div class="project-header">
+            <h2>💻 Landing Page Corporativa</h2>
+            <span class="status-badge" style="background: #e0f2fe; color: #0284c7;">En Revisión</span>
+        </div>
+        
+        <p style="color: #64748b; font-size: 0.95rem; margin-bottom: 20px;">
+            El diseño está finalizado. Estamos esperando tu aprobación final sobre los textos de "Nosotros".
+        </p>
+
+        <div class="progress-container">
+            <div class="progress-labels">
+                <span>Progreso General</span>
+                <span>90%</span>
+            </div>
+            <div class="progress-bar-bg">
+                <div class="progress-bar-fill" style="width: 90%; background-color: #0ea5e9;"></div>
+            </div>
+        </div>
+
+        <div class="project-details">
+            <div class="detail-item">
+                <strong>Entrega Estimada:</strong>
+                <span>20 Ene, 2026</span>
+            </div>
+            <div class="detail-item">
+                <strong>Líder:</strong>
+                <span>Ana M.</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="project-card">
+        <div class="project-header">
+            <h2>🛡️ Auditoría de Seguridad</h2>
+            <span class="status-badge" style="background: #fef9c3; color: #854d0e;">Planificación</span>
+        </div>
+        
+        <p style="color: #64748b; font-size: 0.95rem; margin-bottom: 20px;">
+            Análisis de vulnerabilidades en servidor Linux. Programado para iniciar la próxima semana.
+        </p>
+
+        <div class="progress-container">
+            <div class="progress-labels">
+                <span>Progreso General</span>
+                <span>10%</span>
+            </div>
+            <div class="progress-bar-bg">
+                <div class="progress-bar-fill" style="width: 10%; background-color: #eab308;"></div>
+            </div>
+        </div>
+
+        <div class="project-details">
+            <div class="detail-item">
+                <strong>Entrega Estimada:</strong>
+                <span>15 Mar, 2026</span>
+            </div>
+            <div class="detail-item">
+                <strong>Líder:</strong>
+                <span>Marcos R.</span>
+            </div>
+        </div>
+    </div>
+
+</div>
 
                 <div class="activity-widget">
                     <div class="widget-header">
