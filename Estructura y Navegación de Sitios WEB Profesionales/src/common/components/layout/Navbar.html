@@ -1,108 +1,197 @@
-<nav style="
-    box-sizing: border-box;
+<nav class="navbar">
+    <a href="/index.html" class="nav-logo">
+        DEV<span>AGENCY</span>
+    </a>
+
+    <ul class="nav-links">
+        <li><a href="/src/pages/nosotros.html">Nosotros</a></li>
+        <li><a href="/src/pages/servicios.html">Servicios</a></li>
+        <li><a href="/src/pages/portafolio.html">Portafolio</a></li>
+        <li><a href="/src/pages/blog.html">Blog</a></li>
+        <li><a href="/src/pages/contacto.html">Contacto</a></li>
+    </ul>
+
+    <div class="nav-actions">
+
+        <div class="search-wrapper">
+            <div class="search-input-box">
+                <span class="search-icon">🔍</span>
+                <input type="text" id="searchInput" placeholder="Buscar..." autocomplete="off">
+                <span id="searchClear" class="close-icon" style="display: none;">✕</span>
+            </div>
+
+            <div id="searchResults" class="search-dropdown" style="display: none;">
+
+                <div id="searchFilters" class="search-filters" style="display: none;">
+                    <span class="filter-label">Filtrar por:</span>
+                    <div class="chips-container">
+                        <button class="filter-chip active" data-filter="all">Todo</button>
+                        <button class="filter-chip" data-filter="Servicios">Servicios</button>
+                        <button class="filter-chip" data-filter="Blog">Blog</button>
+                        <button class="filter-chip" data-filter="Portafolio">Proyectos</button>
+                    </div>
+                </div>
+
+                <div id="resultsList" class="results-list">
+                    </div>
+            </div>
+        </div>
+
+        <div class="separator"></div>
+
+        <div class="profile-wrapper">
+            <div class="avatar">M</div>
+            <div class="user-dropdown">
+                <a href="#" class="dropdown-item">👤 Mi Perfil</a>
+                <a href="/src/pages/panel-cliente.html" class="dropdown-item">📊 Dashboard</a>
+                <div class="dropdown-divider"></div>
+                <a href="/index.html" class="dropdown-item logout">🚪 Cerrar Sesión</a>
+            </div>
+        </div>
+    </div>
+    <script>
+    /* Script para detectar scroll y animar el navbar */
+window.addEventListener('scroll', function() {
+    const navbar = document.querySelector('.navbar');
+
+    // Si el usuario ha bajado más de 50px...
+    if (window.scrollY > 50) {
+        navbar.classList.add('scrolled'); // Añadir clase de sombra/efecto
+    } else {
+        navbar.classList.remove('scrolled'); // Volver al estado transparente original
+    }
+});
+
+</script>
+</nav>
+
+<style>
+    /* === ESTILOS GENERALES NAVBAR === */
+   /* === ESTILOS GENERALES NAVBAR === */
+.navbar {
     width: 100%;
     height: 80px;
-    background-color: #ffffff;
-    border-bottom: 1px solid #e2e8f0;
+
+    /* 1. MAGIA VISUAL (Glassmorphism) */
+    background-color: rgba(255, 255, 255, 0.8); /* Blanco al 80% de opacidad */
+    backdrop-filter: blur(12px); /* Desenfoque de lo que pasa por detrás */
+    -webkit-backdrop-filter: blur(12px); /* Para soporte en Safari/Mac */
+
+    /* 2. POSICIONAMIENTO (Para que se quede pegado) */
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+
+    /* 3. BORDES Y ALINEACIÓN */
+    border-bottom: 1px solid rgba(226, 232, 240, 0.6); /* Borde sutil */
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 0 30px;
-    position: sticky;
-    top: 0;
-    z-index: 1000;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
     font-family: 'Segoe UI', sans-serif;
-    user-select: none;
-">
 
-    <a href="/index.html" style="text-decoration: none;">
-        <div style="font-size: 26px; font-weight: 800; color: #0f4c81; letter-spacing: -0.5px; white-space: nowrap; cursor: pointer;">
-            DEV<span style="color: #0ea5e9;">AGENCY</span>
-        </div>
-    </a>
+    /* 4. TRANSICIÓN SUAVE (Para la animación al hacer scroll) */
+    transition: all 0.3s ease;
+}
 
-    <ul style="display: flex; gap: 20px; list-style: none; margin: 0; padding: 0; align-items: center;">    
-        <li><a href="/src/pages/nosotros.html" style="text-decoration: none; color: #334155; font-weight: 500; font-size: 15px;">Nosotros</a></li>
-        <li><a href="/src/pages/servicios.html" style="text-decoration: none; color: #334155; font-weight: 500; font-size: 15px;">Servicios</a></li>
-        <li><a href="/src/pages/portafolio.html" style="text-decoration: none; color: #334155; font-weight: 500; font-size: 15px;">Portafolio</a></li>
-        <li><a href="/src/pages/blog.html" style="text-decoration: none; color: #334155; font-weight: 500; font-size: 15px;">Blog</a></li>
-        <li><a href="/src/pages/contacto.html" style="text-decoration: none; color: #334155; font-weight: 500; font-size: 15px;">Contacto</a></li>
-    </ul>
+/* ESTADO CUANDO HACES SCROLL (Se activará con JS) */
+.navbar.scrolled {
+    background-color: rgba(255, 255, 255, 0.95); /* Se vuelve más sólido */
+    box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.1); /* Aparece una sombra elegante */
+    height: 70px; /* Opcional: Se hace un poquito más pequeño para dar dinamismo */
+}
 
-    <div style="display: flex; gap: 20px; align-items: center; flex-shrink: 0;">
-        
-        <div style="
-            display: flex;
-            align-items: center;
-            background-color: #f1f5f9;
-            border: 1px solid #e2e8f0;
-            border-radius: 50px;
-            padding: 8px 15px;
-            width: 240px;
-        ">
-            <span style="color: #64748b; font-size: 16px; margin-right: 8px;">🔍</span>
-            <input type="text" placeholder="Buscar..." style="
-                border: none;
-                background: transparent;
-                outline: none;
-                width: 100%;
-                color: #334155;
-                font-size: 14px;
-                font-family: 'Segoe UI', sans-serif;
-            ">
-        </div>
+    /* Logo */
+    .nav-logo { font-size: 24px; font-weight: 800; color: #0f4c81; letter-spacing: -0.5px; text-decoration: none; }
+    .nav-logo span { color: #0ea5e9; }
 
-        <div style="width: 1px; height: 24px; background-color: #cbd5e1;"></div>
+    /* Links */
+    .nav-links { display: flex; gap: 25px; list-style: none; margin: 0; padding: 0; }
+    .nav-links a { text-decoration: none; color: #334155; font-weight: 500; font-size: 15px; transition: color 0.2s; }
+    .nav-links a:hover { color: #0ea5e9; }
 
-        <style>
-            .profile-wrapper:hover .dropdown-menu { display: block !important; }
-            .dropdown-item:hover { background-color: #f8fafc; color: #0ea5e9 !important; }
-        </style>
+    /* Zona Derecha */
+    .nav-actions { display: flex; align-items: center; gap: 20px; }
+    .separator { width: 1px; height: 24px; background-color: #cbd5e1; }
 
-        <div class="profile-wrapper" style="position: relative; padding: 10px 0;">
-            <div style="
-                width: 40px; 
-                height: 40px; 
-                background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%); 
-                border-radius: 50%; 
-                display: flex; 
-                align-items: center; 
-                justify-content: center; 
-                color: white; 
-                font-weight: 700; 
-                cursor: pointer;
-                box-shadow: 0 4px 10px rgba(14, 165, 233, 0.3);
-            ">
-                M
-            </div>
+    /* === BUSCADOR (ESTILO AZUL PRO) === */
+    .search-wrapper { position: relative; width: 260px; margin-right: 60px; }
 
-            <div class="dropdown-menu" style="
-                display: none; 
-                position: absolute;
-                top: 100%; /* Justo debajo del avatar */
-                right: 0;
-                width: 180px;
-                background: white;
-                border: 1px solid #e2e8f0;
-                border-radius: 12px;
-                box-shadow: 0 10px 25px -5px rgba(0,0,0,0.15);
-                overflow: hidden;
-                padding: 5px 0;
-                z-index: 2000; /* <--- ESTO SOLUCIONA QUE NO SE VEA */
-            ">
-                <a href="#" class="dropdown-item" style="display: block; padding: 10px 20px; color: #334155; text-decoration: none; font-size: 14px; transition: 0.2s;">
-                    👤 Mi Perfil
-                </a>
-                <a href="/src/pages/panel-cliente.html" class="dropdown-item" style="display: block; padding: 10px 20px; color: #334155; text-decoration: none; font-size: 14px; transition: 0.2s;">
-                    📊 Dashboard
-                </a>
-                <div style="height: 1px; background: #e2e8f0; margin: 5px 0;"></div>
-                <a href="/index.html" class="dropdown-item" style="display: block; padding: 10px 20px; color: #ef4444; text-decoration: none; font-size: 14px; font-weight: 600; transition: 0.2s;">
-                    🚪 Cerrar Sesión
-                </a>
-            </div>
-        </div>
+    .search-input-box {
+        display: flex; align-items: center; background-color: #f1f5f9;
+        border: 1px solid #e2e8f0; border-radius: 50px; padding: 8px 15px;
+        transition: all 0.2s ease;
+        width: 100%;
+    }
+    /* Efecto Focus Azul */
+    .search-input-box:focus-within {
+        background-color: #ffffff; border-color: #0ea5e9;
+        box-shadow: 0 0 0 4px rgba(14, 165, 233, 0.1); width: 320px; /* Se expande */
+    }
 
-    </div>
-</nav>
+    .search-icon { color: #64748b; font-size: 16px; margin-right: 8px; }
+    .search-input-box input {
+        border: none; background: transparent; outline: none; width: 100%;
+        color: #334155; font-size: 14px;
+    }
+    .close-icon { cursor: pointer; color: #94a3b8; font-size: 12px; font-weight: bold; }
+    .close-icon:hover { color: #ef4444; }
+
+    /* === DROPDOWN FLOTANTE === */
+    .search-dropdown {
+        position: absolute; top: 120%; right: 0; width: 100%; min-width: 350px;
+        background: white; border: 1px solid #e2e8f0; border-radius: 12px;
+        box-shadow: 0 20px 40px -5px rgba(0,0,0,0.15); overflow: hidden;
+    }
+
+    /* Filtros (Chips) */
+    .search-filters { background: #f8fafc; padding: 12px 15px; border-bottom: 1px solid #e2e8f0; }
+    .filter-label { font-size: 11px; font-weight: 700; color: #94a3b8; text-transform: uppercase; display: block; margin-bottom: 8px; }
+    .chips-container { display: flex; gap: 8px; flex-wrap: wrap; }
+
+    .filter-chip {
+        border: 1px solid #e2e8f0; background: white; color: #64748b;
+        padding: 5px 12px; border-radius: 20px; font-size: 12px; font-weight: 600;
+        cursor: pointer; transition: all 0.2s;
+    }
+    .filter-chip:hover { border-color: #cbd5e1; color: #0f172a; }
+    .filter-chip.active { background: #0ea5e9; color: white; border-color: #0ea5e9; }
+
+    /* Lista de Resultados */
+    .results-list { max-height: 350px; overflow-y: auto; padding: 5px 0; }
+
+    .result-item {
+        display: flex; align-items: center; gap: 12px; padding: 10px 15px;
+        text-decoration: none; transition: background 0.1s; cursor: pointer;
+    }
+    .result-item:hover { background-color: #f0f9ff; } /* Azul muy claro al hover */
+
+    .item-icon { font-size: 16px; color: #94a3b8; }
+    .item-text { font-size: 14px; color: #334155; font-weight: 500; }
+
+    /* Etiqueta de historial */
+    .history-header { padding: 10px 15px 5px; font-size: 11px; font-weight: 700; color: #0ea5e9; text-transform: uppercase; }
+
+    /* === PERFIL USUARIO === */
+    .profile-wrapper { position: relative; }
+    .avatar {
+        width: 40px; height: 40px; border-radius: 50%;
+        background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
+        color: white; font-weight: 700; display: flex; align-items: center; justify-content: center;
+        cursor: pointer; box-shadow: 0 4px 10px rgba(14, 165, 233, 0.3);
+    }
+
+    /* Dropdown Usuario */
+    .user-dropdown {
+        display: none; position: absolute; top: 120%; right: 0; width: 180px;
+        background: white; border: 1px solid #e2e8f0; border-radius: 12px;
+        box-shadow: 0 10px 25px -5px rgba(0,0,0,0.15); padding: 5px 0;
+    }
+    .profile-wrapper:hover .user-dropdown { display: block; }
+
+    .dropdown-item { display: block; padding: 10px 20px; color: #334155; text-decoration: none; font-size: 14px; transition: 0.2s; }
+    .dropdown-item:hover { background: #f8fafc; color: #0ea5e9; }
+    .dropdown-divider { height: 1px; background: #e2e8f0; margin: 5px 0; }
+    .logout { color: #ef4444; font-weight: 600; }
+    .logout:hover { color: #dc2626; background: #fef2f2; }
+</style>

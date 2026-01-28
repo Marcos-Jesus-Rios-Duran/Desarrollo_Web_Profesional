@@ -1,0 +1,58 @@
+[
+  { 
+    "title": "Desarrollo Web Corporativo", 
+    "url": "/src/pages/desarrollo-web.html", 
+    "category": "Servicios", 
+    "tags": "pagina, sitio, web, landing, react, frontend" 
+  },
+  { 
+    "title": "Desarrollo de Apps Móviles", 
+    "url": "/src/pages/apps-moviles.html", 
+    "category": "Servicios", 
+    "tags": "app, android, ios, celular, nativo, hibrido" 
+  },
+  { 
+    "title": "Consultoría TI & Cloud", 
+    "url": "/src/pages/consultoria.html", 
+    "category": "Servicios", 
+    "tags": "asesoria, cloud, aws, servidores, devops, arquitectura" 
+  },
+  { 
+    "title": "Portafolio de Proyectos", 
+    "url": "/src/pages/portafolio.html", 
+    "category": "Portafolio", 
+    "tags": "proyectos, casos, ejemplos, clientes, delivery" 
+  },
+  { 
+    "title": "Contacto y Soporte", 
+    "url": "/src/pages/contacto.html", 
+    "category": "General", 
+    "tags": "ayuda, ticket, soporte, telefono, correo, ubicacion" 
+  },
+  
+  
+  { 
+    "title": "Cómo elegir la arquitectura perfecta", 
+    "url": "/src/pages/blog.html#arquitectura", 
+    "category": "Blog", 
+    "tags": "backend, arquitectura, monolito, microservicios, tutorial" 
+  },
+  { 
+    "title": "¿Por qué usar React en 2026?", 
+    "url": "/src/pages/blog.html#react2026", 
+    "category": "Blog", 
+    "tags": "frontend, react, javascript, tendencias, tecnologia" 
+  },
+  { 
+    "title": "Protege tu E-commerce de ataques", 
+    "url": "/src/pages/blog.html#seguridad", 
+    "category": "Blog", 
+    "tags": "ciberseguridad, seguridad, hacking, tienda, ssl, ventas" 
+  },
+  { 
+    "title": "Flutter vs React Native: La comparativa", 
+    "url": "/src/pages/blog.html#flutter-vs-react", 
+    "category": "Blog", 
+    "tags": "movil, hibrido, comparacion, performance, android, ios" 
+  }
+]
