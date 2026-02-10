@@ -1,90 +1,84 @@
 /* src/common/scripts/ui-loader.js */
 
-// Función genérica para cargar cualquier componente HTML externo
+// 1. Función genérica para cargar componentes HTML
 async function loadComponent(containerId, filePath) {
     const container = document.getElementById(containerId);
-    
-    if (!container) {
-        // No mostramos error console si no existe, para no ensuciar la consola
-        // si una página no requiere un componente específico.
-        return false; 
-    }
+    if (!container) return false;
 
     try {
         const response = await fetch(filePath);
-        if (!response.ok) {
-            throw new Error(`No se pudo cargar ${filePath}: ${response.statusText}`);
-        }
+        if (!response.ok) throw new Error(`Error ${response.status}: ${filePath}`);
+
         const htmlContent = await response.text();
         container.innerHTML = htmlContent;
-        return true; // Retornamos true si cargó bien
-
+        return true; // Retornamos éxito
     } catch (error) {
-        console.error('Error cargando componente:', error);
-        container.innerHTML = `<p style="color:red">Error cargando componente: ${filePath}</p>`;
+        console.error('UI-Loader Error:', error);
         return false;
     }
 }
 
-// src/common/scripts/ui-loader.js (Actualización)
+// 2. Función para inyectar el CEREBRO del buscador
+function loadSearchEngine() {
+    // Evitamos cargar el script dos veces si ya existe
+    if (document.querySelector('script[src*="search-engine.js"]')) return;
 
+    const script = document.createElement('script');
+    script.src = '/src/common/scripts/search-engine.js';
+    script.defer = true; // Importante: carga en paralelo pero ejecuta al final
+    document.body.appendChild(script);
+    // console.log("🔍 Motor de búsqueda inyectado correctamente.");
+}
+
+// 3. Función inteligente de Breadcrumbs (Migas de Pan)
 async function loadBreadcrumbs() {
-    const filePath = '/src/common/components/layout/breadcrumbs.html'; 
     const containerId = 'breadcrumb-container';
-
-    // 1. Cargar el HTML base
-    const loaded = await loadComponent(containerId, filePath);
+    const loaded = await loadComponent(containerId, '/src/common/components/layout/breadcrumbs.html');
 
     if (loaded) {
         const container = document.getElementById(containerId);
-        
-        // --- NUEVA LÓGICA INTELIGENTE ---
-        
-        // A. Leer datos de la página actual
-        const pageName = container.getAttribute("data-page") || "Sección Actual";
-        
-        // B. Leer datos del "Padre" (si existen)
-        const parentName = container.getAttribute("data-parent"); // Ej: "Servicios"
-        const parentLink = container.getAttribute("data-parent-link"); // Ej: "/src/pages/servicios.html"
 
-        // C. Obtener referencias del DOM cargado
+        // A. Leer datos
+        const pageName = container.getAttribute("data-page") || "Sección Actual";
+        const parentName = container.getAttribute("data-parent");
+        const parentLink = container.getAttribute("data-parent-link");
+
+        // B. Referencias DOM
         const nav = container.querySelector(".breadcrumb-nav");
         const currentSpan = document.getElementById("breadcrumb-text");
-        const separatorHtml = '<span class="breadcrumb-separator">/</span>';
 
-        // D. Si hay padre, inyectarlo ANTES del elemento actual
+        // C. Inyectar Padre (Si existe)
         if (parentName && parentLink) {
-            // Creamos el link del padre
             const parentNode = document.createElement("a");
             parentNode.href = parentLink;
             parentNode.textContent = parentName;
-            
-            // Creamos el separador
+
             const separatorNode = document.createElement("span");
             separatorNode.className = "breadcrumb-separator";
-            separatorNode.innerHTML = "›"; // Usamos la flechita moderna
-            separatorNode.className = "breadcrumb-separator"; // Aseguramos que tenga la clase
-            // Insertamos: Padre -> Separador -> (antes del span actual)
+            separatorNode.innerHTML = "›";
+
             nav.insertBefore(separatorNode, currentSpan);
-            nav.insertBefore(parentNode, separatorNode); // El link va antes del separador nuevo
+            nav.insertBefore(parentNode, separatorNode);
         }
 
-        // E. Poner el nombre de la página actual
-        if (currentSpan) {
-            currentSpan.innerText = pageName;
-        }
+        // D. Actualizar página actual
+        if (currentSpan) currentSpan.innerText = pageName;
     }
 }
 
-// === EJECUCIÓN AL CARGAR LA PÁGINA ===
-document.addEventListener('DOMContentLoaded', () => {
-    
-    // 1. Cargar el Navbar
-    loadComponent('navbar-container', '/src/common/components/layout/Navbar.html');
+// === 4. EJECUCIÓN MAESTRA (Aquí está el cambio clave) ===
+document.addEventListener('DOMContentLoaded', async () => {
 
-    // 2. Cargar los Breadcrumbs (Con lógica extra de texto)
-    loadBreadcrumbs(); 
-    
-    // 3. Cargar el Footer
+    // A. Cargar NAVBAR y luego activar el BUSCADOR
+    const navbarLoaded = await loadComponent('navbar-container', '/src/common/components/layout/Navbar.html');
+
+    if (navbarLoaded) {
+        loadSearchEngine();
+    }
+
+    // B. Cargar Breadcrumbs
+    loadBreadcrumbs();
+
+    // C. Cargar Footer
     loadComponent('footer-container', '/src/common/components/layout/Footer.html');
 });

@@ -1,0 +1,244 @@
+/* === CONFIGURACIÓN BASE === */
+* { box-sizing: border-box; }
+
+body {
+    margin: 0; padding: 0;
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    background-color: #ffffff;
+    color: #334155;
+    letter-spacing: -0.01em; /* Toque profesional */
+}
+
+/* Contenedor Maestro */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* === ANIMACIÓN INICIAL (ESTADO OCULTO) === */
+.fade-in, .tech-card {
+    opacity: 0; /* Anime.js lo hará visible */
+}
+
+/* === 1. HERO SECTION === */
+.landing-hero {
+    padding: 100px 0 120px;
+    background: linear-gradient(180deg, #f8fafc 0%, #ffffff 100%);
+    overflow: hidden;
+    position: relative;
+}
+
+.hero-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Texto | Visual */
+    gap: 80px;
+    align-items: center;
+}
+
+/* Texto Hero */
+.badge-enterprise {
+    background: #f1f5f9; color: #475569;
+    padding: 6px 14px; border-radius: 6px;
+    font-size: 0.75rem; font-weight: 700; text-transform: uppercase;
+    border: 1px solid #e2e8f0; display: inline-block; margin-bottom: 20px;
+    letter-spacing: 0.05em;
+}
+
+.hero-text-content h1 {
+    font-size: 3.2rem; line-height: 1.1; color: #0f172a;
+    font-weight: 800; margin: 0 0 25px 0; letter-spacing: -1.5px;
+}
+.highlight { color: #0ea5e9; }
+
+.hero-text-content p {
+    font-size: 1.15rem; color: #64748b; margin-bottom: 35px;
+    line-height: 1.6; max-width: 520px;
+}
+
+/* Botones Formales */
+.hero-actions { display: flex; gap: 15px; margin-bottom: 40px; }
+
+.btn-primary, .btn-secondary {
+    padding: 14px 28px; border-radius: 8px; /* Cuadrado = Serio */
+    text-decoration: none; font-weight: 600; font-size: 0.95rem;
+    transition: all 0.2s ease;
+}
+.btn-primary {
+    background: #0f172a; color: white; /* Azul oscuro */
+    box-shadow: 0 4px 12px rgba(15, 23, 42, 0.2);
+}
+.btn-primary:hover { transform: translateY(-2px); background: #1e293b; }
+
+.btn-secondary {
+    background: white; color: #0f172a; border: 1px solid #e2e8f0;
+}
+.btn-secondary:hover { background: #f8fafc; border-color: #cbd5e1; }
+
+/* Métricas de Confianza */
+.trust-metrics {
+    display: flex; gap: 40px; padding-top: 30px; border-top: 1px solid #e2e8f0;
+}
+.metric strong { display: block; font-size: 1.5rem; color: #0f172a; font-weight: 800; }
+.metric span { font-size: 0.85rem; color: #64748b; text-transform: uppercase; font-weight: 600; }
+
+/* === VISUAL TECH (TARJETAS FLOTANTES) - ESPACIADO === */
+.hero-visual {
+    position: relative;
+    height: 600px; /* AUMENTADO: De 500px a 600px para dar más aire vertical */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* Truco: Permitimos que se salgan un poco a los lados para dar sensación de amplitud */
+    margin-right: -40px;
+    margin-left: -20px;
+}
+
+.tech-card {
+    background: rgba(255, 255, 255, 0.85); /* Un poco más transparente */
+    backdrop-filter: blur(12px);
+    border: 1px solid #e2e8f0;
+    border-radius: 16px;
+    padding: 18px; /* Reducido de 20px */
+    position: absolute;
+    box-shadow: 0 20px 40px -10px rgba(0,0,0,0.08);
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    width: 240px; /* REDUCIDO: De 260px a 240px para ganar espacio */
+    transition: transform 0.3s, z-index 0s 0.3s; /* Suaviza el hover */
+}
+
+/* Efecto Hover mejorado: Trae al frente */
+.tech-card:hover {
+    transform: scale(1.1) translateY(-5px) !important; /* !important para sobreescribir anime.js al hacer hover */
+    z-index: 20; /* Asegura que quede encima de todo */
+    border-color: #0ea5e9;
+    background: white;
+    transition: transform 0.3s, z-index 0s;
+}
+
+.icon-circle {
+    width: 42px; height: 42px; /* Ligeramente más pequeño */
+    background: #f8fafc;
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.4rem;
+    border: 1px solid #f1f5f9;
+}
+.card-info h4 { margin: 0 0 5px; font-size: 0.9rem; color: #0f172a; font-weight: 700; }
+.card-info .status { font-size: 0.7rem; color: #64748b; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; }
+
+/* === NUEVO POSICIONAMIENTO (MÁS SEPARADO) === */
+
+/* Tarjeta Central (Cloud) - El protagonista */
+.card-cloud {
+    z-index: 10;
+    top: 25%;
+    left: 18%;
+    transform: scale(1.2); /* Un 20% más grande que el resto */
+    border-color: #0ea5e9; /* Borde azul destacado */
+    box-shadow: 0 30px 60px -15px rgba(14, 165, 233, 0.3); /* Sombra azulada */
+}
+
+/* Tarjeta Arriba Derecha (AI) - Más arriba y a la derecha */
+.card-ai {
+    z-index: 2;
+    top: 5%;      /* Empujada arriba */
+    right: 0%;  /* Empujada fuera del margen derecho */
+}
+
+/* Tarjeta Abajo Derecha (Mobile) - Más abajo y a la derecha */
+.card-mobile {
+    z-index: 2;
+    top: 45%;   /* Empujada abajo */
+    right: 0%;    /* A la derecha */
+}
+
+/* Tarjeta Abajo Izquierda (Web) - Nítida y a la izquierda */
+.card-web {
+    z-index: 1;
+    top: auto;
+    top: 65%;  /* Altura media baja */
+    left: 18%;   /* Empujada fuera del margen izquierdo */
+
+    /* Aseguramos nitidez */
+    opacity: 1;
+    filter: none;
+}/* Loader simulado en la tarjeta Cloud */
+.loader-line { width: 100%; height: 4px; background: #e2e8f0; border-radius: 2px; margin-top: 5px; overflow: hidden; }
+.loader-line .fill { width: 60%; height: 100%; background: #0ea5e9; }
+
+/* === 2. FEATURES SECTION === */
+.features-section { padding: 80px 0; background: white; }
+.section-header { text-align: center; max-width: 700px; margin: 0 auto 60px; }
+.section-header h2 { font-size: 2.2rem; color: #0f172a; margin-bottom: 10px; }
+.section-header p { color: #64748b; font-size: 1.1rem; }
+
+.features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
+
+.feature-card {
+    padding: 30px; border-radius: 12px; background: #ffffff;
+    border: 1px solid #e2e8f0; transition: all 0.3s;
+}
+.feature-card:hover { transform: translateY(-5px); box-shadow: 0 15px 30px -5px rgba(0,0,0,0.05); border-color: #cbd5e1; }
+
+.icon-bg {
+    width: 50px; height: 50px; border-radius: 10px; display: flex; align-items: center; justify-content: center;
+    font-size: 1.5rem; margin-bottom: 20px;
+}
+.blue { background: #e0f2fe; color: #0ea5e9; }
+.purple { background: #f3e8ff; color: #9333ea; }
+.green { background: #dcfce7; color: #16a34a; }
+
+.feature-card h3 { margin: 0 0 10px; color: #0f172a; font-size: 1.1rem; }
+.feature-card p { color: #64748b; line-height: 1.5; font-size: 0.95rem; }
+
+/* === 3. SERVICES PREVIEW === */
+.services-preview { padding: 100px 0; border-top: 1px solid #f1f5f9; background: #fcfcfc; }
+.split-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+
+.service-info h2 { font-size: 2.5rem; color: #0f172a; margin-bottom: 20px; }
+.check-list { list-style: none; padding: 0; margin: 30px 0; }
+.check-list li { margin-bottom: 15px; font-size: 1rem; color: #334155; }
+.link-arrow { color: #0ea5e9; font-weight: 700; text-decoration: none; }
+.link-arrow:hover { text-decoration: underline; }
+
+/* Bloque de código visual */
+.code-visual {
+    background: #0f172a; border-radius: 12px; padding: 30px;
+    box-shadow: 0 20px 50px -10px rgba(15, 23, 42, 0.3);
+    border: 1px solid #334155; position: relative;
+}
+.code-visual::before {
+    content: "● ● ●"; color: #475569; position: absolute; top: 15px; left: 20px; font-size: 0.8rem; letter-spacing: 2px;
+}
+.code-visual pre { margin: 0; color: #a5b4fc; font-family: 'Consolas', monospace; font-size: 0.9rem; line-height: 1.5; margin-top: 20px; }
+
+/* === 4. CTA FINAL === */
+.final-cta { padding: 0 0 80px; background: #fcfcfc; }
+.cta-box {
+    background: #0f172a; /* Navy Blue Corporativo */
+    border-radius: 16px; padding: 80px; text-align: center; color: white;
+    box-shadow: 0 20px 40px -10px rgba(15, 23, 42, 0.4);
+}
+.cta-box h2 { font-size: 2.5rem; margin-bottom: 15px; color: white; }
+.cta-box p { color: #cbd5e1; font-size: 1.2rem; margin-bottom: 40px; max-width: 600px; margin-left: auto; margin-right: auto; }
+.btn-white {
+    background: white; color: #0f172a; padding: 16px 36px; border-radius: 8px;
+    text-decoration: none; font-weight: 700; display: inline-block;
+    transition: transform 0.2s;
+}
+.btn-white:hover { transform: scale(1.05); }
+
+/* Responsive */
+@media (max-width: 900px) {
+    .hero-grid, .split-layout { grid-template-columns: 1fr; text-align: center; gap: 50px; }
+    .hero-visual { height: 350px; }
+    .tech-card { width: 200px; padding: 15px; font-size: 0.9rem; }
+    .card-cloud { left: 50%; transform: translateX(-50%) scale(1.1); top: 30%; }
+    .card-ai { top: 0; left: 0; }
+    .card-mobile { bottom: 0; right: 0; }
+    .hero-actions { justify-content: center; }
+    .trust-metrics { justify-content: center; }
+}

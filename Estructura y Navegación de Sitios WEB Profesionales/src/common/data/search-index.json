@@ -1,58 +1,58 @@
 [
-  { 
-    "title": "Desarrollo Web Corporativo", 
-    "url": "/src/pages/desarrollo-web.html", 
-    "category": "Servicios", 
-    "tags": "pagina, sitio, web, landing, react, frontend" 
+  {
+    "title": "Desarrollo Web Corporativo",
+    "url": "/src/pages/desarrollo-web.html",
+    "category": "Servicios",
+    "tags": "pagina, sitio, web, landing, react, frontend,Angular, Vue,tailwind, bootstrap, html, css, javascript, responsive, ux, ui, accesibilidad,page,pages,site,sites,web,webs"
   },
-  { 
-    "title": "Desarrollo de Apps Móviles", 
-    "url": "/src/pages/apps-moviles.html", 
-    "category": "Servicios", 
-    "tags": "app, android, ios, celular, nativo, hibrido" 
+  {
+    "title": "Desarrollo de Apps Móviles",
+    "url": "/src/pages/apps-moviles.html",
+    "category": "Servicios",
+    "tags": "app, android, ios, celular, nativo, hibrido,java,kottlin, flutter, react native, dart, movil, smartphone,phone,mobile,"
   },
-  { 
-    "title": "Consultoría TI & Cloud", 
-    "url": "/src/pages/consultoria.html", 
-    "category": "Servicios", 
-    "tags": "asesoria, cloud, aws, servidores, devops, arquitectura" 
+  {
+    "title": "Consultoría TI & Cloud",
+    "url": "/src/pages/consultoria.html",
+    "category": "Servicios",
+    "tags": "asesoria, cloud, aws, servidores, devops, arquitectura,azure, google cloud, gcp, infraestructura,consulting,consultoria,technology,ti,it"
   },
-  { 
-    "title": "Portafolio de Proyectos", 
-    "url": "/src/pages/portafolio.html", 
-    "category": "Portafolio", 
-    "tags": "proyectos, casos, ejemplos, clientes, delivery" 
+  {
+    "title": "Portafolio de Proyectos",
+    "url": "/src/pages/portafolio.html",
+    "category": "Portafolio",
+    "tags": "proyectos, casos, ejemplos, clientes, delivery, trabajos, portfolio, projects, work, cases, examples, clientes, customers"
   },
-  { 
-    "title": "Contacto y Soporte", 
-    "url": "/src/pages/contacto.html", 
-    "category": "General", 
-    "tags": "ayuda, ticket, soporte, telefono, correo, ubicacion" 
+  {
+    "title": "Contacto y Soporte",
+    "url": "/src/pages/contacto.html",
+    "category": "General",
+    "tags": "ayuda, ticket, soporte, telefono, correo, ubicacion, contacto"
   },
-  
-  
-  { 
-    "title": "Cómo elegir la arquitectura perfecta", 
-    "url": "/src/pages/blog.html#arquitectura", 
-    "category": "Blog", 
-    "tags": "backend, arquitectura, monolito, microservicios, tutorial" 
+
+
+  {
+    "title": "Cómo elegir la arquitectura perfecta",
+    "url": "/src/pages/blog.html#arquitectura",
+    "category": "Blog",
+    "tags": "backend, arquitectura, monolito, microservicios, tutorial"
   },
-  { 
-    "title": "¿Por qué usar React en 2026?", 
-    "url": "/src/pages/blog.html#react2026", 
-    "category": "Blog", 
-    "tags": "frontend, react, javascript, tendencias, tecnologia" 
+  {
+    "title": "¿Por qué usar React en 2026?",
+    "url": "/src/pages/blog.html#react2026",
+    "category": "Blog",
+    "tags": "frontend, react, javascript, tendencias, tecnologia"
   },
-  { 
-    "title": "Protege tu E-commerce de ataques", 
-    "url": "/src/pages/blog.html#seguridad", 
-    "category": "Blog", 
-    "tags": "ciberseguridad, seguridad, hacking, tienda, ssl, ventas" 
+  {
+    "title": "Protege tu E-commerce de ataques",
+    "url": "/src/pages/blog.html#seguridad",
+    "category": "Blog",
+    "tags": "ciberseguridad, seguridad, hacking, tienda, ssl, ventas"
   },
-  { 
-    "title": "Flutter vs React Native: La comparativa", 
-    "url": "/src/pages/blog.html#flutter-vs-react", 
-    "category": "Blog", 
-    "tags": "movil, hibrido, comparacion, performance, android, ios" 
+  {
+    "title": "Flutter vs React Native: La comparativa",
+    "url": "/src/pages/blog.html#flutter-vs-react",
+    "category": "Blog",
+    "tags": "movil, hibrido, comparacion, performance, android, ios"
   }
 ]
