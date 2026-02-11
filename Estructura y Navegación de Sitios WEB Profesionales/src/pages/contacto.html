@@ -1,157 +1,499 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contacto - DevAgency</title>
     <style>
-        /* === ESTILOS GENERALES (Anti-Línea Blanca) === */
-        * { box-sizing: border-box; }
-        /* Body oscuro igual al footer */
-        body { margin: 0; padding: 0; font-family: 'Segoe UI', system-ui, sans-serif; background-color: #f8fafc; color: #334155; }
-        
-        #navbar-container, #footer-container { display: block; width: 100%; margin: 0; padding: 0; }
+        /* === ESTILOS GENERALES === */
+        * {
+            box-sizing: border-box;
+        }
 
-        /* === MAIN (Fondo Blanco) === */
-        main { background-color: #ffffff; min-height: 80vh; }
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            background-color: #f8fafc;
+            color: #334155;
+        }
+
+        #navbar-container,
+        #footer-container {
+            display: block;
+            width: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        main {
+            background-color: #ffffff;
+            min-height: 80vh;
+        }
 
         /* === HERO === */
-        .contact-hero { text-align: center; padding: 60px 20px 50px; max-width: 900px; margin: 0 auto; }
-        .contact-hero h1 { margin-top: 0; font-size: 3rem; color: #0f172a; line-height: 1.1; margin-bottom: 15px; }
-        .contact-hero p { font-size: 1.1rem; color: #64748b; line-height: 1.6; }
-
-        /* === GRID PRINCIPAL (Más ancho) === */
-        .contact-grid { 
-            display: grid; 
-            /* Le damos más espacio al formulario (1.4fr) que al mapa (1fr) */
-            grid-template-columns: 1.4fr 1fr; 
-            gap: 60px; 
-            max-width: 1350px; /* Expandido a los lados */
-            margin: 0 auto; 
-            padding: 0 30px 100px; 
+        .contact-hero {
+            text-align: center;
+            padding: 60px 20px 50px;
+            max-width: 900px;
+            margin: 0 auto;
         }
 
-        /* === FORMULARIO PROFESIONAL === */
-        .form-card { 
-            background: #ffffff; 
-            border: 1px solid #e2e8f0; 
-            border-radius: 16px; 
-            padding: 40px; /* Más padding interno */
-            box-shadow: 0 20px 40px -10px rgba(0,0,0,0.08); 
+        .contact-hero h1 {
+            margin-top: 0;
+            font-size: 3rem;
+            color: #0f172a;
+            line-height: 1.1;
+            margin-bottom: 15px;
         }
-        
-        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; } /* Dos columnas internas */
-        
-        .form-group { margin-bottom: 25px; }
-        .form-label { display: block; margin-bottom: 8px; font-weight: 600; color: #0f172a; font-size: 0.95rem; }
-        
-        .form-input, .form-select, .form-textarea { 
-            width: 100%; padding: 14px; border: 2px solid #e2e8f0; border-radius: 8px; 
-            font-family: inherit; font-size: 1rem; color: #334155; transition: all 0.3s;
+
+        .contact-hero p {
+            font-size: 1.1rem;
+            color: #64748b;
+            line-height: 1.6;
+        }
+
+        /* === GRID PRINCIPAL === */
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1.4fr 1fr;
+            gap: 60px;
+            max-width: 1350px;
+            margin: 0 auto;
+            padding: 0 30px 100px;
+        }
+
+        /* === FORMULARIO === */
+        .form-card {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.08);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+            position: relative;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #0f172a;
+            font-size: 0.95rem;
+        }
+
+        .form-input,
+        .form-select,
+        .form-textarea {
+            width: 100%;
+            padding: 14px;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            font-family: inherit;
+            font-size: 1rem;
+            color: #334155;
+            transition: all 0.3s;
             background-color: #f8fafc;
         }
-        .form-input:focus, .form-select:focus, .form-textarea:focus { 
-            border-color: #0ea5e9; outline: none; background-color: #fff; box-shadow: 0 0 0 4px rgba(14, 165, 233, 0.1);
-        }
-        .form-textarea { resize: vertical; min-height: 150px; }
 
-        .btn-submit { 
-            width: 100%; background: #0ea5e9; color: white; border: none; padding: 16px; 
-            font-size: 1.1rem; font-weight: bold; border-radius: 50px; cursor: pointer; 
-            transition: all 0.2s; box-shadow: 0 10px 20px -5px rgba(14, 165, 233, 0.4); 
+        .form-input:focus,
+        .form-select:focus,
+        .form-textarea:focus {
+            border-color: #0ea5e9;
+            outline: none;
+            background-color: #fff;
+            box-shadow: 0 0 0 4px rgba(14, 165, 233, 0.1);
         }
-        .btn-submit:hover { background: #0284c7; transform: translateY(-2px); }
-        
-        #success-message { display: none; background: #dcfce7; color: #166534; padding: 15px; border-radius: 8px; margin-top: 15px; text-align: center; border: 1px solid #bbf7d0; font-weight: 600; }
+
+        .form-textarea {
+            resize: vertical;
+            min-height: 150px;
+        }
+
+        /* === VALIDACIONES === */
+        .form-input.error,
+        .form-textarea.error {
+            border-color: #ef4444;
+            background-color: #fef2f2;
+        }
+
+        .form-input.success,
+        .form-textarea.success {
+            border-color: #22c55e;
+            background-color: #f0fdf4;
+        }
+
+        .error-message {
+            display: none;
+            color: #ef4444;
+            font-size: 0.85rem;
+            margin-top: 6px;
+            font-weight: 500;
+        }
+
+        .error-message.show {
+            display: block;
+        }
+
+        .success-icon {
+            position: absolute;
+            right: 14px;
+            top: 44px;
+            color: #22c55e;
+            font-size: 1.2rem;
+            display: none;
+        }
+
+        .success-icon.show {
+            display: block;
+        }
+
+        /* === CHECKLIST DE CONTRASEÑA === */
+        .password-requirements {
+            margin-top: 10px;
+            padding: 15px;
+            background: #f8fafc;
+            border-radius: 8px;
+            border: 1px solid #e2e8f0;
+            display: none;
+        }
+
+        .password-requirements.show {
+            display: block;
+        }
+
+        .password-requirements h4 {
+            margin: 0 0 10px 0;
+            font-size: 0.9rem;
+            color: #64748b;
+            font-weight: 600;
+        }
+
+        .requirement-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 8px;
+            font-size: 0.85rem;
+            color: #64748b;
+            transition: all 0.3s;
+        }
+
+        .requirement-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .requirement-icon {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            border: 2px solid #cbd5e1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            flex-shrink: 0;
+            transition: all 0.3s;
+        }
+
+        .requirement-item.met {
+            color: #22c55e;
+        }
+
+        .requirement-item.met .requirement-icon {
+            background: #22c55e;
+            border-color: #22c55e;
+            color: white;
+        }
+
+        .requirement-item.met .requirement-icon::before {
+            content: '✓';
+        }
+
+        .password-strength {
+            margin-top: 8px;
+            font-size: 0.85rem;
+            display: none;
+        }
+
+        .password-strength.show {
+            display: block;
+        }
+
+        .strength-bar {
+            height: 4px;
+            background: #e2e8f0;
+            border-radius: 2px;
+            margin-top: 6px;
+            overflow: hidden;
+        }
+
+        .strength-fill {
+            height: 100%;
+            width: 0%;
+            transition: all 0.3s;
+            border-radius: 2px;
+        }
+
+        .strength-weak .strength-fill {
+            width: 33%;
+            background: #ef4444;
+        }
+
+        .strength-medium .strength-fill {
+            width: 66%;
+            background: #f59e0b;
+        }
+
+        .strength-strong .strength-fill {
+            width: 100%;
+            background: #22c55e;
+        }
+
+        .btn-submit {
+            width: 100%;
+            background: #0ea5e9;
+            color: white;
+            border: none;
+            padding: 16px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.2s;
+            box-shadow: 0 10px 20px -5px rgba(14, 165, 233, 0.4);
+        }
+
+        .btn-submit:hover:not(:disabled) {
+            background: #0284c7;
+            transform: translateY(-2px);
+        }
+
+        .btn-submit:disabled {
+            background: #cbd5e1;
+            cursor: not-allowed;
+            transform: none;
+            opacity: 0.6;
+        }
+
+        #success-message {
+            display: none;
+            background: #dcfce7;
+            color: #166534;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+            text-align: center;
+            border: 1px solid #bbf7d0;
+            font-weight: 600;
+        }
 
         /* === INFO & MAPA === */
-        .info-wrapper { display: flex; flex-direction: column; height: 100%; }
-        
-        .info-card { 
-            background: #f8fafc; padding: 30px; border-radius: 16px; border: 1px solid #e2e8f0; margin-bottom: 30px;
+        .info-wrapper {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
         }
-        .info-item { display: flex; align-items: flex-start; gap: 15px; margin-bottom: 20px; }
-        .info-item:last-child { margin-bottom: 0; }
-        
-        .info-icon { background: #ffffff; color: #0ea5e9; width: 45px; height: 45px; display: flex; align-items: center; justify-content: center; border-radius: 50%; font-size: 1.2rem; flex-shrink: 0; border: 1px solid #e2e8f0; }
-        .info-content h3 { margin: 0 0 2px; font-size: 1rem; color: #0f172a; font-weight: 700; }
-        .info-content p { margin: 0; color: #64748b; font-size: 0.95rem; }
 
-        /* MAPA */
+        .info-card {
+            background: #f8fafc;
+            padding: 30px;
+            border-radius: 16px;
+            border: 1px solid #e2e8f0;
+            margin-bottom: 30px;
+        }
+
+        .info-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .info-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .info-icon {
+            background: #ffffff;
+            color: #0ea5e9;
+            width: 45px;
+            height: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            font-size: 1.2rem;
+            flex-shrink: 0;
+            border: 1px solid #e2e8f0;
+        }
+
+        .info-content h3 {
+            margin: 0 0 2px;
+            font-size: 1rem;
+            color: #0f172a;
+            font-weight: 700;
+        }
+
+        .info-content p {
+            margin: 0;
+            color: #64748b;
+            font-size: 0.95rem;
+        }
+
         .map-container {
-            width: 100%; 
-            flex-grow: 1; /* Ocupa el resto de la altura disponible */
-            min-height: 400px; /* Altura mínima para que se vea bien */
-            border-radius: 16px; overflow: hidden;
-            box-shadow: 0 10px 30px -5px rgba(0,0,0,0.1); border: 1px solid #e2e8f0;
+            width: 100%;
+            flex-grow: 1;
+            min-height: 400px;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e2e8f0;
             background-color: #e2e8f0;
         }
 
-        /* Responsive */
         @media (max-width: 900px) {
-            .contact-grid { grid-template-columns: 1fr; gap: 40px; padding: 0 20px 60px; }
-            .form-row { grid-template-columns: 1fr; gap: 0; }
-            .detail-hero h1 { font-size: 2.5rem; }
+            .contact-grid {
+                grid-template-columns: 1fr;
+                gap: 40px;
+                padding: 0 20px 60px;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+                gap: 0;
+            }
         }
     </style>
+
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 </head>
+
 <body>
 
     <div id="navbar-container"></div>
-
     <div id="breadcrumb-container" data-page="Contacto"></div>
 
     <main>
         <section class="contact-hero">
             <h1>Inicia tu Proyecto Digital</h1>
-            <p>Cuéntanos sobre tu visión. Nuestro equipo de ingeniería analizará tus requerimientos y te responderemos en menos de 24 horas.</p>
+            <p>Cuéntanos sobre tu visión. Nuestro equipo de ingeniería analizará tus requerimientos y te responderemos
+                en menos de 24 horas.</p>
         </section>
 
         <section class="contact-grid">
             <div class="form-wrapper">
-                <form id="contactForm" class="form-card">
+                <form id="contactForm" class="form-card" novalidate>
                     <h3 style="margin-top: 0; color: #0f172a; margin-bottom: 25px;">Detalles del Proyecto</h3>
-                    
+
                     <div class="form-row">
                         <div class="form-group">
-                            <label class="form-label">Nombre Completo</label>
-                            <input type="text" class="form-input" placeholder="Tu nombre" required>
+                            <label class="form-label">Nombre Completo *</label>
+                            <input type="text" id="nombre" class="form-input" placeholder="Tu nombre" required>
+                            <span class="success-icon">✓</span>
+                            <div class="error-message" id="nombre-error"></div>
                         </div>
                         <div class="form-group">
-                            <label class="form-label">Teléfono / WhatsApp</label>
-                            <input type="tel" class="form-input" placeholder="+52 55..." required>
+                            <label class="form-label">Teléfono / WhatsApp *</label>
+                            <input type="tel" id="telefono" class="form-input" placeholder="+52 55 1234 5678" required>
+                            <span class="success-icon">✓</span>
+                            <div class="error-message" id="telefono-error"></div>
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label class="form-label">Correo Corporativo</label>
-                        <input type="email" class="form-input" placeholder="nombre@empresa.com" required>
+                        <label class="form-label">Correo Corporativo *</label>
+                        <input type="email" id="email" class="form-input" placeholder="nombre@empresa.com" required>
+                        <span class="success-icon">✓</span>
+                        <div class="error-message" id="email-error"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Contraseña (para cuenta) *</label>
+                        <input type="password" id="password" class="form-input" placeholder="Crea una contraseña segura"
+                            required>
+                        <span class="success-icon">✓</span>
+                        <div class="error-message" id="password-error"></div>
+
+                        <!-- Checklist de requisitos -->
+                        <div class="password-requirements" id="password-requirements">
+                            <h4>Requisitos de seguridad:</h4>
+                            <div class="requirement-item" id="req-length">
+                                <div class="requirement-icon"></div>
+                                <span>Longitud mínima de 8, al menos:</span>
+                            </div>
+                            <div class="requirement-item" id="req-uppercase">
+                                <div class="requirement-icon"></div>
+                                <span>Una mayúscula</span>
+                            </div>
+                            <div class="requirement-item" id="req-lowercase">
+                                <div class="requirement-icon"></div>
+                                <span>Una minúscula</span>
+                            </div>
+                            <div class="requirement-item" id="req-number">
+                                <div class="requirement-icon"></div>
+                                <span>Un dígito</span>
+                            </div>
+                            <div class="requirement-item" id="req-special">
+                                <div class="requirement-icon"></div>
+                                <span>Un símbolo</span>
+                            </div>
+                        </div>
+
+                        <div class="password-strength" id="password-strength">
+                            <div class="strength-bar">
+                                <div class="strength-fill"></div>
+                            </div>
+                            <span id="strength-text"></span>
+                        </div>
                     </div>
 
                     <div class="form-row">
                         <div class="form-group">
-                            <label class="form-label">Servicio de Interés</label>
-                            <select class="form-select">
+                            <label class="form-label">Servicio de Interés *</label>
+                            <select class="form-select" id="servicio" required>
+                                <option value="">Selecciona una opción</option>
                                 <option>Desarrollo Web a Medida</option>
                                 <option>App Móvil (iOS/Android)</option>
                                 <option>Consultoría de Infraestructura</option>
                                 <option>Auditoría de Seguridad</option>
                             </select>
+                            <div class="error-message" id="servicio-error"></div>
                         </div>
                         <div class="form-group">
-                            <label class="form-label">Presupuesto Estimado</label>
-                            <select class="form-select">
+                            <label class="form-label">Presupuesto Estimado *</label>
+                            <select class="form-select" id="presupuesto" required>
+                                <option value="">Selecciona un rango</option>
                                 <option>Menos de $1,000 USD</option>
                                 <option>$1,000 - $5,000 USD</option>
                                 <option>$5,000 - $10,000 USD</option>
                                 <option>Más de $10,000 USD</option>
                             </select>
+                            <div class="error-message" id="presupuesto-error"></div>
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label class="form-label">Descripción del Proyecto</label>
-                        <textarea class="form-textarea" placeholder="Describe las funcionalidades clave, objetivos y cualquier referencia..." required></textarea>
+                        <label class="form-label">Descripción del Proyecto *</label>
+                        <textarea class="form-textarea" id="descripcion"
+                            placeholder="Describe las funcionalidades clave, objetivos y cualquier referencia... (mínimo 20 caracteres)"
+                            required></textarea>
+                        <span class="success-icon" style="top: 50px;">✓</span>
+                        <div class="error-message" id="descripcion-error"></div>
+                    </div>
+
+                    <div class="g-recaptcha" data-sitekey="6LebOWcsAAAAAJ4Hh5iXF258JTofLt9w4qiNJuyN"
+                        style="margin-bottom: 20px;">
                     </div>
 
                     <button type="submit" class="btn-submit">Solicitar Cotización Gratuita</button>
@@ -176,33 +518,607 @@
                         </div>
                     </div>
                 </div>
-
                 <div id="google-map" class="map-container"></div>
             </div>
         </section>
     </main>
 
     <div id="footer-container"></div>
-    
+
     <script src="../common/scripts/ui-loader.js"></script>
     <script src="../common/scripts/map-loader.js"></script>
 
     <script>
-        document.getElementById('contactForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const btn = document.querySelector('.btn-submit');
-            const successMsg = document.getElementById('success-message');
-            const originalText = btn.innerText;
-            btn.innerText = "Procesando...";
-            btn.style.opacity = "0.7";
-            setTimeout(() => {
-                btn.innerText = originalText;
-                btn.style.opacity = "1";
-                this.reset();
-                successMsg.style.display = 'block';
-                setTimeout(() => { successMsg.style.display = 'none'; }, 5000);
-            }, 2000);
+
+        /* =================================================================
+           HERRAMIENTAS DE LIMPIEZA (SANITIZERS)
+           ================================================================= */
+        const sanitizers = {
+            /**
+             * NIVEL 1: Para Inputs de Texto Corto (Nombre, Apellido, Ciudad)
+             * - Elimina saltos de línea (Enters) por si pegan texto copiado.
+             * - ejemplo: "Juan    Perez" -> "Juan Perez".
+             * - Sintaxis: /\s{2,}/ busca cualquier espacio en blanco (incluyendo tabs y enters) repetido.
+             */
+            cleanInput: (text) => {
+                if (!text) return "";
+                // 1. Convertir saltos de linea y tabs en un solo espacio normal
+                let clean = text.replace(/[\r\n\t]+/g, ' ');
+                // 2. Reducir múltiples espacios a uno solo
+                return clean.replace(/\s{2,}/g, ' ');
+            },
+
+            /**
+             * NIVEL 2: Para Textareas (Descripción del Proyecto)
+             * - ¡IMPORTANTE! Aquí NO usamos \s porque \s borraría los Enters (saltos de párrafo).
+             * - Usamos /[ ]{2,}/ que significa "buscar SOLO el caracter espacio repetido".
+             * - Permite: "Hola.\n\nMundo" (Párrafos).
+             * - Corrige: "Hola.     Mundo" -> "Hola. Mundo" (Espacios dobles).
+             */
+            cleanParagraph: (text) => {
+                if (!text) return "";
+                // Solo reemplaza espacios horizontales dobles, respetando los saltos de línea
+                return text.replace(/[ ]{2,}/g, ' ');
+            },
+
+            /**
+             * NIVEL 3: Estricto (Email, Teléfono, Passwords)
+             * - Elimina ABSOLUTAMENTE todos los espacios.
+             * - "juan @ gmail.com" -> "juan@gmail.com"
+             */
+            cleanStrict: (text) => {
+                if (!text) return "";
+                // \s+ busca cualquier espacio y lo reemplaza por nada ("")
+                return text.replace(/\s+/g, '');
+            }
+        };
+
+        // ========================================
+        // VALIDADORES
+        // ========================================
+
+        const validators = {
+
+            // Validar nombre
+            nombre: (value) => {
+                // 1. Longitud y vacíos
+                if (!value || value.trim().length < 3) {
+                    return { valid: false, message: 'El nombre debe tener al menos 3 caracteres' };
+                }
+                // 2. Caracteres permitidos (Regex)
+                if (!/^[a-záéíóúñA-ZÁÉÍÓÚÑ\s]+$/.test(value)) {
+                    return { valid: false, message: 'El nombre solo puede contener letras' };
+                }
+
+                // 3. Anti-Gibberish (Corrección de variable aquí)
+                const analisis = GibberishDetector.analizar(value); // Le puse un nombre más corto
+
+                if (!analisis.valid) {
+                    return { valid: false, message: 'El nombre ingresado no parece ser coherente' };
+                }
+                return { valid: true };
+            },
+
+            // Validar teléfono: formato mexicano o internacional
+            telefono: (value) => {
+                const cleaned = value.replace(/[\s\-\(\)]/g, '');
+
+                if (!/^\+?\d+$/.test(cleaned)) {
+                    return { valid: false, message: 'El teléfono solo puede contener números' };
+                }
+
+                if (cleaned.startsWith('+')) {
+                    if (cleaned.length < 11 || cleaned.length > 16) {
+                        return { valid: false, message: 'Formato internacional: +52 55 1234 5678' };
+                    }
+                } else {
+                    if (cleaned.length !== 10) {
+                        return { valid: false, message: 'Debe tener 10 dígitos' };
+                    }
+                }
+
+                return { valid: true };
+            },
+
+            // Validar email: solo dominios en la lista blanca son válidos
+            email: (value) => {
+                if (!value) {
+                    return { valid: false, message: 'El correo es obligatorio' };
+                }
+
+                const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
+                if (!emailRegex.test(value)) {
+                    return { valid: false, message: 'Formato de correo inválido' };
+                }
+
+                const domain = value.split('@')[1]?.toLowerCase();
+                if (!domain) {
+                    return { valid: false, message: 'No es un dominio válido' };
+                }
+
+                // ============================================
+                // LISTA BLANCA - Solo estos dominios son válidos
+                // Agrega aquí los dominios que quieres permitir
+                // ============================================
+                const allowedDomains = [
+                    // Correos populares
+                    'gmail.com',
+                    'yahoo.com',
+                    'outlook.com',
+                    'hotmail.com',
+
+                    // Institucionales México
+                    'inaoep.mx',
+                    'inaoep.edu.mx',
+
+                    // Empresas conocidas
+                    'devagency.com',
+                    'microsoft.com',
+                    'apple.com',
+
+                    // Agrega más dominios aquí según necesites
+                    // Ejemplo: 'tuempresa.com', 'universidad.edu', etc.
+                ];
+
+                // Verificar si el dominio está en la lista permitida
+                if (!allowedDomains.includes(domain)) {
+                    return { valid: false, message: 'Este dominio no está autorizado. Contacta al administrador.' };
+                }
+
+                return { valid: true };
+            },
+
+            // Validar contraseña con checklist
+            password: (value) => {
+                const requirements = {
+                    length: value.length >= 8,
+                    uppercase: /[A-Z]/.test(value),
+                    lowercase: /[a-z]/.test(value),
+                    number: /\d/.test(value),
+                    special: /[!@#$%^&*(),.?":{}|<>]/.test(value)
+                };
+
+                const metCount = Object.values(requirements).filter(Boolean).length;
+
+                let strength = 'weak';
+                if (metCount >= 4 && value.length >= 10) {
+                    strength = 'medium';
+                }
+                if (metCount === 5 && value.length >= 12) {
+                    strength = 'strong';
+                }
+
+                const allMet = Object.values(requirements).every(Boolean);
+
+                return {
+                    valid: allMet,
+                    strength: strength,
+                    requirements: requirements
+                };
+            },
+
+            // Validar descripción: mínimo 20 caracteres
+            descripcion: (value) => {
+                if (!value || value.trim().length < 20) {
+                    return { valid: false, message: 'La descripción debe tener al menos 20 caracteres' };
+                }
+                if (value.trim().length > 1000) {
+                    return { valid: false, message: 'La descripción no puede exceder 1000 caracteres' };
+                }
+                //validación logica de escritura
+                const analitic = GibberishDetector.analizar(value);
+                if (!analitic.valid) {
+                    return { valid: false, message: 'La descripción no parece ser un texto válido o coherente.' };
+                }
+                return { valid: true };
+            },
+
+            // Validar select
+            select: (value) => {
+                if (!value || value === '') {
+                    return { valid: false, message: 'Debes seleccionar una opción' };
+                }
+                return { valid: true };
+            }
+        };
+        function showError(inputId, message) {
+            const input = document.getElementById(inputId);
+            const errorDiv = document.getElementById(`${inputId}-error`);
+            const successIcon = input.parentElement.querySelector('.success-icon');
+
+            input.classList.add('error');
+            input.classList.remove('success');
+            errorDiv.textContent = message;
+            errorDiv.classList.add('show');
+            if (successIcon) successIcon.classList.remove('show');
+        }
+
+        function showSuccess(inputId) {
+            const input = document.getElementById(inputId);
+            const errorDiv = document.getElementById(`${inputId}-error`);
+            const successIcon = input.parentElement.querySelector('.success-icon');
+
+            input.classList.remove('error');
+            input.classList.add('success');
+            errorDiv.classList.remove('show');
+            if (successIcon) successIcon.classList.add('show');
+        }
+
+        function clearValidation(inputId) {
+            const input = document.getElementById(inputId);
+            const errorDiv = document.getElementById(`${inputId}-error`);
+            const successIcon = input.parentElement.querySelector('.success-icon');
+
+            input.classList.remove('error', 'success');
+            errorDiv.classList.remove('show');
+            if (successIcon) successIcon.classList.remove('show');
+        }
+
+        function updatePasswordChecklist(requirements) {
+            const reqDiv = document.getElementById('password-requirements');
+            reqDiv.classList.add('show');
+
+            // Actualizar cada requisito
+            document.getElementById('req-length').classList.toggle('met', requirements.length);
+            document.getElementById('req-uppercase').classList.toggle('met', requirements.uppercase);
+            document.getElementById('req-lowercase').classList.toggle('met', requirements.lowercase);
+            document.getElementById('req-number').classList.toggle('met', requirements.number);
+            document.getElementById('req-special').classList.toggle('met', requirements.special);
+        }
+
+        function updatePasswordStrength(strength) {
+            const strengthDiv = document.getElementById('password-strength');
+            const strengthText = document.getElementById('strength-text');
+
+            strengthDiv.className = 'password-strength show';
+            strengthDiv.classList.add(`strength-${strength}`);
+
+            const messages = {
+                weak: '🔴 Contraseña débil',
+                medium: '🟡 Contraseña media',
+                strong: '🟢 Contraseña fuerte'
+            };
+
+            strengthText.textContent = messages[strength] || '';
+        }
+
+        // ========================================
+        // VALIDACIÓN EN TIEMPO REAL
+        // ========================================
+
+        // Nombre
+        document.getElementById('nombre').addEventListener('input', (e) => {
+            // Limpiar
+            const valorOriginal = e.target.value;
+            const valorLimpio = sanitizers.cleanInput(valorOriginal);
+
+            // Si el usuario ingreso doble espacio, se corrige visualmente
+            if (valorOriginal !== valorLimpio) {
+                e.target.value = valorLimpio;
+            }
+            // validador Anti-Gibberish
+            const result = validators.nombre(valorLimpio);
+
+            //Mostrar feedback visual
+            if (valorLimpio.length === 0) {
+                clearValidation('nombre');
+            } else if (result.valid) {
+                showSuccess('nombre');
+            } else {
+                showError('nombre', result.message);
+            }
         });
+
+        // Teléfono
+        document.getElementById('telefono').addEventListener('input', (e) => {
+            const result = validators.telefono(e.target.value);
+            if (e.target.value.length === 0) {
+                clearValidation('telefono');
+            } else if (result.valid) {
+                showSuccess('telefono');
+            } else {
+                showError('telefono', result.message);
+            }
+        });
+
+        // Email con validación estricta
+        document.getElementById('email').addEventListener('input', (e) => {
+            // Usamos cleanStrict: Muerte a los espacios en blanco
+            const valorLimpio = sanitizers.cleanStrict(e.target.value);
+
+            if (e.target.value !== valorLimpio) {
+                e.target.value = valorLimpio;
+            }
+
+            const result = validators.email(valorLimpio);
+
+            if (valorLimpio.length === 0) {
+                clearValidation('email');
+            } else if (result.valid) {
+                showSuccess('email');
+            } else {
+                showError('email', result.message);
+            }
+        });
+
+        // Contraseña con checklist visual
+        document.getElementById('password').addEventListener('input', (e) => {
+            const result = validators.password(e.target.value);
+
+            if (e.target.value.length === 0) {
+                clearValidation('password');
+                document.getElementById('password-requirements').classList.remove('show');
+                document.getElementById('password-strength').classList.remove('show');
+            } else {
+                updatePasswordChecklist(result.requirements);
+                updatePasswordStrength(result.strength);
+
+                if (result.valid) {
+                    showSuccess('password');
+                } else {
+                    // No mostramos error mientras escribe, solo el checklist
+                    const input = document.getElementById('password');
+                    input.classList.remove('error', 'success');
+                    document.getElementById('password-error').classList.remove('show');
+                }
+            }
+        });
+
+        // Descripción
+        document.getElementById('descripcion').addEventListener('input', (e) => {
+            // Usamos cleanParagraph para respetar los saltos de línea
+            const valorOriginal = e.target.value;
+            const valorLimpio = sanitizers.cleanParagraph(valorOriginal);
+
+            if (valorOriginal !== valorLimpio) {
+                // Truco para mantener la posición del cursor (UX Pro)
+                const start = e.target.selectionStart;
+                const end = e.target.selectionEnd;
+
+                e.target.value = valorLimpio;
+
+                // Restaurar cursor
+                e.target.setSelectionRange(start, end);
+            }
+
+            // Validar descripción (longitud mínima, gibberish, etc.)
+            const result = validators.descripcion(valorLimpio);
+
+            if (valorLimpio.length === 0) {
+                clearValidation('descripcion');
+            } else if (result.valid) {
+                showSuccess('descripcion');
+            } else {
+                showError('descripcion', result.message);
+            }
+        });
+
+        // Selects
+        document.getElementById('servicio').addEventListener('change', (e) => {
+            const result = validators.select(e.target.value);
+            if (!result.valid) {
+                showError('servicio', result.message);
+            } else {
+                clearValidation('servicio');
+            }
+        });
+
+        document.getElementById('presupuesto').addEventListener('change', (e) => {
+            const result = validators.select(e.target.value);
+            if (!result.valid) {
+                showError('presupuesto', result.message);
+            } else {
+                clearValidation('presupuesto');
+            }
+        });
+
+        // ========================================
+        // ENVÍO DEL FORMULARIO
+        // ========================================
+
+        document.getElementById('contactForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            let isValid = true;
+            const fields = {
+                nombre: document.getElementById('nombre').value,
+                telefono: document.getElementById('telefono').value,
+                email: document.getElementById('email').value,
+                password: document.getElementById('password').value,
+                servicio: document.getElementById('servicio').value,
+                presupuesto: document.getElementById('presupuesto').value,
+                descripcion: document.getElementById('descripcion').value
+            };
+
+            // Validar todos los campos
+            Object.keys(fields).forEach(field => {
+                let result;
+
+                if (field === 'servicio' || field === 'presupuesto') {
+                    result = validators.select(fields[field]);
+                } else {
+                    result = validators[field](fields[field]);
+                }
+
+                if (!result.valid) {
+                    if (field === 'password') {
+                        showError(field, 'Debes cumplir todos los requisitos de seguridad');
+                    } else {
+                        showError(field, result.message);
+                    }
+                    isValid = false;
+                } else {
+                    showSuccess(field);
+                }
+            });
+
+            // Verificar reCAPTCHA sin alert
+            const recaptchaResponse = grecaptcha.getResponse();
+            if (recaptchaResponse.length === 0) {
+                const recaptchaDiv = document.querySelector('.g-recaptcha');
+                recaptchaDiv.style.border = '2px solid #ef4444';
+                recaptchaDiv.style.borderRadius = '8px';
+                recaptchaDiv.style.padding = '5px';
+                isValid = false;
+            } else {
+                const recaptchaDiv = document.querySelector('.g-recaptcha');
+                recaptchaDiv.style.border = 'none';
+                recaptchaDiv.style.padding = '0';
+            }
+
+            // Si todo está válido, enviar
+            if (isValid) {
+                const btn = document.querySelector('.btn-submit');
+                const successMsg = document.getElementById('success-message');
+                const originalText = btn.innerText;
+
+                btn.innerText = "Procesando...";
+                btn.disabled = true;
+
+                setTimeout(() => {
+                    btn.innerText = originalText;
+                    btn.disabled = false;
+
+                    this.reset();
+                    grecaptcha.reset();
+
+                    // Limpiar todas las validaciones visuales
+                    ['nombre', 'telefono', 'email', 'password', 'descripcion'].forEach(clearValidation);
+                    document.getElementById('password-requirements').classList.remove('show');
+                    document.getElementById('password-strength').classList.remove('show');
+
+                    successMsg.style.display = 'block';
+
+                    setTimeout(() => {
+                        successMsg.style.display = 'none';
+                    }, 5000);
+
+                    console.log("✅ Formulario válido enviado:", fields);
+                }, 2000);
+            }
+        });
+        /**
+ * =================================================================
+ * ANALIZADOR DE COHERENCIA SEMÁNTICA 2.0 (Strict Spanish Mode)
+ * =================================================================
+ */
+        const GibberishDetector = {
+            // 1. DICCIONARIO DE PALABRAS CORTAS VÁLIDAS (1-3 letras)
+            // Esto evita que "dfa dre klo" pase. Si una palabra corta no está aquí, es sospechosa.
+            shortWords: new Set([
+                'a', 'e', 'o', 'y', 'u', 'el', 'la', 'lo', 'le', 'se', 'su', 'mi', 'tu', 'te', 'ti',
+                'si', 'no', 'da', 'de', 'di', 'do', 'en', 'un', 'al', 'es', 'ha', 'he', 'ir', 'va', 've',
+                'vi', 'fe', 'ya', 'yo', 'ni', 'oa', 'os', 'so', 'ar', 'as', 'ex', 'et', 'ok', 'ax',
+                'que', 'los', 'las', 'una', 'uno', 'del', 'por', 'con', 'sin', 'sus', 'mis', 'tus',
+                'esa', 'ese', 'eso', 'fin', 'pan', 'sol', 'dar', 'ver', 'voy', 'vas', 'van', 'fue',
+                'fui', 'vio', 'dio', 'pon', 'ten', 'sal', 'ven', 'haz', 'soy', 'son', 'hoy', 'mar',
+                'pie', 'luz', 'pez', 'dos', 'tres', 'mil', 'red', 'ley', 'sur', 'gol', 'mal', 'muy',
+                'mas', 'más', 'paz', 'gas', 'bus', 'tos', 'pus', 'rol', 'zen', 'fan', 'fax', 'web',
+                'app', 'api', 'sql', 'php', 'css', 'aws', 'git' // Términos técnicos aceptados
+            ]),
+
+            // 2. BIGRAMAS IMPOSIBLES O MUY RAROS EN ESPAÑOL
+            // Si aparecen, restan muchos puntos.
+            impossibleBigrams: [
+                'bk', 'cf', 'cg', 'cj', 'cp', 'cv', 'cx', 'dk', 'dl', 'dx', 'fq', 'fv', 'fx', 'fz',
+                'gq', 'gx', 'hx', 'jq', 'jv', 'jw', 'jx', 'jz', 'kq', 'kx', 'kz', 'pq', 'pv', 'px',
+                'qa', 'qe', 'qi', 'qo', 'qz', // La Q solo acepta U
+                'sx', 'tq', 'tx', 'vf', 'vj', 'vk', 'vm', 'vp', 'vq', 'vw', 'vx', 'vz', 'wq', 'wx',
+                'xj', 'xk', 'xq', 'xv', 'xz', 'yq', 'yx', 'zq', 'zx'
+            ],
+
+            config: {
+                maxConsonantesSeguidas: 4,
+                maxVocalesSeguidas: 3,     // "aei" ok, "aeio" raro
+                umbralPenalizacion: 2      // Cuantos "strikes" aguanta antes de fallar
+            },
+
+            analizar: function (text) {
+                if (!text) return { valid: false, reason: "Vacío" };
+
+                const cleanText = text.toLowerCase().trim();
+                const alphaOnly = cleanText.replace(/[^a-zñáéíóúü ]/g, ''); // Mantenemos espacios para analizar palabras
+
+                // --- FILTRO 0: LONGITUD MÍNIMA ---
+                // Si es muy corto (menos de 3 chars), solo validamos si es una palabra real
+                if (alphaOnly.replace(/ /g, '').length < 3) {
+                    return { valid: true, score: 100 };
+                }
+
+                let strikes = 0; // Puntos malos acumulados
+
+                // --- FILTRO 1: REGLA DE LA 'Q' (Inquebrantable) ---
+                // Busca una 'q' que NO esté seguida de 'u'
+                if (/q[^u]/.test(cleanText)) {
+                    return { valid: false, reason: "La letra Q debe ir seguida de U (que, qui...)" };
+                }
+
+                // --- FILTRO 2: PALABRAS INDIVIDUALES ---
+                const words = alphaOnly.split(/\s+/);
+                let shortWordsUnknown = 0;
+                let wordsWithoutVowels = 0;
+
+                words.forEach(word => {
+                    if (word.length === 0) return;
+
+                    // A. Chequeo de vocales: "mrc", "qw", "sdf" mueren aquí
+                    if (!/[aeiouáéíóúü]/.test(word)) {
+                        wordsWithoutVowels++;
+                        strikes += 2; // Penalización fuerte
+                    }
+
+                    // B. Chequeo de palabras cortas (1-3 letras)
+                    // Si escriben "dfa dre uh", fallarán porque no están en el Set 'shortWords'
+                    if (word.length <= 3) {
+                        if (!this.shortWords.has(word)) {
+                            shortWordsUnknown++;
+                            strikes += 0.5; // Penalización media por cada palabra rara
+                        }
+                    }
+                });
+
+                if (wordsWithoutVowels > 0 && words.length < 4) {
+                    return { valid: false, reason: "Hay palabras sin vocales" };
+                }
+
+                // Si más del 50% de las palabras cortas son desconocidas, es gibberish
+                // Ejemplo: "dfa dre uh klo" -> 4 palabras cortas, 4 desconocidas -> FALLA
+                const totalShortWords = words.filter(w => w.length <= 3 && w.length > 0).length;
+                if (totalShortWords > 0 && (shortWordsUnknown / totalShortWords) > 0.5) {
+                    return { valid: false, reason: "Demasiadas palabras cortas sin sentido" };
+                }
+
+                // --- FILTRO 3: BIGRAMAS IMPOSIBLES ---
+                // Buscamos pares prohibidos como 'kx' o 'cj'
+                const textNoSpaces = alphaOnly.replace(/ /g, '');
+                for (let i = 0; i < textNoSpaces.length - 1; i++) {
+                    const pair = textNoSpaces.substring(i, i + 2);
+                    if (this.impossibleBigrams.includes(pair)) {
+                        strikes += 1.5; // Penalización fuerte
+                    }
+                }
+
+                // --- FILTRO 4: REPETICIÓN Y PATRONES ---
+                if (/(.)\1{2,}/.test(cleanText)) { // 3 letras iguales seguidas (aaa)
+                    return { valid: false, reason: "Caracteres repetidos excesivamente" };
+                }
+
+                // Demasiadas consonantes juntas
+                if (/[bcdfghjklmnñpqrstvwxyz]{5,}/.test(textNoSpaces)) {
+                    return { valid: false, reason: "Exceso de consonantes consecutivas" };
+                }
+
+                // --- DECISIÓN FINAL ---
+                if (strikes > this.config.umbralPenalizacion) {
+                    console.warn(`Texto rechazado (Strikes: ${strikes}). Texto: ${cleanText}`);
+                    return { valid: false, reason: "El texto no parece tener estructura lógica en español" };
+                }
+
+                return { valid: true, score: 100 - (strikes * 10), reason: "OK" };
+            }
+        };
     </script>
 </body>
+
 </html>
