@@ -32,6 +32,32 @@
             min-height: 80vh;
         }
 
+        /* === ESTILOS NUEVOS PARA EL TELÉFONO === */
+        .phone-input-group {
+            display: flex;
+            gap: 10px;
+            width: 100%;
+        }
+
+        /* Estilo específico para el selector de bandera */
+        .phone-input-group .form-select {
+            width: 130px;
+            /* Ancho fijo para la bandera */
+            flex-shrink: 0;
+            /* Evita que se aplaste */
+            text-align: center;
+            /* Bandera centrada */
+            background-color: #f8fafc;
+            /* Mismo color que los inputs */
+            cursor: pointer;
+        }
+
+        /* Ajuste para el input de número */
+        .phone-input-group .form-input {
+            flex-grow: 1;
+            /* Ocupa todo el espacio restante */
+        }
+
         /* === HERO === */
         .contact-hero {
             text-align: center;
@@ -405,12 +431,21 @@
                         </div>
                         <div class="form-group">
                             <label class="form-label">Teléfono / WhatsApp *</label>
-                            <input type="tel" id="telefono" class="form-input" placeholder="+52 55 1234 5678" required>
-                            <span class="success-icon">✓</span>
+
+                            <div class="phone-input-group" style="display: flex; gap: 10px;">
+
+                                <select id="lada" class="form-select"
+                                    style="width: 120px; flex-shrink: 0; background-color: #f1f5f9;">
+                                </select>
+
+                                <input type="tel" id="telefono" class="form-input" placeholder="Número a 10 dígitos"
+                                    maxlength="15" required>
+                            </div>
+
+                            <span class="success-icon" style="top: 44px;">✓</span>
                             <div class="error-message" id="telefono-error"></div>
                         </div>
                     </div>
-
                     <div class="form-group">
                         <label class="form-label">Correo Corporativo *</label>
                         <input type="email" id="email" class="form-input" placeholder="nombre@empresa.com" required>
@@ -529,6 +564,81 @@
     <script src="../common/scripts/map-loader.js"></script>
 
     <script>
+        /* =================================================================
+   CONFIGURACIÓN DE PAÍSES Y TELÉFONOS
+   ================================================================= */
+
+        // 1. Base de datos de países (Puedes agregar más copiando la línea)
+        // type: 'mx' (Agrupa 3-3-4), 'us' (Estilo gringo), 'gen' (Generico 4-4)
+        const countryData = [
+            { code: "+52", flag: "🇲🇽", name: "México", type: "mx", max: 10, placeholder: "764 123 4567" },
+            { code: "+1", flag: "🇺🇸", name: "USA", type: "us", max: 10, placeholder: "(555) 123-4567" },
+            { code: "+34", flag: "🇪🇸", name: "España", type: "gen", max: 9, placeholder: "612 34 56 78" },
+            { code: "+54", flag: "🇦🇷", name: "Arg", type: "gen", max: 11, placeholder: "9 11 1234 5678" },
+            { code: "+57", flag: "🇨🇴", name: "Col", type: "mx", max: 10, placeholder: "300 123 4567" },
+            { code: "+51", flag: "🇵🇪", name: "Perú", type: "gen", max: 9, placeholder: "912 345 678" },
+        ];
+
+        // 2. Inicializar el Select automáticamente
+        const selectLada = document.getElementById('lada');
+        const inputTelefono = document.getElementById('telefono');
+
+        (() => {
+            countryData.forEach(country => {
+                const option = document.createElement('option');
+                option.value = country.code;
+                option.textContent = `${country.flag} ${country.code}`;
+                // Guardamos datos útiles en el HTML para usarlos luego
+                option.setAttribute('data-type', country.type);
+                option.setAttribute('data-max', country.max);
+                option.setAttribute('data-place', country.placeholder);
+                selectLada.appendChild(option);
+            });
+        })();
+
+        // 3. El Formateador Visual (Tu máscara de entrada)
+        const phoneFormatter = {
+            format: (value) => {
+                // Obtenemos configuración del país actual
+                const selectedOption = selectLada.options[selectLada.selectedIndex];
+                const type = selectedOption.getAttribute('data-type');
+                const maxLen = selectedOption.getAttribute('data-max');
+
+                // Limpiar basura (solo dejar números)
+                let numbers = value.replace(/\D/g, '');
+
+                // Cortar si se pasa del máximo
+                if (numbers.length > maxLen) numbers = numbers.substring(0, maxLen);
+
+                // --- LÓGICA DE MÉXICO (+52) ---
+                // Formato: 3 dígitos (Lada) + 3 dígitos + 4 dígitos
+                // Sirve para Puebla (764), Veracruz (784) y se ve bien en CDMX (55)
+                if (type === 'mx') {
+                    const p1 = numbers.substring(0, 3);
+                    const p2 = numbers.substring(3, 6);
+                    const p3 = numbers.substring(6, 10);
+                    if (numbers.length > 6) return `${p1} ${p2} ${p3}`;
+                    if (numbers.length > 3) return `${p1} ${p2}`;
+                    return numbers;
+                }
+
+                // --- LÓGICA DE USA (+1) ---
+                // Formato: (XXX) XXX-XXXX
+                if (type === 'us') {
+                    const p1 = numbers.substring(0, 3);
+                    const p2 = numbers.substring(3, 6);
+                    const p3 = numbers.substring(6, 10);
+                    if (numbers.length > 6) return `(${p1}) ${p2}-${p3}`;
+                    if (numbers.length > 3) return `(${p1}) ${p2}`;
+                    if (numbers.length > 0) return `(${p1}`;
+                    return numbers;
+                }
+
+                // --- RESTO DEL MUNDO ---
+                // Agrupamos de 4 en 4 para que sea legible
+                return numbers.match(/.{1,4}/g)?.join(' ') || numbers;
+            }
+        };
 
         /* =================================================================
            HERRAMIENTAS DE LIMPIEZA (SANITIZERS)
@@ -589,32 +699,26 @@
                 if (!/^[a-záéíóúñA-ZÁÉÍÓÚÑ\s]+$/.test(value)) {
                     return { valid: false, message: 'El nombre solo puede contener letras' };
                 }
-
-                // 3. Anti-Gibberish (Corrección de variable aquí)
-                const analisis = GibberishDetector.analizar(value); // Le puse un nombre más corto
-
-                if (!analisis.valid) {
-                    return { valid: false, message: 'El nombre ingresado no parece ser coherente' };
-                }
                 return { valid: true };
             },
 
-            // Validar teléfono: formato mexicano o internacional
+            // Validar teléfono (Dinámico según país)
             telefono: (value) => {
-                const cleaned = value.replace(/[\s\-\(\)]/g, '');
+                // Obtener reglas del país seleccionado actualmente
+                const selectedOption = document.getElementById('lada').options[document.getElementById('lada').selectedIndex];
+                const maxLen = parseInt(selectedOption.getAttribute('data-max'));
 
-                if (!/^\+?\d+$/.test(cleaned)) {
+                // Limpiamos formato visual para contar números reales
+                const cleanNumber = value.replace(/\D/g, '');
+
+                if (!/^\d+$/.test(cleanNumber)) {
                     return { valid: false, message: 'El teléfono solo puede contener números' };
                 }
 
-                if (cleaned.startsWith('+')) {
-                    if (cleaned.length < 11 || cleaned.length > 16) {
-                        return { valid: false, message: 'Formato internacional: +52 55 1234 5678' };
-                    }
-                } else {
-                    if (cleaned.length !== 10) {
-                        return { valid: false, message: 'Debe tener 10 dígitos' };
-                    }
+                // Validación estricta de longitud
+                // Si es México, exige 10. Si es España, exige 9.
+                if (cleanNumber.length !== maxLen) {
+                    return { valid: false, message: `Para este país se requieren ${maxLen} dígitos` };
                 }
 
                 return { valid: true };
@@ -810,16 +914,46 @@
             }
         });
 
-        // Teléfono
-        document.getElementById('telefono').addEventListener('input', (e) => {
-            const result = validators.telefono(e.target.value);
-            if (e.target.value.length === 0) {
+        // --- LÓGICA DE EVENTOS DEL TELÉFONO ---
+
+        const handlePhoneInput = (e) => {
+            const valorOriginal = inputTelefono.value;
+
+            // 1. Formatear (Poner espacios bonitos)
+            const valorFormateado = phoneFormatter.format(valorOriginal);
+
+            if (valorOriginal !== valorFormateado) {
+                inputTelefono.value = valorFormateado;
+            }
+
+            // 2. Validar (Checar si ya cumplió la longitud)
+            const result = validators.telefono(valorFormateado);
+
+            if (valorFormateado.length === 0) {
                 clearValidation('telefono');
             } else if (result.valid) {
                 showSuccess('telefono');
             } else {
+                // Opcional: Solo mostramos error si ya terminó de escribir o si excedió longitud
+                // Para no molestar mientras escribe, podrías poner condiciones aquí, 
+                // pero tu lógica actual de mostrar error al instante está bien.
                 showError('telefono', result.message);
             }
+        };
+
+        // Evento al escribir
+        inputTelefono.addEventListener('input', handlePhoneInput);
+
+        // Evento al cambiar país (Select)
+        selectLada.addEventListener('change', () => {
+            // 1. Actualizar Placeholder visual
+            const selectedOption = selectLada.options[selectLada.selectedIndex];
+            inputTelefono.placeholder = selectedOption.getAttribute('data-place');
+
+            // 2. Limpiar y enfocar para que escriba de nuevo
+            inputTelefono.value = '';
+            clearValidation('telefono');
+            inputTelefono.focus();
         });
 
         // Email con validación estricta
@@ -1000,124 +1134,111 @@
         });
         /**
          * =================================================================
-         * ANALIZADOR DE COHERENCIA SEMÁNTICA 2.0 (Strict Spanish Mode)
+         * (Strict Streak Logic)
          * =================================================================
          */
         const GibberishDetector = {
-            // 1. DICCIONARIO DE PALABRAS CORTAS VÁLIDAS (1-3 letras)
-            // Esto evita que "dfa dre klo" pase. Si una palabra corta no está aquí, es sospechosa.
-            shortWords: new Set([
-                'a', 'e', 'o', 'y', 'u', 'el', 'la', 'lo', 'le', 'se', 'su', 'mi', 'tu', 'te', 'ti',
-                'si', 'no', 'da', 'de', 'di', 'do', 'en', 'un', 'al', 'es', 'ha', 'he', 'ir', 'va', 've',
-                'vi', 'fe', 'ya', 'yo', 'ni', 'oa', 'os', 'so', 'ar', 'as', 'ex', 'et', 'ok', 'ax',
-                'que', 'los', 'las', 'una', 'uno', 'del', 'por', 'con', 'sin', 'sus', 'mis', 'tus',
-                'esa', 'ese', 'eso', 'fin', 'pan', 'sol', 'dar', 'ver', 'voy', 'vas', 'van', 'fue',
-                'fui', 'vio', 'dio', 'pon', 'ten', 'sal', 'ven', 'haz', 'soy', 'son', 'hoy', 'mar',
-                'pie', 'luz', 'pez', 'dos', 'tres', 'mil', 'red', 'ley', 'sur', 'gol', 'mal', 'muy',
-                'mas', 'más', 'paz', 'gas', 'bus', 'tos', 'pus', 'rol', 'zen', 'fan', 'fax', 'web',
-                'app', 'api', 'sql', 'php', 'css', 'aws', 'git' // Términos técnicos aceptados
+            // 1. HELPERS
+            normalize: (str) => {
+                // Normaliza y reemplaza saltos de línea por espacios para evitar error del "Enter"
+                return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[\r\n]+/g, " ").toLowerCase();
+            },
+
+            // 2. WHITELIST TÉCNICA (Igual que antes...)
+            techTerms: new Set([
+                'java', 'python', 'javascript', 'js', 'ts', 'typescript', 'php', 'c#', 'sharp', 'c++', 'cpp', 'ruby', 'go', 'golang', 'rust',
+                'html', 'css', 'scss', 'sass', 'sql', 'mysql', 'postgres', 'mongodb', 'firebase', 'aws', 'azure', 'google', 'cloud', 'docker',
+                'kubernetes', 'git', 'github', 'react', 'vue', 'angular', 'node', 'express', 'django', 'laravel', 'flutter', 'react native',
+                'ionic', 'ios', 'android', 'figma', 'adobe', 'photoshop', 'wordpress', 'shopify', 'seo', 'sem', 'api', 'json', 'xml', 'rest'
             ]),
 
-            // 2. BIGRAMAS IMPOSIBLES O MUY RAROS EN ESPAÑOL
-            // Si aparecen, restan muchos puntos.
-            impossibleBigrams: [
-                'bk', 'cf', 'cg', 'cj', 'cp', 'cv', 'cx', 'dk', 'dl', 'dx', 'fq', 'fv', 'fx', 'fz',
-                'gq', 'gx', 'hx', 'jq', 'jv', 'jw', 'jx', 'jz', 'kq', 'kx', 'kz', 'pq', 'pv', 'px',
-                'qa', 'qe', 'qi', 'qo', 'qz', // La Q solo acepta U
-                'sx', 'tq', 'tx', 'vf', 'vj', 'vk', 'vm', 'vp', 'vq', 'vw', 'vx', 'vz', 'wq', 'wx',
-                'xj', 'xk', 'xq', 'xv', 'xz', 'yq', 'yx', 'zq', 'zx'
-            ],
+            // 3. DICCIONARIO ESPAÑOL (Igual que antes + palabras clave que faltaban)
+            commonWords: new Set(
+                ("de la que el en y a los se del las un por con no una su para es al lo como mas o pero sus le ha me si sin sobre este ya entre " +
+                    "cuando todo esta ser son dos tambien fue habia era muy años hasta desde mi porque que solo han yo hay vez puede todos asi nos ni parte tiene " +
+                    "el uno donde bien tiempo mismo ese ahora cada e vida otro despues te otros aunque esa eso hace otra gobierno tan durante siempre dia tanto tres si " +
+                    "gran pais segun menos mundo año antes estado contra sino forma caso nada trabajo estas sus quien estara lugar empresas esto embargo dias tener " +
+                    "primer bajo hacer saber general momento ella millones fin casa mejor ciudad politica nueva algunos entonces hoy dice existe frente " +
+                    "ayuda hombre cuenta real universidad trato hola buen tardes noches saludos estimado estimada señor señora usted ustedes nosotros ellos ellas " +
+                    "proyecto cotizacion interes desarrollo necesito quiero busco requerimientos funcionalidades usuario cliente empresa negocio ventas sistema " +
+                    "aplicacion sitio pagina plataforma base datos servidor nube integracion backend frontend diseño logo marca identidad costo precio presupuesto " +
+                    "entrega propuesta duda pregunta informacion contacto telefono correo email whatsapp llamada mensaje reunion cita presencial online remoto " +
+                    "gracias favor atentamente quedo atento espera respuesta excelente tarde dia noche equipo grupo staff agencia servicios productos catalogo " +
+                    "soy estoy vamos ver dar poder decir ir venir saber querer llegar pasar deber poner quedar creer hablar llevar dejar seguir encontrar llamar " +
+                    "programando programar programador web movil").split(" ")
+            ),
 
+            // 4. CONFIGURACIÓN
             config: {
-                maxConsonantesSeguidas: 4,
-                maxVocalesSeguidas: 3,     // "aei" ok, "aeio" raro
-                umbralPenalizacion: 2      // Cuantos "strikes" aguanta antes de fallar
+                minVocabularyRatio: 0.50, // 50% del texto debe ser conocido
+                maxConsecutiveUnknown: 3  // <--- NUEVA REGLA MORTAL: 3 palabras raras seguidas = BLOQUEO
             },
 
             analizar: function (text) {
                 if (!text) return { valid: false, reason: "Vacío" };
 
-                const cleanText = text.toLowerCase().trim();
-                const alphaOnly = cleanText.replace(/[^a-zñáéíóúü ]/g, ''); // Mantenemos espacios para analizar palabras
+                // 1. Limpieza que arregla el BUG DEL ENTER
+                // Reemplazamos \n por espacio ANTES de cualquier cosa
+                const cleanText = this.normalize(text).trim();
 
-                // --- FILTRO 0: LONGITUD MÍNIMA ---
-                // Si es muy corto (menos de 3 chars), solo validamos si es una palabra real
-                if (alphaOnly.replace(/ /g, '').length < 3) {
-                    return { valid: true, score: 100 };
+                // Obtenemos array de palabras limpias
+                const words = cleanText.replace(/[^a-z0-9 ]/g, ' ').split(/\s+/).filter(w => w.length > 0);
+
+                // --- FILTRO 0: LONGITUD ---
+                if (words.length < 3) {
+                    const known = words.filter(w => this.commonWords.has(w) || this.techTerms.has(w));
+                    return known.length === words.length ? { valid: true } : { valid: false, reason: "Texto muy corto y desconocido" };
                 }
 
-                let strikes = 0; // Puntos malos acumulados
+                // --- FILTRO 1: ANÁLISIS DE DICCIONARIO Y RACHAS ---
+                let knownWordsCount = 0;
+                let consecutiveUnknown = 0; // Contador de racha
+                let maxStreak = 0;          // La racha más larga encontrada
 
-                // --- FILTRO 1: REGLA DE LA 'Q' (Inquebrantable) ---
-                // Busca una 'q' que NO esté seguida de 'u'
-                if (/q[^u]/.test(cleanText)) {
-                    return { valid: false, reason: "La letra Q debe ir seguida de U (que, qui...)" };
-                }
+                for (let word of words) {
+                    // Lógica de plurales simples
+                    let root = word;
+                    if (word.endsWith('s')) root = word.slice(0, -1);
+                    else if (word.endsWith('es')) root = word.slice(0, -2);
+                    else if (word.endsWith('ando')) root = word.slice(0, -4); // gerundios simples (programando -> program)
 
-                // --- FILTRO 2: PALABRAS INDIVIDUALES ---
-                const words = alphaOnly.split(/\s+/);
-                let shortWordsUnknown = 0;
-                let wordsWithoutVowels = 0;
+                    const isKnown = this.commonWords.has(word) || this.techTerms.has(word) ||
+                        this.commonWords.has(root) || this.techTerms.has(root) ||
+                        !isNaN(word);
 
-                words.forEach(word => {
-                    if (word.length === 0) return;
-
-                    // A. Chequeo de vocales: "mrc", "qw", "sdf" mueren aquí
-                    if (!/[aeiouáéíóúü]/.test(word)) {
-                        wordsWithoutVowels++;
-                        strikes += 2; // Penalización fuerte
-                    }
-
-                    // B. Chequeo de palabras cortas (1-3 letras)
-                    // Si escriben "dfa dre uh", fallarán porque no están en el Set 'shortWords'
-                    if (word.length <= 3) {
-                        if (!this.shortWords.has(word)) {
-                            shortWordsUnknown++;
-                            strikes += 0.5; // Penalización media por cada palabra rara
+                    if (isKnown) {
+                        knownWordsCount++;
+                        consecutiveUnknown = 0; // Racha rota, reseteamos a 0
+                    } else {
+                        consecutiveUnknown++;   // Sumamos a la racha de basura
+                        if (consecutiveUnknown > maxStreak) {
+                            maxStreak = consecutiveUnknown;
                         }
                     }
-                });
-
-                if (wordsWithoutVowels > 0 && words.length < 4) {
-                    return { valid: false, reason: "Hay palabras sin vocales" };
                 }
 
-                // Si más del 50% de las palabras cortas son desconocidas, es gibberish
-                // Ejemplo: "dfa dre uh klo" -> 4 palabras cortas, 4 desconocidas -> FALLA
-                const totalShortWords = words.filter(w => w.length <= 3 && w.length > 0).length;
-                if (totalShortWords > 0 && (shortWordsUnknown / totalShortWords) > 0.5) {
-                    return { valid: false, reason: "Demasiadas palabras cortas sin sentido" };
+                // REGLA MORTAL 1: ¿Hubo demasiada basura seguida?
+                // Esto mata a: "Hola buen dia asd asd asd"
+                if (maxStreak >= this.config.maxConsecutiveUnknown) {
+                    return { valid: false, reason: "El texto contiene secuencias de palabras incoherentes." };
                 }
 
-                // --- FILTRO 3: BIGRAMAS IMPOSIBLES ---
-                // Buscamos pares prohibidos como 'kx' o 'cj'
-                const textNoSpaces = alphaOnly.replace(/ /g, '');
-                for (let i = 0; i < textNoSpaces.length - 1; i++) {
-                    const pair = textNoSpaces.substring(i, i + 2);
-                    if (this.impossibleBigrams.includes(pair)) {
-                        strikes += 1.5; // Penalización fuerte
-                    }
+                // REGLA 2: Promedio General
+                const coverageRatio = knownWordsCount / words.length;
+                if (coverageRatio < this.config.minVocabularyRatio) {
+                    return { valid: false, reason: "Demasiadas palabras desconocidas en total." };
                 }
 
-                // --- FILTRO 4: REPETICIÓN Y PATRONES ---
-                if (/(.)\1{2,}/.test(cleanText)) { // 3 letras iguales seguidas (aaa)
-                    return { valid: false, reason: "Caracteres repetidos excesivamente" };
-                }
+                // --- FILTRO 2: ESTRUCTURA (Bigramas imposibles) ---
+                // Regla Q sin U
+                if (/q[^u]/.test(cleanText)) return { valid: false, reason: "Uso incorrecto de la Q" };
 
-                // Demasiadas consonantes juntas
-                if (/[bcdfghjklmnñpqrstvwxyz]{5,}/.test(textNoSpaces)) {
-                    return { valid: false, reason: "Exceso de consonantes consecutivas" };
-                }
+                // Exceso de consonantes
+                if (/[bcdfghjklmnñpqrstvwxyz]{5,}/.test(cleanText)) return { valid: false, reason: "Imposible pronunciar" };
 
-                // --- DECISIÓN FINAL ---
-                if (strikes > this.config.umbralPenalizacion) {
-                    console.warn(`Texto rechazado (Strikes: ${strikes}). Texto: ${cleanText}`);
-                    return { valid: false, reason: "El texto no parece tener estructura lógica en español" };
-                }
-
-                return { valid: true, score: 100 - (strikes * 10), reason: "OK" };
+                return { valid: true };
             }
-        }; 
+        };
     </script>
 </body>
 
