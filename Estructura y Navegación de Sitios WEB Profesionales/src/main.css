@@ -23,8 +23,8 @@ body {
 
 /* === 1. HERO SECTION === */
 .landing-hero {
-    padding: 100px 0 120px;
-    background: linear-gradient(180deg, #f8fafc 0%, #ffffff 100%);
+    padding: 12px;
+    background: linear-gradient(180deg, #4b96e0 0%, #ffffff 100%);
     overflow: hidden;
     position: relative;
 }
@@ -49,7 +49,7 @@ body {
     font-size: 3.2rem; line-height: 1.1; color: #0f172a;
     font-weight: 800; margin: 0 0 25px 0; letter-spacing: -1.5px;
 }
-.highlight { color: #0ea5e9; }
+.highlight { color: #dfe1e2; }
 
 .hero-text-content p {
     font-size: 1.15rem; color: #64748b; margin-bottom: 35px;
