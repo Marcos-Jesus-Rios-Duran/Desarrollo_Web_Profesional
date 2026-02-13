@@ -935,7 +935,7 @@
                 showSuccess('telefono');
             } else {
                 // Opcional: Solo mostramos error si ya terminó de escribir o si excedió longitud
-                // Para no molestar mientras escribe, podrías poner condiciones aquí, 
+                // Para no molestar mientras escribe, podrías poner condiciones aquí,
                 // pero tu lógica actual de mostrar error al instante está bien.
                 showError('telefono', result.message);
             }
@@ -1133,108 +1133,201 @@
             }
         });
         /**
-         * =================================================================
-         * (Strict Streak Logic)
-         * =================================================================
-         */
+ * Detector de Galimatías (GibberishDetector) v3.0
+ * * Módulo encargado de analizar la coherencia léxica y estructural de un texto
+ * para determinar si es un mensaje humano válido o una secuencia aleatoria.
+ * * @author Marcos & Gemini
+ */
         const GibberishDetector = {
-            // 1. HELPERS
-            normalize: (str) => {
-                // Normaliza y reemplaza saltos de línea por espacios para evitar error del "Enter"
-                return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[\r\n]+/g, " ").toLowerCase();
+
+            // --- CONFIGURACIÓN Y DATOS ---
+
+            config: {
+                minVocabularyRatio: 0.45, // 50% del texto debe ser conocido
+                maxConsecutiveUnknown: 2, // 2 palabras desconocidas seguidas = ALERTA (pero con excepciones)
+                maxConsonantsSequence: 5  // "bcdfgh" = impronunciable
             },
 
-            // 2. WHITELIST TÉCNICA (Igual que antes...)
-            techTerms: new Set([
-                'java', 'python', 'javascript', 'js', 'ts', 'typescript', 'php', 'c#', 'sharp', 'c++', 'cpp', 'ruby', 'go', 'golang', 'rust',
-                'html', 'css', 'scss', 'sass', 'sql', 'mysql', 'postgres', 'mongodb', 'firebase', 'aws', 'azure', 'google', 'cloud', 'docker',
-                'kubernetes', 'git', 'github', 'react', 'vue', 'angular', 'node', 'express', 'django', 'laravel', 'flutter', 'react native',
-                'ionic', 'ios', 'android', 'figma', 'adobe', 'photoshop', 'wordpress', 'shopify', 'seo', 'sem', 'api', 'json', 'xml', 'rest'
+            // Lista estricta de palabras funcionales cortas (1-2 letras) en Español
+            // Cualquier palabra de 2 letras que NO esté aquí, es sospechosa (ej: "xl", "ty")
+            shortWordsWhitelist: new Set([
+                'a', 'e', 'y', 'o', 'u',
+                'el', 'la', 'lo', 'le', 'un', 'de', 'en', 'es', 'al', 'ha', 'he', 'si', 'no',
+                'mi', 'tu', 'su', 'te', 'se', 'me', 'ti', 'ir', 'va', 've', 'vi', 'da', 'di',
+                'ya', 'yo', 'ni', 'so', 'os', 'fe', 'ex', 'ok', 'id'
             ]),
 
-            // 3. DICCIONARIO ESPAÑOL (Igual que antes + palabras clave que faltaban)
-            commonWords: new Set(
-                ("de la que el en y a los se del las un por con no una su para es al lo como mas o pero sus le ha me si sin sobre este ya entre " +
-                    "cuando todo esta ser son dos tambien fue habia era muy años hasta desde mi porque que solo han yo hay vez puede todos asi nos ni parte tiene " +
-                    "el uno donde bien tiempo mismo ese ahora cada e vida otro despues te otros aunque esa eso hace otra gobierno tan durante siempre dia tanto tres si " +
-                    "gran pais segun menos mundo año antes estado contra sino forma caso nada trabajo estas sus quien estara lugar empresas esto embargo dias tener " +
-                    "primer bajo hacer saber general momento ella millones fin casa mejor ciudad politica nueva algunos entonces hoy dice existe frente " +
-                    "ayuda hombre cuenta real universidad trato hola buen tardes noches saludos estimado estimada señor señora usted ustedes nosotros ellos ellas " +
-                    "proyecto cotizacion interes desarrollo necesito quiero busco requerimientos funcionalidades usuario cliente empresa negocio ventas sistema " +
-                    "aplicacion sitio pagina plataforma base datos servidor nube integracion backend frontend diseño logo marca identidad costo precio presupuesto " +
-                    "entrega propuesta duda pregunta informacion contacto telefono correo email whatsapp llamada mensaje reunion cita presencial online remoto " +
-                    "gracias favor atentamente quedo atento espera respuesta excelente tarde dia noche equipo grupo staff agencia servicios productos catalogo " +
-                    "soy estoy vamos ver dar poder decir ir venir saber querer llegar pasar deber poner quedar creer hablar llevar dejar seguir encontrar llamar " +
-                    "programando programar programador web movil").split(" ")
-            ),
+            // Tu Whitelist técnica
+            // Tu Whitelist técnica (COMPLETA Y BLINDADA)
+            techTerms: new Set([
+                // Lenguajes y Core
+                'java', 'python', 'javascript', 'js', 'ts', 'typescript', 'php', 'c#', 'sharp', 'c++', 'cpp', 'ruby', 'go', 'golang', 'rust', 'c', 'swift', 'kotlin', 'dart',
 
-            // 4. CONFIGURACIÓN
-            config: {
-                minVocabularyRatio: 0.50, // 50% del texto debe ser conocido
-                maxConsecutiveUnknown: 3  // <--- NUEVA REGLA MORTAL: 3 palabras raras seguidas = BLOQUEO
+                // Web y Datos
+                'html', 'css', 'scss', 'sass', 'sql', 'mysql', 'postgres', 'mongodb', 'firebase', 'aws', 'azure', 'google', 'cloud', 'docker', 'json', 'xml', 'rest', 'graphql',
+
+                // Frameworks y Librerías
+                'kubernetes', 'git', 'github', 'react', 'vue', 'angular', 'node', 'express', 'django', 'laravel', 'flutter', 'react native', 'native', 'ionic', 'nextjs', 'nestjs',
+
+                // Plataformas y Herramientas (Nuevas agregadas)
+                'ios', 'android', 'figma', 'adobe', 'photoshop', 'wordpress', 'shopify', 'vtex', 'magento', 'woocommerce', 'prestashop', 'vercel', 'netlify', 'heroku','Udemy', 'Coursera', 'edX', 'Pluralsight',
+                'LMS', 'CMS', 'CRM', 'ERP',
+                'plugins', 'bitso', 'flotillas', 'lms', 'privacidad', 'servidores','agentes','adobe','xd','illustrator','after effects','premiere','canva','notion','slack','trello','jira','asana',
+
+                // Conceptos de Negocio y Roles (CRÍTICOS para tus pruebas)
+                'seo', 'sem', 'api', 'ux', 'ui', 'cv', 'ia', 'app', 'qa', 'erp', 'crm', 'saas', 'ssl', 'b2b', 'b2c',
+                'backend', 'frontend', 'fullstack', 'devops', 'analytics',
+
+                // Palabras comunes en el argot tech (Spanglish)
+                'dashboard', 'landing', 'leads', 'bug', 'deploy', 'login', 'ranking', 'freelance','uxui',
+
+                // Pagos y Enterprise
+                'stripe', 'paypal', 'openpay', 'mercadopago', 'salesforce', 'sap', 'oracle', 'hubspot', 'odoo', 'zoho'
+            ]),
+            // Tu Diccionario común
+            commonWords: new Set(
+
+                ("de la que el en y a los se del las un por con no una su para es al lo como mas o pero sus le ha me si sin sobre este ya entre " +
+
+                    "cuando todo esta ser son dos tambien fue habia era muy años hasta desde mi porque que solo han yo hay vez puede todos asi nos ni parte tiene " +
+
+                    "el uno donde bien tiempo mismo ese ahora cada e vida otro despues te otros aunque esa eso hace otra gobierno tan durante siempre dia tanto tres si " +
+
+                    "gran pais segun menos mundo año antes estado contra sino forma caso nada trabajo estas sus quien estara lugar empresas esto embargo dias tener " +
+
+                    "primer bajo hacer saber general momento ella millones fin casa mejor ciudad politica nueva algunos entonces hoy dice existe frente " +
+
+                    "ayuda hombre cuenta real universidad trato hola buen tardes noches saludos estimado estimada señor señora usted ustedes nosotros ellos ellas " +
+
+                    "proyecto cotizacion interes desarrollo necesito quiero busco requerimientos funcionalidades usuario cliente empresa negocio ventas sistema " +
+
+                    "aplicacion sitio pagina plataforma base datos servidor nube integracion backend frontend diseño logo marca identidad costo precio presupuesto " +
+
+                    "entrega propuesta duda pregunta informacion contacto telefono correo email whatsapp llamada mensaje reunion cita presencial online remoto " +
+
+                    "gracias favor atentamente quedo atento espera respuesta excelente tarde dia noche equipo grupo staff agencia servicios productos catalogo " +
+
+                    "soy estoy vamos ver dar poder decir ir venir saber querer llegar pasar deber poner quedar creer hablar llevar dejar seguir encontrar llamar " +
+
+                    "programando programar programador web movil"
+                    + " gustaria cotizar movil android ios inventario experto arquitectura software cuesta basica requiero integracion transporte norte etapa cordiales respuesta migrar factura interesa " +
+                    "comprar vender pagar pago transferencia mensual anual urgente plazo fecha hora semana mes posible rapido eficiente calidad soporte mantenimiento " +
+                    "tienda online virtual digital marketing redes sociales facebook instagram google anuncios posicionamiento administracion gestion usuarios clientes productos " +
+                    "cuanto donde quien cuales mediante durante ante bajo cabe con contra desde entre hacia hasta para por segun sin so sobre tras versus via " +
+                    "ocupo sale urge quisiera informes echenme mano integrar chatgpt solucion generativa chatbot entrenado solicito erp empresarial requerimos " +
+                    "consultoria ciberseguridad buscamos partner tecnologico startup implementacion crm salesforce legacy code cobol mantenimiento mejora " +
+                    "automatizacion procesos inteligencia artificial machine learning datos data ciencia nube cloud azure aws gcp servidor hosting dominio " +
+                    "ssl seguridad certificado pasarela pagos stripe paypal openpay mercado libre woocommerce prestashop magento vtex sap oracle netsuite " +
+                    "odoo zoho hubspot activo fijo nomina contabilidad electronica sat facturacion " +
+                    "chamba vacante practicas apoyo telemedicina agendar citas medicas expediente inmobiliaria recorridos escolar cursos cayo error hackearon " +
+                    "acceder panel certificado caduco recuperar respaldo deploy produccion vercel dashboard analytics landing page leads bug login tarjeta " +
+                    "credito ubicados info precio aceptan estan tarjeta credito visa mastercard efectivo oxxo pendiente bitso").split(" ")),
+
+            // --- MÉTODOS AUXILIARES ---
+
+            /**
+             * Normaliza el texto eliminando acentos y saltos de línea.
+             * IMPORTANTE: No pasamos a minúsculas aquí todavía para detectar Nombres Propios.
+             */
+            // AHORA (Versión Mejorada):
+            normalize: (str) => {
+                // 1. Quita acentos.
+                // 2. Reemplaza saltos de línea, barras (/), guiones (-) y puntos (.) por ESPACIOS.
+                // Esto separa "UX/UI" en "UX UI" y "Node.js" en "Node js".
+                return str.normalize("NFD")
+                    .replace(/[\u0300-\u036f]/g, "")
+                    .replace(/[\r\n\/\-\.]+/g, " ") // <--- AQUÍ ESTÁ LA MAGIA
+                    .toLowerCase(); // Ya que estamos, pasamos a minusculas aquí para facilitar
             },
 
+            /**
+             * Verifica si una palabra corta (<= 2 chars) es válida.
+             */
+            isValidShortWord: function (word) {
+                return this.shortWordsWhitelist.has(word.toLowerCase()) ||
+                    this.techTerms.has(word.toLowerCase()) ||
+                    !isNaN(word);
+            },
+
+            // --- NÚCLEO DEL ANÁLISIS ---
+
+            /**
+             * Evalúa la validez del texto.
+             * @param {string} text - El texto a analizar.
+             * @returns {object} { valid: boolean, reason: string|null }
+             */
             analizar: function (text) {
-                if (!text) return { valid: false, reason: "Vacío" };
+                if (!text) return { valid: false, reason: "Texto vacío" };
 
-                // 1. Limpieza que arregla el BUG DEL ENTER
-                // Reemplazamos \n por espacio ANTES de cualquier cosa
-                const cleanText = this.normalize(text).trim();
+                const rawText = this.normalize(text).trim();
+                // Separamos conservando el casing original para detectar "Jeff" vs "jeff"
+                const tokens = rawText.split(/\s+/).filter(w => w.length > 0);
 
-                // Obtenemos array de palabras limpias
-                const words = cleanText.replace(/[^a-z0-9 ]/g, ' ').split(/\s+/).filter(w => w.length > 0);
+                if (tokens.length === 0) return { valid: false, reason: "Sin contenido" };
 
-                // --- FILTRO 0: LONGITUD ---
-                if (words.length < 3) {
-                    const known = words.filter(w => this.commonWords.has(w) || this.techTerms.has(w));
-                    return known.length === words.length ? { valid: true } : { valid: false, reason: "Texto muy corto y desconocido" };
-                }
+                // 1. CHEQUEO DE PATRONES IMPOSIBLES (Regex rápido)
+                // Chequeo de Q sin U (qiero -> error), ignorando qatar/qi
+                if (/q[ei]/i.test(rawText)) return { valid: false, reason: "Error ortográfico grave (Q mal usada)" };
+                // Exceso de consonantes seguidas (bcdfgh)
+                const consonantRegex = new RegExp(`[bcdfghjklmnñpqrstvwxyz]{${this.config.maxConsonantsSequence},}`, 'i');
+                if (consonantRegex.test(rawText)) return { valid: false, reason: "Secuencia impronunciable de consonantes" };
 
-                // --- FILTRO 1: ANÁLISIS DE DICCIONARIO Y RACHAS ---
+
+                // 2. ANÁLISIS PALABRA POR PALABRA
                 let knownWordsCount = 0;
-                let consecutiveUnknown = 0; // Contador de racha
-                let maxStreak = 0;          // La racha más larga encontrada
+                let consecutiveUnknown = 0;
 
-                for (let word of words) {
-                    // Lógica de plurales simples
-                    let root = word;
-                    if (word.endsWith('s')) root = word.slice(0, -1);
-                    else if (word.endsWith('es')) root = word.slice(0, -2);
-                    else if (word.endsWith('ando')) root = word.slice(0, -4); // gerundios simples (programando -> program)
+                for (let i = 0; i < tokens.length; i++) {
+                    const token = tokens[i];
+                    const lowerToken = token.toLowerCase();
+                    const cleanToken = lowerToken.replace(/[^a-z0-9]/g, ''); // Sin puntos ni comas para chequear diccionario
 
-                    const isKnown = this.commonWords.has(word) || this.techTerms.has(word) ||
-                        this.commonWords.has(root) || this.techTerms.has(root) ||
-                        !isNaN(word);
+                    // A) LÓGICA DE PALABRAS CORTAS (Tu idea)
+                    if (cleanToken.length <= 2) {
+                        if (this.isValidShortWord(cleanToken)) {
+                            knownWordsCount++;
+                            consecutiveUnknown = 0;
+                            continue; // Es válida, pasamos a la siguiente
+                        } else {
+                            // Si es corta y desconocida (ej: "sl", "jk"), es MUY grave.
+                            // Penalizamos doble o retornamos falso directo.
+                            return { valid: false, reason: `Palabra corta incoherente detectada: ${token}` };
+                        }
+                    }
+
+                    // B) BÚSQUEDA EN DICCIONARIOS
+                    let isKnown = this.commonWords.has(cleanToken) ||
+                        this.techTerms.has(cleanToken) ||
+                        !isNaN(cleanToken);
+
+                    // C) HEURÍSTICA DE NOMBRES PROPIOS (Jeff Bezos / Elon Musk)
+                    // Si no está en diccionario, pero empieza con Mayúscula y NO es la primera palabra del texto
+                    // Le damos el "beneficio de la duda" -> No rompe la racha, pero tampoco suma como conocida.
+                    const isProperNoun = /^[A-Z]/.test(token) && i > 0;
 
                     if (isKnown) {
                         knownWordsCount++;
-                        consecutiveUnknown = 0; // Racha rota, reseteamos a 0
+                        consecutiveUnknown = 0;
+                    } else if (isProperNoun) {
+                        // "Elon" no está en el diccionario, pero parece un nombre.
+                        // Truco: Reseteamos la racha de basura a 0 o la mantenemos, pero no la aumentamos.
+                        // Aquí decidimos: Los nombres rompen la racha de basura.
+                        consecutiveUnknown = 0;
                     } else {
-                        consecutiveUnknown++;   // Sumamos a la racha de basura
-                        if (consecutiveUnknown > maxStreak) {
-                            maxStreak = consecutiveUnknown;
-                        }
+                        consecutiveUnknown++;
+                    }
+
+                    // D) MUERTE SÚBITA
+                    if (consecutiveUnknown >= this.config.maxConsecutiveUnknown) {
+                        return { valid: false, reason: "Secuencia de palabras desconocidas excedida" };
                     }
                 }
 
-                // REGLA MORTAL 1: ¿Hubo demasiada basura seguida?
-                // Esto mata a: "Hola buen dia asd asd asd"
-                if (maxStreak >= this.config.maxConsecutiveUnknown) {
-                    return { valid: false, reason: "El texto contiene secuencias de palabras incoherentes." };
+                // 3. EVALUACIÓN FINAL (Ratio)
+                const ratio = knownWordsCount / tokens.length;
+                if (ratio < this.config.minVocabularyRatio) {
+                    return { valid: false, reason: `Vocabulario insuficiente (${Math.round(ratio * 100)}% reconocido)` };
                 }
-
-                // REGLA 2: Promedio General
-                const coverageRatio = knownWordsCount / words.length;
-                if (coverageRatio < this.config.minVocabularyRatio) {
-                    return { valid: false, reason: "Demasiadas palabras desconocidas en total." };
-                }
-
-                // --- FILTRO 2: ESTRUCTURA (Bigramas imposibles) ---
-                // Regla Q sin U
-                if (/q[^u]/.test(cleanText)) return { valid: false, reason: "Uso incorrecto de la Q" };
-
-                // Exceso de consonantes
-                if (/[bcdfghjklmnñpqrstvwxyz]{5,}/.test(cleanText)) return { valid: false, reason: "Imposible pronunciar" };
 
                 return { valid: true };
             }
