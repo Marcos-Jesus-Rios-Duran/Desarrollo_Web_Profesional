@@ -1143,7 +1143,7 @@
             // --- CONFIGURACIÓN Y DATOS ---
 
             config: {
-                minVocabularyRatio: 0.45, // 50% del texto debe ser conocido
+                minVocabularyRatio: 0.40, // 50% del texto debe ser conocido
                 maxConsecutiveUnknown: 2, // 2 palabras desconocidas seguidas = ALERTA (pero con excepciones)
                 maxConsonantsSequence: 5  // "bcdfgh" = impronunciable
             },
@@ -1160,6 +1160,7 @@
             // Tu Whitelist técnica
             // Tu Whitelist técnica (COMPLETA Y BLINDADA)
             techTerms: new Set([
+                'nativa',
                 // Lenguajes y Core
                 'java', 'python', 'javascript', 'js', 'ts', 'typescript', 'php', 'c#', 'sharp', 'c++', 'cpp', 'ruby', 'go', 'golang', 'rust', 'c', 'swift', 'kotlin', 'dart',
 
@@ -1187,7 +1188,7 @@
             // Tu Diccionario común
             commonWords: new Set(
 
-                ("de la que el en y a los se del las un por con no una su para es al lo como mas o pero sus le ha me si sin sobre este ya entre " +
+                ("sean escribir de la que el en y a los se del las un por con no una su para es al lo como mas o pero sus le ha me si sin sobre este ya entre " +
 
                     "cuando todo esta ser son dos tambien fue habia era muy años hasta desde mi porque que solo han yo hay vez puede todos asi nos ni parte tiene " +
 
@@ -1218,7 +1219,7 @@
                     "consultoria ciberseguridad buscamos partner tecnologico startup implementacion crm salesforce legacy code cobol mantenimiento mejora " +
                     "automatizacion procesos inteligencia artificial machine learning datos data ciencia nube cloud azure aws gcp servidor hosting dominio " +
                     "ssl seguridad certificado pasarela pagos stripe paypal openpay mercado libre woocommerce prestashop magento vtex sap oracle netsuite " +
-                    "odoo zoho hubspot activo fijo nomina contabilidad electronica sat facturacion " +
+                    "odoo zoho hubspot activo fijo nomina contabilidad electronica sat facturacion errores " +
                     "chamba vacante practicas apoyo telemedicina agendar citas medicas expediente inmobiliaria recorridos escolar cursos cayo error hackearon " +
                     "acceder panel certificado caduco recuperar respaldo deploy produccion vercel dashboard analytics landing page leads bug login tarjeta " +
                     "credito ubicados info precio aceptan estan tarjeta credito visa mastercard efectivo oxxo pendiente bitso").split(" ")),

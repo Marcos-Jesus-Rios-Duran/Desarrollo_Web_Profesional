@@ -30,7 +30,7 @@ function loadSearchEngine() {
     // console.log("🔍 Motor de búsqueda inyectado correctamente.");
 }
 
-// 3. Función inteligente de Breadcrumbs (Migas de Pan)
+// 3. Función inteligente de Breadcrumbs
 async function loadBreadcrumbs() {
     const containerId = 'breadcrumb-container';
     const loaded = await loadComponent(containerId, '/src/common/components/layout/breadcrumbs.html');
